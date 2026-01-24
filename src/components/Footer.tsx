@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 import logoFooter from "@/assets/logo-footer.png";
 
 // TikTok icon component since it's not in lucide-react
@@ -45,36 +46,76 @@ const Footer = () => {
     }
   };
 
-  return (
+   return (
     <footer className="bg-foreground text-background">
-      <div className="container mx-auto px-4 py-8">
+
+      <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <a href="#home" className="inline-block mb-6">
+            <motion.a 
+              href="#home" 
+              className="inline-block mb-6"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
               <img 
                 src={logoFooter} 
                 alt="The Pro English" 
                 className="h-16 w-auto brightness-0 invert"
               />
-            </a>
+            </motion.a>
             <p className="text-background/70 mb-6 max-w-sm">
               Pro English Academy is your trusted partner in mastering the English language. 
               Join thousands of successful learners and achieve your language goals.
             </p>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-background/70">
-                <Mail className="w-5 h-5 text-primary" />
-                <span>Mail@theproenglish.net</span>
-              </div>
-              <div className="flex items-center gap-3 text-background/70">
-                <Phone className="w-5 h-5 text-primary" />
-                <span>+20 2 48813729</span>
-              </div>
-              <div className="flex items-center gap-3 text-background/70">
-                <MapPin className="w-5 h-5 text-primary" />
-                <span>Cairo, Egypt</span>
-              </div>
+              {/* Email - clickable */}
+              <motion.a 
+                href="mailto:Mail@theproenglish.net"
+                className="flex items-center gap-3 text-background/70 group cursor-pointer"
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Mail className="w-5 h-5 text-primary" />
+                </motion.div>
+                <span className="group-hover:text-background transition-colors hover:underline">Mail@theproenglish.net</span>
+              </motion.a>
+
+              {/* Phone - clickable */}
+              <motion.a 
+                href="tel:+20248813729"
+                className="flex items-center gap-3 text-background/70 group cursor-pointer"
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Phone className="w-5 h-5 text-primary" />
+                </motion.div>
+                <span className="group-hover:text-background transition-colors hover:underline">+20 2 48813729</span>
+              </motion.a>
+
+              {/* Location - not clickable */}
+              <motion.div 
+                className="flex items-center gap-3 text-background/70 group cursor-default"
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <MapPin className="w-5 h-5 text-primary" />
+                </motion.div>
+                <span className="group-hover:text-background transition-colors">Cairo, Egypt</span>
+              </motion.div>
             </div>
           </div>
 
@@ -82,15 +123,23 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-background mb-6">Company</h4>
             <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <button
+              {footerLinks.company.map((link, index) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                >
+                  <motion.button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-background/70 hover:text-primary transition-colors"
+                    className="text-background/70 hover:text-primary transition-colors relative group"
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
                   >
                     {link.name}
-                  </button>
-                </li>
+                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                  </motion.button>
+                </motion.li>
               ))}
             </ul>
           </div>
@@ -99,42 +148,63 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-background mb-6">Support</h4>
             <ul className="space-y-3">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <button
+              {footerLinks.support.map((link, index) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                >
+                  <motion.button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-background/70 hover:text-primary transition-colors"
+                    className="text-background/70 hover:text-primary transition-colors relative group"
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
                   >
                     {link.name}
-                  </button>
-                </li>
+                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                  </motion.button>
+                </motion.li>
               ))}
             </ul>
           </div>
         </div>
 
         {/* Social Links & Copyright */}
-        <div className="border-t border-background/10 mt-8 pt-6">
+        <motion.div 
+          className="border-t border-background/10 mt-8 pt-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <a
+              {socialLinks.map((social, index) => (
+                <motion.a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary transition-colors"
+                  whileHover={{ scale: 1.15, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  // @ts-ignore - framer motion delay
+                  custom={index}
+                  style={{ transitionDelay: `${index * 50}ms` }}
                 >
                   <social.icon className="w-5 h-5" />
-                </a>
+                </motion.a>
               ))}
             </div>
             <p className="text-background/50 text-sm">
               © 2024 Pro English Academy. All rights reserved.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

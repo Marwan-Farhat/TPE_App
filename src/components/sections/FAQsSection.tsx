@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 const faqs = [
   {
@@ -82,11 +83,16 @@ And if you don't book with us, you've learned your level comprehensively and can
 ];
 
 const FAQsSection = () => {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation({ threshold: 0.05 });
   return (
     <section id="faqs" className="py-14 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <div 
+          ref={headerRef}
+          className={`text-center max-w-3xl mx-auto mb-10 animate-fade-up ${headerVisible ? "visible" : ""}`}
+        >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3">
             Do you have many questions in your mind?!
           </h2>
@@ -96,15 +102,19 @@ const FAQsSection = () => {
         </div>
 
         {/* FAQ Accordion */}
-        <div className="max-w-4xl mx-auto">
+        <div 
+          ref={contentRef}
+          className={`max-w-4xl mx-auto animate-fade-up ${contentVisible ? "visible" : ""}`}
+          style={{ transitionDelay: "150ms" }}
+        >
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-card border border-border rounded-lg px-6 data-[state=open]:shadow-soft"
+                 className="bg-card border border-border rounded-lg px-6 data-[state=open]:shadow-soft data-[state=open]:border-primary/20 transition-all duration-300 hover:border-primary/30"
               >
-                <AccordionTrigger className="text-left text-foreground font-medium py-4 hover:no-underline hover:text-primary text-sm md:text-base">
+                <AccordionTrigger className="text-left text-foreground font-medium py-4 hover:no-underline hover:text-primary text-sm md:text-base transition-colors duration-200">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5 whitespace-pre-line text-sm leading-relaxed">

@@ -1,4 +1,6 @@
 import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 const testimonials = [
   {
@@ -45,11 +47,18 @@ const companyLogos = [
 ];
 
 const SuccessStoriesSection = () => {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: logosRef, isVisible: logosVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section id="success-stories" className="py-14 lg:py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div 
+          ref={headerRef}
+          className={`text-center max-w-3xl mx-auto mb-12 animate-fade-up ${headerVisible ? "visible" : ""}`}
+        >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Thousands of happy students
           </h2>
@@ -60,20 +69,30 @@ const SuccessStoriesSection = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-20">
-          {testimonials.map((testimonial) => (
-            <div
+        <div 
+          ref={cardsRef}
+          className="grid md:grid-cols-2 gap-8 mb-20"
+        >
+          {testimonials.map((testimonial, index) => (
+            <motion.div
               key={testimonial.id}
-              className="bg-card rounded-2xl p-8 shadow-card border border-border relative"
+              className={`bg-card rounded-2xl p-8 shadow-card border border-border relative card-interactive animate-fade-up ${cardsVisible ? "visible" : ""}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
             >
               <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/20" />
               
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
+                  <motion.div
                     key={i}
-                    className="w-5 h-5 fill-primary text-primary"
-                  />
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={cardsVisible ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.3, delay: index * 0.1 + i * 0.05 }}
+                  >
+                    <Star className="w-5 h-5 fill-primary text-primary" />
+                  </motion.div>
                 ))}
               </div>
               
@@ -82,11 +101,15 @@ const SuccessStoriesSection = () => {
               </p>
               
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+                <motion.div 
+                  className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <span className="text-lg font-semibold text-primary">
                     {testimonial.name.charAt(0)}
                   </span>
-                </div>
+                </motion.div>
                 <div>
                   <div className="font-semibold text-foreground">
                     {testimonial.name}
@@ -96,12 +119,15 @@ const SuccessStoriesSection = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Company Logos */}
-        <div className="text-center">
+        <div 
+          ref={logosRef}
+          className={`text-center animate-fade-up ${logosVisible ? "visible" : ""}`}
+        >
           <h3 className="text-xl font-semibold text-foreground mb-2">
             Trusted by leading companies
           </h3>
@@ -110,12 +136,15 @@ const SuccessStoriesSection = () => {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
             {companyLogos.map((company, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="text-2xl font-bold text-muted-foreground/40 hover:text-primary transition-colors"
+                className="text-2xl font-bold text-muted-foreground/40 hover:text-primary transition-colors cursor-default"
+                whileHover={{ scale: 1.05, y: -2 }}
+                transition={{ duration: 0.2 }}
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
                 {company}
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

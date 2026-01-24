@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
 import aboutLaptop from "@/assets/about-laptop.png";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 const benefits = [
   "Strong interactive curriculum focused on conversation and listening.",
@@ -10,7 +12,29 @@ const benefits = [
   "Individual and group sessions.",
 ];
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
 const AboutSection = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+
   const scrollToCourses = () => {
     const element = document.querySelector("#courses");
     if (element) {
@@ -19,52 +43,104 @@ const AboutSection = () => {
   };
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-secondary/30">
+    <section id="about" className="py-20 lg:py-28 bg-secondary/30 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div 
+          ref={sectionRef}
+          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+        >
           {/* Left Content */}
-          <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-foreground leading-tight">
+          <motion.div 
+            className="space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
+            <motion.h2 
+              className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-foreground leading-tight"
+              variants={itemVariants}
+            >
               Shorten your path and learn English the right way!
-            </h2>
+            </motion.h2>
             
-            <p className="text-muted-foreground text-lg leading-relaxed">
+            <motion.p 
+              className="text-muted-foreground text-lg leading-relaxed"
+              variants={itemVariants}
+            >
               We provide you with an interactive, direct, and enjoyable experience through constantly 
               evolving content that helps you speak English quickly and easily.
-            </p>
+            </motion.p>
 
-            <div className="space-y-4 pt-2">
+            <motion.div className="space-y-4 pt-2" variants={itemVariants}>
               {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <span className="text-foreground">{benefit}</span>
-                </div>
+                <motion.div 
+                  key={index} 
+                  className="flex items-start gap-3 group"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                >
+                  <motion.div
+                    className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5"
+                    whileHover={{ scale: 1.2, backgroundColor: "hsl(var(--primary))" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Check className="w-4 h-4 text-primary group-hover:text-white transition-colors" />
+                  </motion.div>
+                  <span className="text-foreground group-hover:text-primary transition-colors duration-200">
+                    {benefit}
+                  </span>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <Button
-              onClick={scrollToCourses}
-              size="lg"
-              className="gradient-primary text-white mt-4 gap-2"
-            >
-              Choose the right course for your dreams
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
+            <motion.div variants={itemVariants}>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  onClick={scrollToCourses}
+                  size="lg"
+                  className="gradient-primary text-white mt-4 gap-2 btn-interactive animate-subtle-pulse"
+                >
+                  Choose the right course for your dreams
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Content - Laptop Image */}
-          <div className="relative hidden lg:block">
-            <div className="relative">
+          <motion.div 
+            className="relative hidden lg:block"
+            initial={{ opacity: 0, x: 50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <motion.div 
+              className="relative"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
               <img 
                 src={aboutLaptop} 
                 alt="Learning platform on laptop" 
                 className="w-full h-auto rounded-2xl shadow-2xl object-cover min-h-[300px] lg:min-h-[380px]"
               />
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-primary/10 rounded-full blur-sm" />
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-emerald-400/20 rounded-full blur-sm" />
-            </div>
-          </div>
+              {/* Decorative elements with animations */}
+              <motion.div 
+                className="absolute -top-4 -right-4 w-20 h-20 bg-primary/10 rounded-full blur-sm"
+                animate={{ scale: [1, 1.15, 1], rotate: [0, 5, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div 
+                className="absolute -bottom-4 -left-4 w-16 h-16 bg-emerald-400/20 rounded-full blur-sm"
+                animate={{ scale: [1, 1.2, 1], rotate: [0, -5, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

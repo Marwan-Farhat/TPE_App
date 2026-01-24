@@ -10,6 +10,7 @@ import SuccessStoriesSection from "@/components/sections/SuccessStoriesSection";
 import NewsSection from "@/components/sections/NewsSection";
 import StartSection from "@/components/sections/StartSection";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
         <StartSection />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

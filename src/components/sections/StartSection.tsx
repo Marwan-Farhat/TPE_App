@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { motion } from "framer-motion";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 const StartSection = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +22,8 @@ const StartSection = () => {
     dateOfBirth: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,10 +39,20 @@ const StartSection = () => {
     return (
       <section id="start" className="py-20 lg:py-32 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center bg-card rounded-3xl p-12 shadow-card border border-border">
-            <div className="w-20 h-20 rounded-full gradient-primary flex items-center justify-center mx-auto mb-6">
+           <motion.div 
+            className="max-w-2xl mx-auto text-center bg-card rounded-3xl p-12 shadow-card border border-border"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div 
+              className="w-20 h-20 rounded-full gradient-primary flex items-center justify-center mx-auto mb-6"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
+            >
               <span className="text-4xl text-white">✓</span>
-            </div>
+             </motion.div>
             <h2 className="text-3xl font-bold text-foreground mb-4">
               Registration Successful!
             </h2>
@@ -46,14 +60,16 @@ const StartSection = () => {
               We've received your registration. Our team will contact you within 
               24 hours to confirm your placement test booking and payment details.
             </p>
-            <Button
-              onClick={() => setIsSubmitted(false)}
-              variant="outline"
-              className="border-primary text-primary"
-            >
-              Register another person
-            </Button>
-          </div>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                onClick={() => setIsSubmitted(false)}
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary/5"
+              >
+                Register another person
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     );
@@ -63,7 +79,10 @@ const StartSection = () => {
     <section id="start" className="py-14 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <div 
+          ref={sectionRef}
+          className={`text-center max-w-3xl mx-auto mb-10 animate-fade-up ${isVisible ? "visible" : ""}`}
+        >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3">
             Start Your Journey Now
           </h2>
@@ -73,7 +92,10 @@ const StartSection = () => {
         </div>
 
         {/* Registration Form */}
-        <div className="max-w-2xl mx-auto">
+       <motion.div 
+          className={`max-w-2xl mx-auto animate-fade-up ${isVisible ? "visible" : ""}`}
+          style={{ transitionDelay: "150ms" }}
+        >
           <div className="bg-card rounded-2xl shadow-card border border-border overflow-hidden">
             {/* Form Header */}
             <div className="text-center py-8 px-6 border-b border-border">
@@ -87,7 +109,11 @@ const StartSection = () => {
             
             <div className="p-6 md:p-8">
               {/* Test Info Card */}
-              <div className="bg-secondary/50 rounded-xl p-5 mb-8 border-l-4 border-primary">
+              <motion.div 
+                className="bg-secondary/50 rounded-xl p-5 mb-8 border-l-4 border-primary"
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+              >
                 <h4 className="font-semibold text-foreground text-lg mb-1">
                   English Placement Test 2025
                 </h4>
@@ -95,7 +121,7 @@ const StartSection = () => {
                   Comprehensive English language assessment test
                 </p>
                 <span className="text-primary font-semibold">100 EGP</span>
-              </div>
+              </motion.div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Name Fields */}
@@ -109,8 +135,12 @@ const StartSection = () => {
                       placeholder="First Name"
                       value={formData.firstName}
                       onChange={(e) => handleChange("firstName", e.target.value)}
+                      onFocus={() => setFocusedField("firstName")}
+                      onBlur={() => setFocusedField(null)}
                       required
-                      className="bg-background border-border"
+                      className={`bg-background border-border transition-all duration-200 ${
+                        focusedField === "firstName" ? "border-primary ring-2 ring-primary/20" : ""
+                      }`}
                     />
                   </div>
                   <div className="space-y-2">
@@ -122,8 +152,12 @@ const StartSection = () => {
                       placeholder="Last Name"
                       value={formData.lastName}
                       onChange={(e) => handleChange("lastName", e.target.value)}
+                      onFocus={() => setFocusedField("lastName")}
+                      onBlur={() => setFocusedField(null)}
                       required
-                      className="bg-background border-border"
+                      className={`bg-background border-border transition-all duration-200 ${
+                        focusedField === "lastName" ? "border-primary ring-2 ring-primary/20" : ""
+                      }`}
                     />
                   </div>
                 </div>
@@ -139,8 +173,12 @@ const StartSection = () => {
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
+                     onFocus={() => setFocusedField("email")}
+                    onBlur={() => setFocusedField(null)}
                     required
-                    className="bg-background border-border"
+                    className={`bg-background border-border transition-all duration-200 ${
+                      focusedField === "email" ? "border-primary ring-2 ring-primary/20" : ""
+                    }`}
                   />
                 </div>
 
@@ -155,8 +193,12 @@ const StartSection = () => {
                     placeholder="+20 123 456 7890"
                     value={formData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
+                     onFocus={() => setFocusedField("phone")}
+                    onBlur={() => setFocusedField(null)}
                     required
-                    className="bg-background border-border"
+                    className={`bg-background border-border transition-all duration-200 ${
+                      focusedField === "phone" ? "border-primary ring-2 ring-primary/20" : ""
+                    }`}
                   />
                 </div>
 
@@ -171,7 +213,7 @@ const StartSection = () => {
                       onValueChange={(value) => handleChange("gender", value)}
                       required
                     >
-                      <SelectTrigger className="bg-background border-border">
+                      <SelectTrigger className="bg-background border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200">
                         <SelectValue placeholder="Select Gender" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover">
@@ -189,24 +231,33 @@ const StartSection = () => {
                       type="date"
                       value={formData.dateOfBirth}
                       onChange={(e) => handleChange("dateOfBirth", e.target.value)}
+                      onFocus={() => setFocusedField("dob")}
+                      onBlur={() => setFocusedField(null)}
                       required
-                      className="bg-background border-border"
+                      className={`bg-background border-border transition-all duration-200 ${
+                        focusedField === "dob" ? "border-primary ring-2 ring-primary/20" : ""
+                      }`}
                     />
                   </div>
                 </div>
 
                 {/* Submit Button */}
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full gradient-primary text-white text-lg py-6 mt-4"
+                <motion.div
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
                 >
-                  Register
-                </Button>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full gradient-primary text-white text-lg py-6 mt-4 btn-interactive"
+                  >
+                    Register
+                  </Button>
+                </motion.div>
               </form>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
