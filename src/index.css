@@ -45,9 +45,9 @@
     /* Custom colors for the design */
     --hero-gradient-start: 258 70% 55%;
     --hero-gradient-end: 280 70% 45%;
-    --success-green: 142 70% 45%;
-    --warning-orange: 30 95% 55%;
-    --info-blue: 210 90% 55%;
+    --success: 142 70% 45%;
+    --warning: 35 95% 55%;
+    --info: 210 90% 55%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 220 20% 20%;
@@ -108,9 +108,18 @@
     scroll-behavior: smooth;
   }
 
+/* Smooth theme transition */
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease !important;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
   }
 }
 

@@ -52,7 +52,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-slate-900 dark:bg-slate-950 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
@@ -66,17 +66,17 @@ const Footer = () => {
               <img 
                 src={logoFooter} 
                 alt="The Pro English" 
-                className="h-16 w-auto brightness-0 invert"
+                className="h-16 w-auto"
               />
             </motion.a>
-            <p className="text-background/70 mb-6 max-w-sm">
+            <p className="text-white/70 mb-6 max-w-sm">
               {t("footer.description")}
             </p>
             <div className="space-y-3">
               {/* Email - clickable */}
               <motion.a 
                 href="mailto:Mail@theproenglish.net"
-                className="flex items-center gap-3 text-background/70 group cursor-pointer"
+                className="flex items-center gap-3 text-white/70 group cursor-pointer"
                 whileHover={{ x: isRTL ? -4 : 4 }}
                 transition={{ duration: 0.2 }}
               >
@@ -86,13 +86,13 @@ const Footer = () => {
                 >
                   <Mail className="w-5 h-5 text-primary" />
                 </motion.div>
-                <span className="group-hover:text-background transition-colors hover:underline">Mail@theproenglish.net</span>
+                <span className="group-hover:text-white transition-colors hover:underline">Mail@theproenglish.net</span>
               </motion.a>
 
               {/* Phone - clickable */}
               <motion.a 
                 href="tel:+20248813729"
-                className="flex items-center gap-3 text-background/70 group cursor-pointer"
+                className="flex items-center gap-3 text-white/70 group cursor-pointer"
                 whileHover={{ x: isRTL ? -4 : 4 }}
                 transition={{ duration: 0.2 }}
               >
@@ -102,12 +102,12 @@ const Footer = () => {
                 >
                   <Phone className="w-5 h-5 text-primary" />
                 </motion.div>
-                <span className="group-hover:text-background transition-colors hover:underline">+20 2 48813729</span>
+                <span className="group-hover:text-white transition-colors hover:underline">+20 2 48813729</span>
               </motion.a>
 
               {/* Location - not clickable */}
               <motion.div 
-                className="flex items-center gap-3 text-background/70 group cursor-default"
+                className="flex items-center gap-3 text-white/70 group cursor-default"
                 whileHover={{ x: isRTL ? -4 : 4 }}
                 transition={{ duration: 0.2 }}
               >
@@ -117,14 +117,14 @@ const Footer = () => {
                 >
                   <MapPin className="w-5 h-5 text-primary" />
                 </motion.div>
-                <span className="group-hover:text-background transition-colors">{t("footer.location")}</span>
+                <span className="group-hover:text-white transition-colors">{t("footer.location")}</span>
               </motion.div>
             </div>
           </div>
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-background mb-6">{t("footer.company")}</h4>
+            <h4 className="font-semibold text-white mb-6">{t("footer.company")}</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link, index) => (
                 <motion.li 
@@ -135,7 +135,7 @@ const Footer = () => {
                 >
                   <motion.button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-background/70 hover:text-primary transition-colors relative group"
+                    className="text-white/70 hover:text-primary transition-colors relative group"
                     whileHover={{ x: isRTL ? -4 : 4 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -149,7 +149,7 @@ const Footer = () => {
 
           {/* Support Links */}
           <div>
-            <h4 className="font-semibold text-background mb-6">{t("footer.support")}</h4>
+            <h4 className="font-semibold text-white mb-6">{t("footer.support")}</h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link, index) => (
                 <motion.li 
@@ -160,7 +160,7 @@ const Footer = () => {
                 >
                   <motion.button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-background/70 hover:text-primary transition-colors relative group"
+                    className="text-white/70 hover:text-primary transition-colors relative group"
                     whileHover={{ x: isRTL ? -4 : 4 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -175,7 +175,7 @@ const Footer = () => {
 
         {/* Social Links & Copyright */}
         <motion.div 
-          className="border-t border-background/10 mt-8 pt-6"
+          className="border-t border-white/10 mt-8 pt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -189,7 +189,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary transition-colors"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
                   whileHover={{ scale: 1.15, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
@@ -201,7 +201,7 @@ const Footer = () => {
                 </motion.a>
               ))}
             </div>
-            <p className="text-background/50 text-sm">
+            <p className="text-white/50 text-sm">
               {t("footer.copyright")}
             </p>
           </div>

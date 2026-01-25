@@ -11,6 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import useLanguage from "@/hooks/useLanguage";
+import { ThemeToggle, ThemeToggleCompact } from "@/components/ThemeToggle";
 
 const navLinksData = [
   { nameKey: "nav.home", href: "#home", icon: Sparkles },
@@ -124,6 +125,8 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
+             {/* Theme Toggle */}
+            <ThemeToggle />
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button size="sm" className="gradient-primary text-white px-6 btn-interactive">
                 {t("nav.login")}
@@ -201,6 +204,8 @@ const Navbar = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2, delay: 0.3 }}
                 >
+                  {/* Mobile Theme Toggle */}
+                  <ThemeToggleCompact />
                   <Button size="sm" className="gradient-primary text-white flex-1">
                     {t("nav.login")}
                   </Button>

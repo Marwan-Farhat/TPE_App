@@ -60,8 +60,7 @@ const FeaturesSection = () => {
               }}
               whileHover={{ 
                 y: -8, 
-                boxShadow: "0 20px 40px -12px hsl(var(--primary) / 0.15)",
-                borderColor: "hsl(var(--primary) / 0.3)"
+                boxShadow: "0 20px 40px -12px hsl(var(--primary) / 0.15)"
               }}
             >
               <motion.div 
