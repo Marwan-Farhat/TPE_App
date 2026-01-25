@@ -1,42 +1,44 @@
 import { Compass, MessageCircle, CalendarDays, Target, Shield, Layers } from "lucide-react";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
-
-const features = [
-  {
-    icon: Compass,
-    title: "Free Orientation Session",
-    description: "An introductory session at the beginning to map out your language journey and understand how we'll proceed the right way.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Private Conversation Sessions",
-    description: "Customized sessions so you can speak a lot and get special focus from the trainer.",
-  },
-  {
-    icon: CalendarDays,
-    title: "Daily Practice",
-    description: "You'll speak English 5 times a week and practice the language in an interactive and fun way.",
-  },
-  {
-    icon: Target,
-    title: "Personal Assessment",
-    description: "With every session or task, you get personal evaluation or feedback to continuously improve.",
-  },
-  {
-    icon: Shield,
-    title: "The Pro English Guarantee",
-    description: "Guarantee to repeat any level for free for a year if you commit to attendance and get the guarantee.",
-  },
-  {
-    icon: Layers,
-    title: "Lifetime Platform Access",
-    description: "Once you join the course, you get lifetime access to the platform with all content files and exercises.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const FeaturesSection = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      icon: Compass,
+      titleKey: "features.orientation.title",
+      descriptionKey: "features.orientation.description",
+    },
+    {
+      icon: MessageCircle,
+      titleKey: "features.conversation.title",
+      descriptionKey: "features.conversation.description",
+    },
+    {
+      icon: CalendarDays,
+      titleKey: "features.dailyPractice.title",
+      descriptionKey: "features.dailyPractice.description",
+    },
+    {
+      icon: Target,
+      titleKey: "features.assessment.title",
+      descriptionKey: "features.assessment.description",
+    },
+    {
+      icon: Shield,
+      titleKey: "features.guarantee.title",
+      descriptionKey: "features.guarantee.description",
+    },
+    {
+      icon: Layers,
+      titleKey: "features.platform.title",
+      descriptionKey: "features.platform.description",
+    },
+  ];
 
   return (
     <section className="py-20 lg:py-28 bg-background overflow-hidden">
@@ -70,10 +72,10 @@ const FeaturesSection = () => {
                 <feature.icon className="w-7 h-7 text-primary group-hover:text-white transition-colors duration-300" />
               </motion.div>
               <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-200">
-                {feature.title}
+                {t(feature.titleKey)}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                {feature.description}
+                {t(feature.descriptionKey)}
               </p>
             </motion.div>
           ))}

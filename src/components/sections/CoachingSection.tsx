@@ -2,9 +2,13 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import coachingIllustration from "@/assets/coaching-illustration.png";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { useTranslation } from "react-i18next";
+import useLanguage from "@/hooks/useLanguage";
 
 const CoachingSection = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
 
   const scrollToStart = () => {
     const element = document.querySelector("#start");
@@ -17,7 +21,7 @@ const CoachingSection = () => {
     <section className="py-12 lg:py-16 bg-gradient-to-r from-primary via-primary to-accent relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div 
-        className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"
+        className={`absolute top-0 ${isRTL ? 'right-0' : 'left-0'} w-64 h-64 bg-white/5 rounded-full blur-3xl`}
         animate={{ 
           x: [0, 30, 0], 
           y: [0, -20, 0],
@@ -26,7 +30,7 @@ const CoachingSection = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
-        className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+        className={`absolute bottom-0 ${isRTL ? 'left-0' : 'right-0'} w-96 h-96 bg-white/5 rounded-full blur-3xl`}
         animate={{ 
           x: [0, -40, 0], 
           y: [0, 30, 0],
@@ -43,7 +47,7 @@ const CoachingSection = () => {
           {/* Content */}
           <motion.div 
             className="w-full lg:w-1/2 text-white"
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
@@ -53,7 +57,7 @@ const CoachingSection = () => {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Determine your level and evaluate your skills the right way!
+              {t("coaching.title")}
             </motion.h2>
             <motion.p 
               className="text-white/90 text-lg leading-relaxed mb-8"
@@ -61,7 +65,7 @@ const CoachingSection = () => {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              Start your journey with a Coaching Session individual consultation, 30 minutes with the trainer who speaks and chats with you in English to evaluate your skills and give you a detailed evaluation, plus an MCQ test to determine your level accurately and guide you to the next step.
+              {t("coaching.description")}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -75,7 +79,7 @@ const CoachingSection = () => {
                 variant="outline"
                 className="border-white text-primary bg-white hover:bg-white/90 hover:text-primary px-8 py-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Book Coaching Session
+                {t("coaching.cta")}
               </Button>
             </motion.div>
           </motion.div>
@@ -83,7 +87,7 @@ const CoachingSection = () => {
           {/* Illustration */}
           <motion.div 
             className="w-full lg:w-1/2"
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >

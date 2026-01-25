@@ -9,14 +9,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { motion, AnimatePresence } from "framer-motion";
-const navLinks = [
-  { name: "Home", href: "#home", icon: Sparkles },
-  { name: "About", href: "#about", icon: Info },
-  { name: "Courses", href: "#courses", icon: LayoutGrid },
-  { name: "FAQs", href: "#faqs", icon: HelpCircle },
-  { name: "Success Stories", href: "#success-stories", icon: Star },
-  { name: "News", href: "#news", icon: Newspaper, hasDropdown: true },
-  { name: "Start", href: "#start", icon: ChevronRight, isArrow: true },
+import { useTranslation } from "react-i18next";
+import useLanguage from "@/hooks/useLanguage";
+
+const navLinksData = [
+  { nameKey: "nav.home", href: "#home", icon: Sparkles },
+  { nameKey: "nav.about", href: "#about", icon: Info },
+  { nameKey: "nav.courses", href: "#courses", icon: LayoutGrid },
+  { nameKey: "nav.faqs", href: "#faqs", icon: HelpCircle },
+  { nameKey: "nav.successStories", href: "#success-stories", icon: Star },
+  { nameKey: "nav.news", href: "#news", icon: Newspaper, hasDropdown: true },
+  { nameKey: "nav.start", href: "#start", icon: ChevronRight, isArrow: true },
 ];
 
 const languages = [
@@ -26,16 +29,16 @@ const languages = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("en");
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useTranslation();
+  const { currentLanguage, changeLanguage, isRTL } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      // Detect active section
-      const sections = navLinks.map(link => link.href.replace("#", ""));
+      const sections = navLinksData.map(link => link.href.replace("#", ""));
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
         if (element) {
@@ -83,11 +86,11 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => {
+            {navLinksData.map((link) => {
               const isActive = activeSection === link.href.replace("#", "");
               return (
                 <motion.button
-                  key={link.name}
+                  key={link.nameKey}
                   onClick={() => scrollToSection(link.href)}
                   className={`relative flex items-center gap-1.5 px-3 py-2 text-sm font-semibold transition-colors ${
                     isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
@@ -97,13 +100,13 @@ const Navbar = () => {
                 >
                   {link.isArrow ? (
                     <>
-                      {link.name}
-                      <link.icon className="w-4 h-4" />
+                      {t(link.nameKey)}
+                      <link.icon className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                     </>
                   ) : (
                     <>
                       <link.icon className="w-4 h-4" />
-                      {link.name}
+                      {t(link.nameKey)}
                       {link.hasDropdown && <ChevronDown className="w-3 h-3" />}
                     </>
                   )}
@@ -123,15 +126,15 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-3">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button size="sm" className="gradient-primary text-white px-6 btn-interactive">
-                Login
+                {t("nav.login")}
               </Button>
             </motion.div>
             
             {/* Language Switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-1.5 border-border hover:border-primary/50 transition-colors">
-                  {currentLang === "en" ? "English" : "العربية"}
+                <Button variant="outline" size="sm" className="gap-1.5 border-border hover:border-primary/50 transition-colors min-w-[100px]">
+                  {currentLanguage === "ar" ? "العربية" : "English"}
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
@@ -139,8 +142,8 @@ const Navbar = () => {
                 {languages.map((lang) => (
                   <DropdownMenuItem
                     key={lang.code}
-                    onClick={() => setCurrentLang(lang.code)}
-                    className="cursor-pointer hover:bg-secondary transition-colors"
+                    onClick={() => changeLanguage(lang.code)}
+                    className={`cursor-pointer hover:bg-secondary transition-colors ${currentLanguage === lang.code ? 'bg-secondary' : ''}`}
                   >
                     {lang.name}
                   </DropdownMenuItem>
@@ -170,25 +173,25 @@ const Navbar = () => {
               transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <div className="flex flex-col gap-1">
-                {navLinks.map((link, index) => {
+                {navLinksData.map((link, index) => {
                   const isActive = activeSection === link.href.replace("#", "");
                   return (
                     <motion.button
-                      key={link.name}
+                      key={link.nameKey}
                       onClick={() => scrollToSection(link.href)}
-                      className={`flex items-center gap-2 px-4 py-3 text-left text-sm font-medium rounded-lg transition-colors ${
+                      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                         isActive 
                           ? "text-primary bg-secondary" 
                           : "text-muted-foreground hover:text-primary hover:bg-secondary"
                       }`}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.2, delay: index * 0.05 }}
                     >
                       <link.icon className="w-4 h-4" />
-                      {link.name}
-                      {link.hasDropdown && <ChevronDown className="w-3 h-3 ml-auto" />}
-                      {link.isArrow && <ChevronRight className="w-3 h-3 ml-auto" />}
+                      {t(link.nameKey)}
+                      {link.hasDropdown && <ChevronDown className={`w-3 h-3 ${isRTL ? 'mr-auto' : 'ml-auto'}`} />}
+                      {link.isArrow && <ChevronRight className={`w-3 h-3 ${isRTL ? 'mr-auto rotate-180' : 'ml-auto'}`} />}
                     </motion.button>
                   );
                 })}
@@ -199,12 +202,12 @@ const Navbar = () => {
                   transition={{ duration: 0.2, delay: 0.3 }}
                 >
                   <Button size="sm" className="gradient-primary text-white flex-1">
-                    Login
+                    {t("nav.login")}
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm" className="gap-1.5">
-                        {currentLang === "en" ? "English" : "العربية"}
+                        {currentLanguage === "ar" ? "AR" : "EN"}
                         <ChevronDown className="w-3 h-3" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -212,8 +215,8 @@ const Navbar = () => {
                       {languages.map((lang) => (
                         <DropdownMenuItem
                           key={lang.code}
-                          onClick={() => setCurrentLang(lang.code)}
-                          className="cursor-pointer"
+                          onClick={() => changeLanguage(lang.code)}
+                          className={`cursor-pointer ${currentLanguage === lang.code ? 'bg-secondary' : ''}`}
                         >
                           {lang.name}
                         </DropdownMenuItem>

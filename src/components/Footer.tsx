@@ -1,6 +1,8 @@
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import logoFooter from "@/assets/logo-footer.png";
+import { useTranslation } from "react-i18next";
+import useLanguage from "@/hooks/useLanguage";
 
 // TikTok icon component since it's not in lucide-react
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -13,21 +15,6 @@ const TikTokIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const footerLinks = {
-  company: [
-    { name: "About Us", href: "#about" },
-    { name: "Our Courses", href: "#courses" },
-    { name: "Success Stories", href: "#success-stories" },
-    { name: "Blog", href: "#news" },
-  ],
-  support: [
-    { name: "FAQs", href: "#faqs" },
-    { name: "Contact Us", href: "#start" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Privacy Policy", href: "#" },
-  ],
-};
-
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/share/1DFdM5d3cX/", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/theproenglish?igsh=MXR5dHk1aXkyNDc4dQ==", label: "Instagram" },
@@ -37,6 +24,24 @@ const socialLinks = [
 ];
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
+
+  const footerLinks = {
+    company: [
+      { nameKey: "footer.links.aboutUs", href: "#about" },
+      { nameKey: "footer.links.ourCourses", href: "#courses" },
+      { nameKey: "footer.links.successStories", href: "#success-stories" },
+      { nameKey: "footer.links.blog", href: "#news" },
+    ],
+    support: [
+      { nameKey: "footer.links.faqs", href: "#faqs" },
+      { nameKey: "footer.links.contactUs", href: "#start" },
+      { nameKey: "footer.links.termsOfService", href: "#" },
+      { nameKey: "footer.links.privacyPolicy", href: "#" },
+    ],
+  };
+
   const scrollToSection = (href: string) => {
     if (href.startsWith("#")) {
       const element = document.querySelector(href);
@@ -46,9 +51,8 @@ const Footer = () => {
     }
   };
 
-   return (
+  return (
     <footer className="bg-foreground text-background">
-
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
@@ -66,15 +70,14 @@ const Footer = () => {
               />
             </motion.a>
             <p className="text-background/70 mb-6 max-w-sm">
-              Pro English Academy is your trusted partner in mastering the English language. 
-              Join thousands of successful learners and achieve your language goals.
+              {t("footer.description")}
             </p>
             <div className="space-y-3">
               {/* Email - clickable */}
               <motion.a 
                 href="mailto:Mail@theproenglish.net"
                 className="flex items-center gap-3 text-background/70 group cursor-pointer"
-                whileHover={{ x: 4 }}
+                whileHover={{ x: isRTL ? -4 : 4 }}
                 transition={{ duration: 0.2 }}
               >
                 <motion.div
@@ -90,7 +93,7 @@ const Footer = () => {
               <motion.a 
                 href="tel:+20248813729"
                 className="flex items-center gap-3 text-background/70 group cursor-pointer"
-                whileHover={{ x: 4 }}
+                whileHover={{ x: isRTL ? -4 : 4 }}
                 transition={{ duration: 0.2 }}
               >
                 <motion.div
@@ -105,7 +108,7 @@ const Footer = () => {
               {/* Location - not clickable */}
               <motion.div 
                 className="flex items-center gap-3 text-background/70 group cursor-default"
-                whileHover={{ x: 4 }}
+                whileHover={{ x: isRTL ? -4 : 4 }}
                 transition={{ duration: 0.2 }}
               >
                 <motion.div
@@ -114,30 +117,30 @@ const Footer = () => {
                 >
                   <MapPin className="w-5 h-5 text-primary" />
                 </motion.div>
-                <span className="group-hover:text-background transition-colors">Cairo, Egypt</span>
+                <span className="group-hover:text-background transition-colors">{t("footer.location")}</span>
               </motion.div>
             </div>
           </div>
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-background mb-6">Company</h4>
+            <h4 className="font-semibold text-background mb-6">{t("footer.company")}</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link, index) => (
                 <motion.li 
-                  key={link.name}
-                  initial={{ opacity: 0, x: -10 }}
+                  key={link.nameKey}
+                  initial={{ opacity: 0, x: isRTL ? 10 : -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
                   <motion.button
                     onClick={() => scrollToSection(link.href)}
                     className="text-background/70 hover:text-primary transition-colors relative group"
-                    whileHover={{ x: 4 }}
+                    whileHover={{ x: isRTL ? -4 : 4 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {link.name}
-                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                    {t(link.nameKey)}
+                    <span className={`absolute ${isRTL ? 'right-0' : 'left-0'} bottom-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300`} />
                   </motion.button>
                 </motion.li>
               ))}
@@ -146,23 +149,23 @@ const Footer = () => {
 
           {/* Support Links */}
           <div>
-            <h4 className="font-semibold text-background mb-6">Support</h4>
+            <h4 className="font-semibold text-background mb-6">{t("footer.support")}</h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link, index) => (
                 <motion.li 
-                  key={link.name}
-                  initial={{ opacity: 0, x: -10 }}
+                  key={link.nameKey}
+                  initial={{ opacity: 0, x: isRTL ? 10 : -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
                   <motion.button
                     onClick={() => scrollToSection(link.href)}
                     className="text-background/70 hover:text-primary transition-colors relative group"
-                    whileHover={{ x: 4 }}
+                    whileHover={{ x: isRTL ? -4 : 4 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {link.name}
-                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                    {t(link.nameKey)}
+                    <span className={`absolute ${isRTL ? 'right-0' : 'left-0'} bottom-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300`} />
                   </motion.button>
                 </motion.li>
               ))}
@@ -192,8 +195,6 @@ const Footer = () => {
                   transition={{ duration: 0.2 }}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  // @ts-ignore - framer motion delay
-                  custom={index}
                   style={{ transitionDelay: `${index * 50}ms` }}
                 >
                   <social.icon className="w-5 h-5" />
@@ -201,7 +202,7 @@ const Footer = () => {
               ))}
             </div>
             <p className="text-background/50 text-sm">
-              © 2024 Pro English Academy. All rights reserved.
+              {t("footer.copyright")}
             </p>
           </div>
         </motion.div>

@@ -1,41 +1,7 @@
 import { Star, Quote } from "lucide-react";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Ahmed",
-    role: "Business Professional",
-    image: null,
-    rating: 5,
-    text: "Pro English Academy transformed my career. After completing the 3in1 Program, I was promoted to a position that requires daily English communication. The teachers are amazing!",
-  },
-  {
-    id: 2,
-    name: "Mohamed Hassan",
-    role: "Medical Student",
-    image: null,
-    rating: 5,
-    text: "I needed to improve my English for my medical studies abroad. The VIP Course gave me the personalized attention I needed. Now I'm studying medicine in the UK!",
-  },
-  {
-    id: 3,
-    name: "Fatima Al-Sayed",
-    role: "Marketing Manager",
-    image: null,
-    rating: 5,
-    text: "The flexible schedule was perfect for my busy work life. I could attend classes in the evening and on weekends. My English improved dramatically in just 3 months.",
-  },
-  {
-    id: 4,
-    name: "Ahmed Mostafa",
-    role: "Software Developer",
-    image: null,
-    rating: 5,
-    text: "As a developer, I needed English for documentation and international team meetings. Pro English made learning fun and practical. Highly recommended!",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const companyLogos = [
   "Company 1",
@@ -50,6 +16,9 @@ const SuccessStoriesSection = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: logosRef, isVisible: logosVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { t } = useTranslation();
+
+  const testimonialKeys = ["1", "2", "3", "4"];
 
   return (
     <section id="success-stories" className="py-14 lg:py-20 bg-muted/30">
@@ -60,11 +29,10 @@ const SuccessStoriesSection = () => {
           className={`text-center max-w-3xl mx-auto mb-12 animate-fade-up ${headerVisible ? "visible" : ""}`}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Thousands of happy students
+            {t("successStories.title")}
           </h2>
           <p className="text-muted-foreground text-base">
-            Hear from our students who have achieved their English learning goals 
-            and transformed their careers with Pro English Academy.
+            {t("successStories.subtitle")}
           </p>
         </div>
 
@@ -73,18 +41,18 @@ const SuccessStoriesSection = () => {
           ref={cardsRef}
           className="grid md:grid-cols-2 gap-8 mb-20"
         >
-          {testimonials.map((testimonial, index) => (
+          {testimonialKeys.map((key, index) => (
             <motion.div
-              key={testimonial.id}
+              key={key}
               className={`bg-card rounded-2xl p-8 shadow-card border border-border relative card-interactive animate-fade-up ${cardsVisible ? "visible" : ""}`}
               style={{ transitionDelay: `${index * 100}ms` }}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
             >
-              <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/20" />
+              <Quote className="absolute top-6 end-6 w-10 h-10 text-primary/20" />
               
               <div className="flex gap-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
+                {[...Array(5)].map((_, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, scale: 0 }}
@@ -97,7 +65,7 @@ const SuccessStoriesSection = () => {
               </div>
               
               <p className="text-foreground mb-6 relative z-10">
-                "{testimonial.text}"
+                "{t(`successStories.testimonials.${key}.text`)}"
               </p>
               
               <div className="flex items-center gap-4">
@@ -107,15 +75,15 @@ const SuccessStoriesSection = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <span className="text-lg font-semibold text-primary">
-                    {testimonial.name.charAt(0)}
+                    {t(`successStories.testimonials.${key}.name`).charAt(0)}
                   </span>
                 </motion.div>
                 <div>
                   <div className="font-semibold text-foreground">
-                    {testimonial.name}
+                    {t(`successStories.testimonials.${key}.name`)}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {testimonial.role}
+                    {t(`successStories.testimonials.${key}.role`)}
                   </div>
                 </div>
               </div>
@@ -129,10 +97,10 @@ const SuccessStoriesSection = () => {
           className={`text-center animate-fade-up ${logosVisible ? "visible" : ""}`}
         >
           <h3 className="text-xl font-semibold text-foreground mb-2">
-            Trusted by leading companies
+            {t("successStories.trustedBy")}
           </h3>
           <p className="text-muted-foreground mb-8">
-            Teams at these companies train their English with us
+            {t("successStories.companiesSubtitle")}
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
             {companyLogos.map((company, index) => (

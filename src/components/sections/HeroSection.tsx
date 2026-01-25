@@ -1,15 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Play, Users, Award, TrendingUp, ArrowRight, Star } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import useLanguage from "@/hooks/useLanguage";
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
+
   const scrollToStart = () => {
     const element = document.querySelector("#start");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-const containerVariants: Variants = {
+
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -38,6 +44,12 @@ const containerVariants: Variants = {
     },
   };
 
+  const stats = [
+    { icon: Users, value: "15,000+", labelKey: "hero.stats.trainee" },
+    { icon: Award, value: "50+", labelKey: "hero.stats.trainer" },
+    { icon: TrendingUp, value: "5+", labelKey: "hero.stats.program" },
+  ];
+
   return (
     <section
       id="home"
@@ -45,25 +57,26 @@ const containerVariants: Variants = {
     >
       {/* Decorative circles with floating animation */}
       <motion.div 
-        className="absolute top-32 left-8 w-24 h-24 bg-primary/20 rounded-full blur-sm"
+        className={`absolute top-32 ${isRTL ? 'right-8' : 'left-8'} w-24 h-24 bg-primary/20 rounded-full blur-sm`}
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
-        className="absolute top-64 left-1/3 w-16 h-16 bg-emerald-400/30 rounded-full"
+        className={`absolute top-64 ${isRTL ? 'right-1/3' : 'left-1/3'} w-16 h-16 bg-emerald-400/30 rounded-full`}
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
       <motion.div 
-        className="absolute bottom-32 right-20 w-20 h-20 bg-primary/10 rounded-full"
+        className={`absolute bottom-32 ${isRTL ? 'left-20' : 'right-20'} w-20 h-20 bg-primary/10 rounded-full`}
         animate={{ y: [0, -12, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
       <motion.div 
-        className="absolute bottom-48 right-1/4 w-8 h-8 bg-emerald-400/40 rounded-full"
+        className={`absolute bottom-48 ${isRTL ? 'left-1/4' : 'right-1/4'} w-8 h-8 bg-emerald-400/40 rounded-full`}
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-6rem)] py-12">
           {/* Left Content */}
@@ -79,23 +92,21 @@ const containerVariants: Variants = {
               variants={itemVariants}
             >
               <Star className="w-4 h-4 fill-primary" />
-              Learn English with certified experts
+              {t("hero.badge")}
             </motion.div>
             
             <motion.h1 
               className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-tight text-foreground"
               variants={itemVariants}
             >
-              Speak English from day one and achieve your dream the right way!
+              {t("hero.title")}
             </motion.h1>
             
             <motion.p 
               className="text-lg text-muted-foreground max-w-xl leading-relaxed"
               variants={itemVariants}
             >
-              Get rid of fear and shyness and start communicating with confidence and 
-              achieve your dream in work, travel, or study through interactive methods, 
-              conversation sessions, and daily practice in different ways from day one.
+              {t("hero.description")}
             </motion.p>
 
             <motion.div 
@@ -107,8 +118,8 @@ const containerVariants: Variants = {
                 size="lg"
                 className="gradient-primary text-white font-medium px-6 gap-2 btn-interactive animate-subtle-pulse"
               >
-                Take the first step towards your dream
-                <ArrowRight className="w-4 h-4" />
+                {t("hero.cta")}
+                <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
               </Button>
               <Button
                 variant="outline"
@@ -116,22 +127,18 @@ const containerVariants: Variants = {
                 className="border-border text-foreground hover:bg-secondary gap-2 font-medium btn-interactive hover:border-primary/50"
               >
                 <Play className="w-4 h-4" />
-                Watch Video
+                {t("hero.watchVideo")}
               </Button>
             </motion.div>
 
             {/* Stats Cards */}
-           <motion.div 
+            <motion.div 
               className="flex flex-wrap gap-4 pt-8"
               variants={itemVariants}
             >
-              {[
-                { icon: Users, value: "15,000+", label: "Trainee", delay: 0 },
-                { icon: Award, value: "50+", label: "Trainer", delay: 0.1 },
-                { icon: TrendingUp, value: "5+", label: "Program", delay: 0.2 },
-              ].map((stat, index) => (
+              {stats.map((stat) => (
                 <motion.div
-                  key={stat.label}
+                  key={stat.labelKey}
                   className="flex flex-col items-center px-8 py-4 bg-card border border-border rounded-xl shadow-sm min-w-[140px] card-interactive"
                   variants={statsVariants}
                   whileHover={{ y: -4, boxShadow: "0 12px 40px -8px rgba(0,0,0,0.12)" }}
@@ -139,7 +146,7 @@ const containerVariants: Variants = {
                 >
                   <stat.icon className="w-6 h-6 text-primary mb-2" />
                   <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">{t(stat.labelKey)}</div>
                 </motion.div>
               ))}
             </motion.div>
@@ -148,7 +155,7 @@ const containerVariants: Variants = {
           {/* Right Content - Video Thumbnail */}
           <motion.div 
             className="relative mt-8 lg:mt-0"
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           >
@@ -165,7 +172,7 @@ const containerVariants: Variants = {
                     <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto mb-3 lg:mb-4 rounded-full bg-card flex items-center justify-center shadow-lg">
                       <Users className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary" />
                     </div>
-                    <p className="font-medium text-sm md:text-base">Professional Teacher</p>
+                    <p className="font-medium text-sm md:text-base">{t("hero.professionalTeacher")}</p>
                   </div>
                 </div>
                 
@@ -180,19 +187,19 @@ const containerVariants: Variants = {
                     whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary))" }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Play className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-background fill-background ml-0.5 lg:ml-1" />
+                    <Play className={`w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-background fill-background ${isRTL ? 'mr-0.5 lg:mr-1' : 'ml-0.5 lg:ml-1'}`} />
                   </motion.div>
                 </motion.button>
               </motion.div>
 
               {/* Decorative elements */}
               <motion.div 
-                className="absolute -bottom-3 -right-3 lg:-bottom-4 lg:-right-4 w-16 h-16 lg:w-24 lg:h-24 bg-emerald-400/20 rounded-full blur-sm"
+                className={`absolute -bottom-3 ${isRTL ? '-left-3 lg:-left-4' : '-right-3 lg:-right-4'} w-16 h-16 lg:w-24 lg:h-24 bg-emerald-400/20 rounded-full blur-sm`}
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.div 
-                className="absolute -top-3 -left-3 lg:-top-4 lg:-left-4 w-12 h-12 lg:w-16 lg:h-16 bg-primary/20 rounded-full blur-sm"
+                className={`absolute -top-3 ${isRTL ? '-right-3 lg:-right-4' : '-left-3 lg:-left-4'} w-12 h-12 lg:w-16 lg:h-16 bg-primary/20 rounded-full blur-sm`}
                 animate={{ scale: [1, 1.15, 1] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               />

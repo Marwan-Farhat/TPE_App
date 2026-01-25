@@ -1,39 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, ArrowRight, Mail, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
+import { Calendar, ArrowRight, Mail, Sparkles, CheckCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
-
-const blogs = [
-  {
-    id: 1,
-    title: "10 Tips to Improve Your English Speaking Skills",
-    excerpt:
-      "Discover practical strategies to boost your confidence and fluency in English conversations...",
-    date: "January 10, 2024",
-    category: "Learning Tips",
-    image: null,
-  },
-  {
-    id: 2,
-    title: "Why Immersive Learning Works Best for Languages",
-    excerpt:
-      "Research shows that immersive learning environments accelerate language acquisition...",
-    date: "January 5, 2024",
-    category: "Research",
-    image: null,
-  },
-  {
-    id: 3,
-    title: "Success Story: From Beginner to Business English in 6 Months",
-    excerpt:
-      "Read how one of our students transformed their career with intensive English training...",
-    date: "December 28, 2023",
-    category: "Success Stories",
-    image: null,
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const NewsSection = () => {
   const [email, setEmail] = useState("");
@@ -42,6 +13,31 @@ const NewsSection = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: newsletterRef, isVisible: newsletterVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { t } = useTranslation();
+
+  const blogs = [
+    {
+      id: 1,
+      title: t("news.blogs.1.title"),
+      excerpt: t("news.blogs.1.excerpt"),
+      date: t("news.blogs.1.date"),
+      category: t("news.blogs.1.category"),
+    },
+    {
+      id: 2,
+      title: t("news.blogs.2.title"),
+      excerpt: t("news.blogs.2.excerpt"),
+      date: t("news.blogs.2.date"),
+      category: t("news.blogs.2.category"),
+    },
+    {
+      id: 3,
+      title: t("news.blogs.3.title"),
+      excerpt: t("news.blogs.3.excerpt"),
+      date: t("news.blogs.3.date"),
+      category: t("news.blogs.3.category"),
+    },
+  ];
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,10 +59,10 @@ const NewsSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Stay updated with our blog
+            {t("news.title")}
           </h2>
           <p className="text-muted-foreground text-base">
-            Explore tips, insights, and stories to help you on your English learning journey.
+            {t("news.subtitle")}
           </p>
         </motion.div>
 
@@ -114,7 +110,7 @@ const NewsSection = () => {
                     variant="ghost"
                     className="p-0 h-auto text-primary hover:text-primary/80 hover:bg-transparent group/btn"
                   >
-                    Read more 
+                    {t("news.readMore")} 
                     <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
                 </motion.div>
@@ -148,11 +144,10 @@ const NewsSection = () => {
             <Mail className="w-8 h-8 text-primary" />
           </motion.div>
           <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-            Subscribe to our newsletter
+            {t("news.newsletter.title")}
           </h3>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Get the latest English learning tips, exclusive offers, and updates 
-            delivered directly to your inbox.
+            {t("news.newsletter.description")}
           </p>
           
           {isSubscribed ? (
@@ -170,7 +165,7 @@ const NewsSection = () => {
               >
                 ✓
               </motion.span>
-              Thank you for subscribing! Check your email for confirmation.
+              {t("news.newsletter.success")}
             </motion.div>
           ) : (
             <form
@@ -184,7 +179,7 @@ const NewsSection = () => {
               >
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("news.newsletter.placeholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onFocus={() => setIsFocused(true)}
@@ -200,7 +195,7 @@ const NewsSection = () => {
                 whileTap={{ scale: 0.98 }}
               >
                 <Button type="submit" className="gradient-primary text-white btn-interactive">
-                  Subscribe
+                  {t("news.newsletter.subscribe")}
                 </Button>
               </motion.div>
             </form>

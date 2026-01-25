@@ -2,57 +2,58 @@ import { Button } from "@/components/ui/button";
 import { Check, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { useTranslation } from "react-i18next";
 
 interface PricingPlan {
-  name: string;
-  duration: string;
-  price: string;
-  features: string[];
+  nameKey: string;
+  durationKey: string;
+  priceKey: string;
+  featuresKeys: string[];
   isBestseller?: boolean;
   accentColor: string;
 }
 
-const pricingPlans: PricingPlan[] = [
+const pricingPlansData: PricingPlan[] = [
   {
-    name: "3 Levels",
-    duration: "3 months of daily English practice and speaking.",
-    price: "3750 EGP",
+    nameKey: "pricing.plans.3levels.name",
+    durationKey: "pricing.plans.3levels.duration",
+    priceKey: "pricing.plans.3levels.price",
     accentColor: "from-purple-500 to-blue-500",
-    features: [
-      "24 interactive sessions with learners at your level.",
-      "24 private sessions with the trainer.",
-      "12 accent improvement training sessions",
-      "3 free orientation sessions.",
-      "Continuous support and customer service available 24/7.",
+    featuresKeys: [
+      "pricing.plans.3levels.features.1",
+      "pricing.plans.3levels.features.2",
+      "pricing.plans.3levels.features.3",
+      "pricing.plans.3levels.features.4",
+      "pricing.plans.3levels.features.5",
     ],
   },
   {
-    name: "8 Levels",
-    duration: "12 months of daily English practice and speaking.",
-    price: "8500 EGP",
+    nameKey: "pricing.plans.8levels.name",
+    durationKey: "pricing.plans.8levels.duration",
+    priceKey: "pricing.plans.8levels.price",
     isBestseller: true,
     accentColor: "from-orange-500 to-yellow-500",
-    features: [
-      "64 interactive sessions with learners at your level.",
-      "64 private sessions with the trainer.",
-      "32 accent improvement training sessions",
-      "12 free orientation sessions.",
-      "Continuous support and customer service available 24/7.",
-      "Guarantee to repeat any level for free for a year if you commit to attendance.",
+    featuresKeys: [
+      "pricing.plans.8levels.features.1",
+      "pricing.plans.8levels.features.2",
+      "pricing.plans.8levels.features.3",
+      "pricing.plans.8levels.features.4",
+      "pricing.plans.8levels.features.5",
+      "pricing.plans.8levels.features.6",
     ],
   },
   {
-    name: "6 Levels",
-    duration: "6 months of daily English practice and speaking.",
-    price: "6900 EGP",
+    nameKey: "pricing.plans.6levels.name",
+    durationKey: "pricing.plans.6levels.duration",
+    priceKey: "pricing.plans.6levels.price",
     accentColor: "from-purple-500 to-blue-500",
-    features: [
-      "48 interactive sessions with learners at your level.",
-      "48 private sessions with the trainer.",
-      "24 accent improvement training sessions",
-      "6 free orientation sessions.",
-      "Continuous support and customer service available 24/7.",
-      "Guarantee to repeat any level for free for a year if you commit to attendance.",
+    featuresKeys: [
+      "pricing.plans.6levels.features.1",
+      "pricing.plans.6levels.features.2",
+      "pricing.plans.6levels.features.3",
+      "pricing.plans.6levels.features.4",
+      "pricing.plans.6levels.features.5",
+      "pricing.plans.6levels.features.6",
     ],
   },
 ];
@@ -60,6 +61,7 @@ const pricingPlans: PricingPlan[] = [
 const PricingSection = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { t } = useTranslation();
 
   const scrollToStart = () => {
     const element = document.querySelector("#start");
@@ -80,7 +82,7 @@ const PricingSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Choose the right plan for you!
+            {t("pricing.title")}
           </h2>
         </motion.div>
 
@@ -89,7 +91,7 @@ const PricingSection = () => {
           ref={cardsRef}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch"
         >
-          {pricingPlans.map((plan, index) => (
+          {pricingPlansData.map((plan, index) => (
             <motion.div
               key={index}
               className={`relative bg-card rounded-2xl shadow-lg overflow-hidden border flex flex-col ${
@@ -130,7 +132,7 @@ const PricingSection = () => {
               <div className="p-6 lg:p-8 flex flex-col flex-1 relative z-10">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
+                  <h3 className="text-xl font-bold text-foreground">{t(plan.nameKey)}</h3>
                   {plan.isBestseller && (
                     <motion.span 
                       className="bg-gradient-to-r from-orange-100 to-yellow-100 text-orange-600 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1"
@@ -139,12 +141,12 @@ const PricingSection = () => {
                       transition={{ duration: 0.4, delay: 0.5, type: "spring" }}
                     >
                       <Sparkles className="w-3 h-3" />
-                      Bestseller
+                      {t("pricing.bestseller")}
                     </motion.span>
                   )}
                 </div>
 
-                <p className="text-muted-foreground text-sm mb-4">{plan.duration}</p>
+                <p className="text-muted-foreground text-sm mb-4">{t(plan.durationKey)}</p>
 
                 {/* Price */}
                 <motion.div 
@@ -154,13 +156,13 @@ const PricingSection = () => {
                   transition={{ duration: 0.4, delay: index * 0.15 + 0.2 }}
                 >
                   <span className="text-3xl lg:text-4xl font-bold text-foreground">
-                    {plan.price}
+                    {t(plan.priceKey)}
                   </span>
                 </motion.div>
 
                 {/* Features */}
                 <ul className="space-y-3 mb-8 flex-1">
-                  {plan.features.map((feature, idx) => (
+                  {plan.featuresKeys.map((featureKey, idx) => (
                     <motion.li 
                       key={idx} 
                       className="flex items-start gap-3 group"
@@ -175,7 +177,7 @@ const PricingSection = () => {
                       >
                         <Check className="w-3 h-3 text-primary group-hover:text-white transition-colors" />
                       </motion.div>
-                      <span className="text-muted-foreground text-sm">{feature}</span>
+                      <span className="text-muted-foreground text-sm">{t(featureKey)}</span>
                     </motion.li>
                   ))}
                 </ul>
@@ -193,7 +195,7 @@ const PricingSection = () => {
                         : "bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:opacity-90"
                     }`}
                   >
-                    Subscribe Now
+                    {t("pricing.subscribeNow")}
                   </Button>
                 </motion.div>
               </div>

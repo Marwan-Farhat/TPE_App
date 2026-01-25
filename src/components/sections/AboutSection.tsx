@@ -3,14 +3,8 @@ import { Check, ArrowRight } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import aboutLaptop from "@/assets/about-laptop.png";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
-
-const benefits = [
-  "Strong interactive curriculum focused on conversation and listening.",
-  "Comprehensive platform for all content, schedules, and attendance.",
-  "Professional trainers and friendly, motivating environment.",
-  "Continuous support and customer service available 24/7.",
-  "Individual and group sessions.",
-];
+import { useTranslation } from "react-i18next";
+import useLanguage from "@/hooks/useLanguage";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -34,6 +28,16 @@ const itemVariants: Variants = {
 
 const AboutSection = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
+
+  const benefits = [
+    t("about.benefits.1"),
+    t("about.benefits.2"),
+    t("about.benefits.3"),
+    t("about.benefits.4"),
+    t("about.benefits.5"),
+  ];
 
   const scrollToCourses = () => {
     const element = document.querySelector("#courses");
@@ -60,15 +64,14 @@ const AboutSection = () => {
               className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-foreground leading-tight"
               variants={itemVariants}
             >
-              Shorten your path and learn English the right way!
+              {t("about.title")}
             </motion.h2>
             
             <motion.p 
               className="text-muted-foreground text-lg leading-relaxed"
               variants={itemVariants}
             >
-              We provide you with an interactive, direct, and enjoyable experience through constantly 
-              evolving content that helps you speak English quickly and easily.
+              {t("about.description")}
             </motion.p>
 
             <motion.div className="space-y-4 pt-2" variants={itemVariants}>
@@ -76,7 +79,7 @@ const AboutSection = () => {
                 <motion.div 
                   key={index} 
                   className="flex items-start gap-3 group"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                   animate={isVisible ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                 >
@@ -104,8 +107,8 @@ const AboutSection = () => {
                   size="lg"
                   className="gradient-primary text-white mt-4 gap-2 btn-interactive animate-subtle-pulse"
                 >
-                  Choose the right course for your dreams
-                  <ArrowRight className="w-4 h-4" />
+                  {t("about.cta")}
+                  <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                 </Button>
               </motion.div>
             </motion.div>
@@ -114,7 +117,7 @@ const AboutSection = () => {
           {/* Right Content - Laptop Image */}
           <motion.div 
             className="relative hidden lg:block"
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
@@ -130,12 +133,12 @@ const AboutSection = () => {
               />
               {/* Decorative elements with animations */}
               <motion.div 
-                className="absolute -top-4 -right-4 w-20 h-20 bg-primary/10 rounded-full blur-sm"
+                className={`absolute -top-4 ${isRTL ? '-left-4' : '-right-4'} w-20 h-20 bg-primary/10 rounded-full blur-sm`}
                 animate={{ scale: [1, 1.15, 1], rotate: [0, 5, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.div 
-                className="absolute -bottom-4 -left-4 w-16 h-16 bg-emerald-400/20 rounded-full blur-sm"
+                className={`absolute -bottom-4 ${isRTL ? '-right-4' : '-left-4'} w-16 h-16 bg-emerald-400/20 rounded-full blur-sm`}
                 animate={{ scale: [1, 1.2, 1], rotate: [0, -5, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               />

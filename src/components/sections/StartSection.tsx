@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { useTranslation } from "react-i18next";
 
 const StartSection = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +25,7 @@ const StartSection = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const { ref: sectionRef, isVisible } = useScrollAnimation();
+  const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +41,7 @@ const StartSection = () => {
     return (
       <section id="start" className="py-20 lg:py-32 bg-background">
         <div className="container mx-auto px-4">
-           <motion.div 
+          <motion.div 
             className="max-w-2xl mx-auto text-center bg-card rounded-3xl p-12 shadow-card border border-border"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -52,13 +54,12 @@ const StartSection = () => {
               transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
             >
               <span className="text-4xl text-white">✓</span>
-             </motion.div>
+            </motion.div>
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Registration Successful!
+              {t("start.success.title")}
             </h2>
             <p className="text-muted-foreground mb-8">
-              We've received your registration. Our team will contact you within 
-              24 hours to confirm your placement test booking and payment details.
+              {t("start.success.message")}
             </p>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
@@ -66,7 +67,7 @@ const StartSection = () => {
                 variant="outline"
                 className="border-primary text-primary hover:bg-primary/5"
               >
-                Register another person
+                {t("start.success.registerAnother")}
               </Button>
             </motion.div>
           </motion.div>
@@ -84,15 +85,15 @@ const StartSection = () => {
           className={`text-center max-w-3xl mx-auto mb-10 animate-fade-up ${isVisible ? "visible" : ""}`}
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3">
-            Start Your Journey Now
+            {t("start.title")}
           </h2>
           <p className="text-muted-foreground text-base">
-            Register for the placement test and book your free session
+            {t("start.subtitle")}
           </p>
         </div>
 
         {/* Registration Form */}
-       <motion.div 
+        <motion.div 
           className={`max-w-2xl mx-auto animate-fade-up ${isVisible ? "visible" : ""}`}
           style={{ transitionDelay: "150ms" }}
         >
@@ -100,27 +101,27 @@ const StartSection = () => {
             {/* Form Header */}
             <div className="text-center py-8 px-6 border-b border-border">
               <h3 className="text-2xl font-bold text-foreground mb-2">
-                Placement Test Registration
+                {t("start.form.title")}
               </h3>
               <p className="text-muted-foreground">
-                Complete the registration to proceed to payment
+                {t("start.form.subtitle")}
               </p>
             </div>
             
             <div className="p-6 md:p-8">
               {/* Test Info Card */}
               <motion.div 
-                className="bg-secondary/50 rounded-xl p-5 mb-8 border-l-4 border-primary"
+                className="bg-secondary/50 rounded-xl p-5 mb-8 border-s-4 border-primary"
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.2 }}
               >
                 <h4 className="font-semibold text-foreground text-lg mb-1">
-                  English Placement Test 2025
+                  {t("start.form.testInfo.title")}
                 </h4>
                 <p className="text-muted-foreground text-sm mb-2">
-                  Comprehensive English language assessment test
+                  {t("start.form.testInfo.description")}
                 </p>
-                <span className="text-primary font-semibold">100 EGP</span>
+                <span className="text-primary font-semibold">{t("start.form.testInfo.price")}</span>
               </motion.div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -128,11 +129,11 @@ const StartSection = () => {
                 <div className="grid md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <Label htmlFor="firstName" className="text-foreground font-medium">
-                      First Name
+                      {t("start.form.fields.firstName")}
                     </Label>
                     <Input
                       id="firstName"
-                      placeholder="First Name"
+                      placeholder={t("start.form.fields.firstName")}
                       value={formData.firstName}
                       onChange={(e) => handleChange("firstName", e.target.value)}
                       onFocus={() => setFocusedField("firstName")}
@@ -145,11 +146,11 @@ const StartSection = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName" className="text-foreground font-medium">
-                      Last Name
+                      {t("start.form.fields.lastName")}
                     </Label>
                     <Input
                       id="lastName"
-                      placeholder="Last Name"
+                      placeholder={t("start.form.fields.lastName")}
                       value={formData.lastName}
                       onChange={(e) => handleChange("lastName", e.target.value)}
                       onFocus={() => setFocusedField("lastName")}
@@ -165,7 +166,7 @@ const StartSection = () => {
                 {/* Email Field */}
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-foreground font-medium">
-                    Email Address
+                    {t("start.form.fields.email")}
                   </Label>
                   <Input
                     id="email"
@@ -173,7 +174,7 @@ const StartSection = () => {
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
-                     onFocus={() => setFocusedField("email")}
+                    onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
                     required
                     className={`bg-background border-border transition-all duration-200 ${
@@ -185,7 +186,7 @@ const StartSection = () => {
                 {/* Phone Field */}
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-foreground font-medium">
-                    Phone Number
+                    {t("start.form.fields.phone")}
                   </Label>
                   <Input
                     id="phone"
@@ -193,7 +194,7 @@ const StartSection = () => {
                     placeholder="+20 123 456 7890"
                     value={formData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
-                     onFocus={() => setFocusedField("phone")}
+                    onFocus={() => setFocusedField("phone")}
                     onBlur={() => setFocusedField(null)}
                     required
                     className={`bg-background border-border transition-all duration-200 ${
@@ -206,7 +207,7 @@ const StartSection = () => {
                 <div className="grid md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <Label className="text-foreground font-medium">
-                      Gender
+                      {t("start.form.fields.gender")}
                     </Label>
                     <Select
                       value={formData.gender}
@@ -214,17 +215,17 @@ const StartSection = () => {
                       required
                     >
                       <SelectTrigger className="bg-background border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200">
-                        <SelectValue placeholder="Select Gender" />
+                        <SelectValue placeholder={t("start.form.fields.selectGender")} />
                       </SelectTrigger>
                       <SelectContent className="bg-popover">
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="male">{t("start.form.fields.male")}</SelectItem>
+                        <SelectItem value="female">{t("start.form.fields.female")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="dob" className="text-foreground font-medium">
-                      Date of Birth
+                      {t("start.form.fields.dob")}
                     </Label>
                     <Input
                       id="dob"
@@ -251,7 +252,7 @@ const StartSection = () => {
                     size="lg"
                     className="w-full gradient-primary text-white text-lg py-6 mt-4 btn-interactive"
                   >
-                    Register
+                    {t("start.form.submit")}
                   </Button>
                 </motion.div>
               </form>
