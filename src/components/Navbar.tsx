@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ChevronRight, Sparkles, Info, LayoutGrid, HelpCircle, Star, Newspaper } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import useLanguage from "@/hooks/useLanguage";
 import { ThemeToggle, ThemeToggleCompact } from "@/components/ThemeToggle";
-
 const navLinksData = [
   { nameKey: "nav.home", href: "#home", icon: Sparkles },
   { nameKey: "nav.about", href: "#about", icon: Info },
@@ -125,11 +125,12 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
-             {/* Theme Toggle */}
+            {/* Theme Toggle */}
             <ThemeToggle />
+            
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button size="sm" className="gradient-primary text-white px-6 btn-interactive">
-                {t("nav.login")}
+              <Button asChild size="sm" className="gradient-primary text-white px-6 btn-interactive">
+                <Link to="/login">{t("nav.login")}</Link>
               </Button>
             </motion.div>
             
@@ -206,8 +207,9 @@ const Navbar = () => {
                 >
                   {/* Mobile Theme Toggle */}
                   <ThemeToggleCompact />
-                  <Button size="sm" className="gradient-primary text-white flex-1">
-                    {t("nav.login")}
+                  
+                  <Button asChild size="sm" className="gradient-primary text-white flex-1">
+                    <Link to="/login">{t("nav.login")}</Link>
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

@@ -373,5 +373,16 @@
     "location": "Cairo, Egypt",
     "copyright": "© 2024 Pro English Academy. All rights reserved."
   },
-  "scrollToTop": "Scroll to top"
+   "scrollToTop": "Scroll to top",
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to your account",
+    "email": "Email or Username",
+    "emailPlaceholder": "Enter your email or username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "needHelp": "Need help? Contact your administrator."
+  }
 }
