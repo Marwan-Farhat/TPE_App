@@ -51,6 +51,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { useToast } from '@/hooks/use-toast';
+import useLanguage from '@/hooks/useLanguage';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import ExtraFieldsManager from '@/components/admin/clients/ExtraFieldsManager';
 import TagsSelector from '@/components/admin/clients/TagsSelector';
@@ -105,8 +106,8 @@ const clientFormSchema = z.object({
 type ClientFormData = z.infer<typeof clientFormSchema>;
 
 const AddNewClient = () => {
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -117,7 +118,7 @@ const AddNewClient = () => {
   const [extraFields, setExtraFields] = useState<ExtraField[]>([]);
   const [extraFieldValues, setExtraFieldValues] = useState<Record<string, string | number | boolean>>({});
   const [isExtraInfoOpen, setIsExtraInfoOpen] = useState(true);
-  const [isProductInfoOpen, setIsProductInfoOpen] = useState(true);
+  const [isEnrollmentDetailsOpen, setIsEnrollmentDetailsOpen] = useState(true);
   const [isExtraFieldsManagerOpen, setIsExtraFieldsManagerOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
@@ -219,8 +220,8 @@ const AddNewClient = () => {
       );
       if (missingMandatory.length > 0) {
         toast({
-          title: 'Missing required fields',
-          description: `Please fill: ${missingMandatory.map(f => f.title).join(', ')}`,
+          title: t('admin.clientForm.missingRequired'),
+          description: `${t('admin.clientForm.pleaseFill')}: ${missingMandatory.map(f => f.title).join(', ')}`,
           variant: 'destructive',
         });
         setIsSubmitting(false);
@@ -259,7 +260,7 @@ const AddNewClient = () => {
       );
 
       toast({
-        title: 'Client created successfully!',
+        title: t('admin.clientForm.success'),
         description: `Client ID: ${newClient.id}${data.createAccount ? ' - Account credentials generated' : ''}`,
       });
 
@@ -272,7 +273,7 @@ const AddNewClient = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error creating client',
+        title: t('admin.clientForm.error'),
         description: 'Please try again',
         variant: 'destructive',
       });
@@ -288,7 +289,7 @@ const AddNewClient = () => {
     if (checked) {
       if (current.length >= 3) {
         toast({
-          title: 'Maximum 3 time slots allowed',
+          title: t('admin.clientForm.maxTimeSlots'),
           variant: 'destructive',
         });
         return;
@@ -320,10 +321,10 @@ const AddNewClient = () => {
             value={value.toString()}
             onValueChange={(v) => setExtraFieldValues({ ...extraFieldValues, [field.id]: v })}
           >
-            <SelectTrigger>
-              <SelectValue placeholder={`Select ${field.title.toLowerCase()}`} />
+            <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+              <SelectValue placeholder={`${t('admin.clientForm.selectPlaceholder')} ${field.title.toLowerCase()}`} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent dir={isRTL ? 'rtl' : 'ltr'}>
               {field.options?.map(option => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
@@ -342,7 +343,7 @@ const AddNewClient = () => {
                 setExtraFieldValues({ ...extraFieldValues, [field.id]: checked as boolean })
               }
             />
-            <Label htmlFor={field.id}>{value ? 'Yes' : 'No'}</Label>
+            <Label htmlFor={field.id}>{value ? t('admin.clientForm.yes') : t('admin.clientForm.no')}</Label>
           </div>
         );
       case 'longText':
@@ -350,8 +351,10 @@ const AddNewClient = () => {
           <Textarea
             value={value.toString()}
             onChange={(e) => setExtraFieldValues({ ...extraFieldValues, [field.id]: e.target.value })}
-            placeholder={field.description || `Enter ${field.title.toLowerCase()}`}
+            placeholder={field.description || `${t('admin.clientForm.enterPlaceholder')} ${field.title.toLowerCase()}`}
             rows={3}
+            className={isRTL ? 'text-right' : ''}
+            dir={isRTL ? 'rtl' : 'ltr'}
           />
         );
       case 'number':
@@ -360,7 +363,9 @@ const AddNewClient = () => {
             type="number"
             value={value.toString()}
             onChange={(e) => setExtraFieldValues({ ...extraFieldValues, [field.id]: Number(e.target.value) })}
-            placeholder={field.description || `Enter ${field.title.toLowerCase()}`}
+            placeholder={field.description || `${t('admin.clientForm.enterPlaceholder')} ${field.title.toLowerCase()}`}
+            className={isRTL ? 'text-right' : ''}
+            dir={isRTL ? 'rtl' : 'ltr'}
           />
         );
       default:
@@ -369,7 +374,9 @@ const AddNewClient = () => {
             type={field.type === 'email' ? 'email' : field.type === 'phoneNumber' ? 'tel' : 'text'}
             value={value.toString()}
             onChange={(e) => setExtraFieldValues({ ...extraFieldValues, [field.id]: e.target.value })}
-            placeholder={field.description || `Enter ${field.title.toLowerCase()}`}
+            placeholder={field.description || `${t('admin.clientForm.enterPlaceholder')} ${field.title.toLowerCase()}`}
+            className={isRTL ? 'text-right' : ''}
+            dir={isRTL ? 'rtl' : 'ltr'}
           />
         );
     }
@@ -392,10 +399,10 @@ const AddNewClient = () => {
                 onClick={() => navigate('/admin')}
               >
                 <UserPlus className="h-4 w-4 mr-1" />
-                Clients
+                {t('admin.sidebar.clients')}
               </Button>
               <span className="text-muted-foreground">/</span>
-              <span className="text-foreground font-medium">Add a new client</span>
+              <span className="text-foreground font-medium">{t('admin.clientForm.title')}</span>
             </div>
           </div>
         </header>
@@ -413,7 +420,7 @@ const AddNewClient = () => {
                 
                 {/* Personal Information Section */}
                 <div className="bg-card border border-border rounded-xl p-6 mb-6">
-                  <h2 className="text-lg font-semibold mb-6">Personal Information</h2>
+                  <h2 className="text-lg font-semibold mb-6">{t('admin.clientForm.personalInfo')}</h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Name */}
@@ -422,12 +429,12 @@ const AddNewClient = () => {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name *</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.name')} *</FormLabel>
                           <FormControl>
                             <Input 
                               {...field} 
-                              placeholder="Client name"
-                              className={validationErrors.name ? 'border-destructive' : ''}
+                              placeholder={t('admin.clientForm.placeholders.name')}
+                              className={validationErrors.name ? 'border-destructive' : isRTL ? 'text-right' : ''}
                             />
                           </FormControl>
                           <FormMessage />
@@ -441,13 +448,13 @@ const AddNewClient = () => {
                       name="phoneNumber"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Phone number *</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.phone')} *</FormLabel>
                           <FormControl>
                             <Input 
                               {...field} 
-                              placeholder="+20 xxx xxx xxxx"
+                              placeholder={t('admin.clientForm.placeholders.phone')}
                               type="tel"
-                              className={validationErrors.phoneNumber ? 'border-destructive' : ''}
+                              className={`${validationErrors.phoneNumber ? 'border-destructive' : ''} ${isRTL ? 'text-right' : ''}`}
                               onBlur={async () => {
                                 await checkDuplicates(form.getValues('email'), field.value);
                               }}
@@ -467,13 +474,13 @@ const AddNewClient = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email *</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.email')} *</FormLabel>
                           <FormControl>
                             <Input 
                               {...field} 
                               type="email"
-                              placeholder="client@example.com"
-                              className={validationErrors.email ? 'border-destructive' : ''}
+                              placeholder={t('admin.clientForm.placeholders.email')}
+                              className={`${validationErrors.email ? 'border-destructive' : ''} ${isRTL ? 'text-right' : ''}`}
                               onBlur={async () => {
                                 await checkDuplicates(field.value, form.getValues('phoneNumber'));
                               }}
@@ -493,9 +500,9 @@ const AddNewClient = () => {
                       name="jobTitle"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Job Title</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.jobTitle')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="e.g. Software Engineer" />
+                            <Input {...field} placeholder={t('admin.clientForm.placeholders.jobTitle')} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -507,7 +514,7 @@ const AddNewClient = () => {
                       name="age"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Age</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.age')}</FormLabel>
                           <FormControl>
                             <Input 
                               type="number"
@@ -515,7 +522,8 @@ const AddNewClient = () => {
                               max={120}
                               value={field.value || ''}
                               onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : null)}
-                              placeholder="Age"
+                              placeholder={t('admin.clientForm.placeholders.age')}
+                              className={isRTL ? 'text-right' : ''}
                             />
                           </FormControl>
                         </FormItem>
@@ -528,16 +536,16 @@ const AddNewClient = () => {
                       name="gender"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Gender</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.gender')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select gender" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+                                <SelectValue placeholder={t('admin.clientForm.selectGender')} />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
-                              <SelectItem value="Male">Male</SelectItem>
-                              <SelectItem value="Female">Female</SelectItem>
+                            <SelectContent dir={isRTL ? 'rtl' : 'ltr'}>
+                              <SelectItem value="Male">{t('admin.clientForm.male')}</SelectItem>
+                              <SelectItem value="Female">{t('admin.clientForm.female')}</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormItem>
@@ -550,9 +558,9 @@ const AddNewClient = () => {
                       name="city"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>City</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.city')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="City" />
+                            <Input {...field} placeholder={t('admin.clientForm.placeholders.city')} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -564,9 +572,9 @@ const AddNewClient = () => {
                       name="country"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Country</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.country')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Country" />
+                            <Input {...field} placeholder={t('admin.clientForm.placeholders.country')} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -579,20 +587,20 @@ const AddNewClient = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="flex items-center gap-1">
-                            Guardian Number
+                            {t('admin.clientForm.fields.guardianNumber')}
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p>Parent or guardian contact for teens</p>
+                                  <p>{t('admin.clientForm.guardianTooltip')}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
                           </FormLabel>
                           <FormControl>
-                            <Input {...field} type="tel" placeholder="Guardian phone number" />
+                            <Input {...field} type="tel" placeholder={t('admin.clientForm.placeholders.guardianNumber')} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -601,12 +609,12 @@ const AddNewClient = () => {
                 </div>
 
                 {/* Product Information Section */}
-                <Collapsible open={isProductInfoOpen} onOpenChange={setIsProductInfoOpen}>
+                <Collapsible open={isEnrollmentDetailsOpen} onOpenChange={setIsEnrollmentDetailsOpen}>
                   <div className="bg-card border border-border rounded-xl mb-6 overflow-hidden">
                     <CollapsibleTrigger className="w-full">
                       <div className="flex items-center justify-between p-6 hover:bg-muted/50 transition-colors">
-                        <h2 className="text-lg font-semibold">Product Information</h2>
-                        {isProductInfoOpen ? (
+                        <h2 className="text-lg font-semibold">{t('admin.clientForm.productInfo')}</h2>
+                        {isEnrollmentDetailsOpen ? (
                           <ChevronUp className="h-5 w-5 text-muted-foreground" />
                         ) : (
                           <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -620,14 +628,14 @@ const AddNewClient = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-3">
                             <Label className="flex items-center gap-1">
-                              Training Path
+                              {t('admin.clientForm.trainingPath')}
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p>Select a pre-designed or custom training path</p>
+                                    <p>{t('admin.clientForm.trainingPathTooltip')}</p>
                                   </TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
@@ -644,7 +652,7 @@ const AddNewClient = () => {
                                   className="h-4 w-4"
                                 />
                                 <Label htmlFor="pre-designed" className="font-normal">
-                                  Select a pre-designed path
+                                  {t('admin.clientForm.preDesignedPath')}
                                 </Label>
                               </div>
                               <div className="flex items-center gap-2">
@@ -658,7 +666,7 @@ const AddNewClient = () => {
                                   className="h-4 w-4"
                                 />
                                 <Label htmlFor="custom" className="font-normal">
-                                  Design a custom path
+                                  {t('admin.clientForm.customPath')}
                                 </Label>
                               </div>
                             </div>
@@ -668,8 +676,8 @@ const AddNewClient = () => {
                                 value={form.watch('currentPath')}
                                 onValueChange={(v) => form.setValue('currentPath', v)}
                               >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select training path" />
+                                <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+                                  <SelectValue placeholder={t('admin.clientForm.selectTrainingPath')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                   {systemOptions.trainingPaths
@@ -688,23 +696,23 @@ const AddNewClient = () => {
                           {/* Time Slots */}
                           <div className="space-y-3">
                             <Label className="flex items-center gap-1">
-                              Selected time slot(s)
+                              {t('admin.clientForm.timeSlots')}
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p>Select up to 3 preferred time slots</p>
+                                    <p>{t('admin.clientForm.timeSlotsTooltip')}</p>
                                   </TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
                             </Label>
                             <Select>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select time slots (max 3)" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+                                <SelectValue placeholder={t('admin.clientForm.selectTimeSlots')} />
                               </SelectTrigger>
-                              <SelectContent>
+                              <SelectContent dir={isRTL ? 'rtl' : 'ltr'}>
                                 {systemOptions?.timeSlots.map(slot => (
                                   <div
                                     key={slot.id}
@@ -747,14 +755,14 @@ const AddNewClient = () => {
                           {/* Tags */}
                           <div className="space-y-3">
                             <Label className="flex items-center gap-1">
-                              Tags
+                              {t('admin.clientForm.tags')}
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p>Add tags for filtering and categorization</p>
+                                    <p>{t('admin.clientForm.tagsTooltip')}</p>
                                   </TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
@@ -774,26 +782,26 @@ const AddNewClient = () => {
                             render={({ field }) => (
                               <FormItem>
                                 <FormLabel className="flex items-center gap-1">
-                                  Assign a coordinator?
+                                  {t('admin.clientForm.coordinator')}
                                   <TooltipProvider>
                                     <Tooltip>
                                       <TooltipTrigger asChild>
                                         <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                       </TooltipTrigger>
                                       <TooltipContent>
-                                        <p>Assign a team member to manage this client</p>
+                                        <p>{t('admin.clientForm.coordinatorTooltip')}</p>
                                       </TooltipContent>
                                     </Tooltip>
                                   </TooltipProvider>
                                 </FormLabel>
                                 <Select onValueChange={field.onChange} value={field.value}>
                                   <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="[No body]" />
+                                    <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+                                      <SelectValue placeholder={t('admin.clientForm.noCoordinator')} />
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    <SelectItem value="none">No body</SelectItem>
+                                    <SelectItem value="none">{t('admin.clientForm.noBody')}</SelectItem>
                                     {systemOptions?.coordinators.map(coord => (
                                       <SelectItem key={coord.id} value={coord.id}>
                                         {coord.name} ({coord.role})
@@ -812,26 +820,26 @@ const AddNewClient = () => {
                             render={({ field }) => (
                               <FormItem>
                                 <FormLabel className="flex items-center gap-1">
-                                  Under company?
+                                  {t('admin.clientForm.company')}
                                   <TooltipProvider>
                                     <Tooltip>
                                       <TooltipTrigger asChild>
                                         <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                                       </TooltipTrigger>
                                       <TooltipContent>
-                                        <p>Associate client with a corporate account</p>
+                                        <p>{t('admin.clientForm.companyTooltip')}</p>
                                       </TooltipContent>
                                     </Tooltip>
                                   </TooltipProvider>
                                 </FormLabel>
                                 <Select onValueChange={field.onChange} value={field.value}>
                                   <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Name, phone number, or email..." />
+                                    <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+                                      <SelectValue placeholder={t('admin.clientForm.companyPlaceholder')} />
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    <SelectItem value="none">None</SelectItem>
+                                    <SelectItem value="none">{t('admin.clientForm.none')}</SelectItem>
                                     {systemOptions?.companies.map(company => (
                                       <SelectItem key={company.id} value={company.name}>
                                         {company.name}
@@ -854,14 +862,14 @@ const AddNewClient = () => {
                     <CollapsibleTrigger className="w-full">
                       <div className="flex items-center justify-between p-6 hover:bg-muted/50 transition-colors">
                         <div className="flex items-center gap-2">
-                          <h2 className="text-lg font-semibold">Extra info</h2>
+                          <h2 className="text-lg font-semibold">{t('admin.clientForm.extraInfo')}</h2>
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <HelpCircle className="h-4 w-4 text-muted-foreground" />
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Custom fields for additional client information</p>
+                                <p>{t('admin.clientForm.extraInfoTooltip')}</p>
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
@@ -878,7 +886,7 @@ const AddNewClient = () => {
                             className="gap-1"
                           >
                             <Settings className="h-4 w-4" />
-                            Manage
+                            {t('admin.clientForm.manageFields')}
                           </Button>
                           {isExtraInfoOpen ? (
                             <ChevronUp className="h-5 w-5 text-muted-foreground" />
@@ -893,14 +901,18 @@ const AddNewClient = () => {
                       <div className="px-6 pb-6">
                         {extraFields.length === 0 ? (
                           <p className="text-muted-foreground text-center py-4">
-                            No extra fields defined. Click "Manage" to add custom fields.
+                            {t('admin.clientForm.noExtraFields')}
                           </p>
                         ) : (
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {extraFields.map(field => (
+                            {extraFields.map(field => {
+                              const fieldLabel = isRTL
+                                ? field.titleAr || field.titleEn || field.title
+                                : field.titleEn || field.title || field.titleAr;
+                              return (
                               <div key={field.id} className="space-y-2">
                                 <Label className="flex items-center gap-1">
-                                  {field.title}
+                                  {fieldLabel}
                                   {field.isMandatory && <span className="text-destructive">*</span>}
                                   {field.description && (
                                     <TooltipProvider>
@@ -917,7 +929,8 @@ const AddNewClient = () => {
                                 </Label>
                                 {renderExtraFieldInput(field)}
                               </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -932,11 +945,11 @@ const AddNewClient = () => {
                     name="notes"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Notes</FormLabel>
+                        <FormLabel>{t('admin.clientForm.notes')}</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
-                            placeholder="Add any additional notes about this client..."
+                            placeholder={t('admin.clientForm.placeholders.notes')}
                             rows={4}
                           />
                         </FormControl>
@@ -961,20 +974,20 @@ const AddNewClient = () => {
                         </FormControl>
                         <div className="space-y-1">
                           <FormLabel className="flex items-center gap-2 cursor-pointer">
-                            Create an account for the new client
+                            {t('admin.clientForm.createAccount')}
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <HelpCircle className="h-4 w-4 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent className="max-w-xs">
-                                  <p>When enabled, the system will automatically generate login credentials (username & password) for this client.</p>
+                                  <p>{t('admin.clientForm.createAccountTooltip')}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
                           </FormLabel>
                           <p className="text-sm text-muted-foreground">
-                            System will auto-generate username (email) and password
+                            {t('admin.clientForm.createAccountDescription')}
                           </p>
                         </div>
                       </FormItem>
@@ -990,9 +1003,9 @@ const AddNewClient = () => {
                     className="gap-2"
                   >
                     <UserPlus className="h-4 w-4" />
-                    Add client
+                    {t('admin.clientForm.addClient')}
                   </Button>
-                  <span className="text-muted-foreground">Or</span>
+                  <span className="text-muted-foreground">{t('admin.clientForm.or')}</span>
                   <Button
                     type="button"
                     variant="secondary"
@@ -1001,7 +1014,7 @@ const AddNewClient = () => {
                     className="gap-2"
                   >
                     <Plus className="h-4 w-4" />
-                    Save & add another one
+                    {t('admin.clientForm.saveAndAddAnother')}
                   </Button>
                 </div>
               </form>

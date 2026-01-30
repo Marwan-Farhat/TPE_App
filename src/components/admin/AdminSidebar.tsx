@@ -1,16 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, UserPlus, List, Search, ChevronRight, User, Phone, Mail, Loader2 } from 'lucide-react';
+import { Users, UserPlus, List, Search, ChevronRight, User, Phone, Mail, Loader2, Languages, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import logo from '@/assets/logo.png';
 import { clientService } from '@/services/clientService';
 import { Client } from '@/types/client';
+import useLanguage from '@/hooks/useLanguage';
+import { ThemeToggleCompact } from '@/components/ThemeToggle';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from '@/components/ui/button';
 
 const AdminSidebar = () => {
   const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { currentLanguage, changeLanguage, isRTL } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -161,7 +170,7 @@ const AdminSidebar = () => {
                 exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
                 transition={{ duration: 0.2 }}
               >
-                Admin
+                {t('admin.sidebar.admin')}
               </motion.span>
             )}
           </AnimatePresence>
@@ -192,7 +201,7 @@ const AdminSidebar = () => {
                 )}
                 <input
                   type="text"
-                  placeholder={isRTL ? "بحث بالاسم، الهاتف، الإيميل..." : "Search name, phone, email..."}
+                  placeholder={t('admin.sidebar.search')}
                   dir={isRTL ? "rtl" : "ltr"}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -255,7 +264,7 @@ const AdminSidebar = () => {
                         }}
                         className="w-full p-2 text-xs text-center text-primary hover:bg-accent transition-colors border-t border-border"
                       >
-                        View all results →
+                        {t('admin.sidebar.viewAllResults')} →
                       </button>
                     </motion.div>
                   )}
@@ -272,7 +281,7 @@ const AdminSidebar = () => {
                     >
                       <div className="flex flex-col items-center gap-2 text-muted-foreground">
                         <User className="h-6 w-6 opacity-50" />
-                        <p className="text-sm">No clients found</p>
+                        <p className="text-sm">{t('admin.sidebar.noClientsFound')}</p>
                       </div>
                     </motion.div>
                   )}
@@ -323,7 +332,7 @@ const AdminSidebar = () => {
                     exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    Clients
+                    {t('admin.sidebar.clients')}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -351,7 +360,7 @@ const AdminSidebar = () => {
                       )}
                     >
                       <UserPlus className="h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">Add New Client</span>
+                      <span className="text-sm whitespace-nowrap">{t('admin.sidebar.addNewClient')}</span>
                     </button>
 
                     {/* All Clients */}
@@ -365,7 +374,7 @@ const AdminSidebar = () => {
                       )}
                     >
                       <List className="h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">All Clients</span>
+                      <span className="text-sm whitespace-nowrap">{t('admin.sidebar.allClients')}</span>
                     </button>
                   </div>
                 </motion.div>
@@ -373,6 +382,89 @@ const AdminSidebar = () => {
             </AnimatePresence>
           </div>
         </nav>
+
+        {/* Bottom Controls - Language & Theme */}
+        <div className="p-2 border-t border-border flex-shrink-0 space-y-2">
+          <AnimatePresence>
+            {isExpanded ? (
+              // Expanded view
+              <motion.div
+                className="space-y-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {/* Language Switcher */}
+                <div className="flex items-center gap-2">
+                  <Languages className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="flex-1 gap-1.5 justify-between text-xs">
+                        <span>{currentLanguage === "ar" ? "العربية" : "English"}</span>
+                        <ChevronDown className="w-3 h-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="bg-popover" align={isRTL ? "end" : "start"}>
+                      <DropdownMenuItem
+                        onClick={() => changeLanguage("en")}
+                        className={`cursor-pointer ${currentLanguage === "en" ? 'bg-secondary' : ''}`}
+                      >
+                        English
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => changeLanguage("ar")}
+                        className={`cursor-pointer ${currentLanguage === "ar" ? 'bg-secondary' : ''}`}
+                      >
+                        العربية
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                {/* Theme Toggle */}
+                <div className="flex items-center gap-2">
+                  <ThemeToggleCompact />
+                </div>
+              </motion.div>
+            ) : (
+              // Collapsed view
+              <motion.div
+                className="flex flex-col gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {/* Language Switcher Icon */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="w-full h-10 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors">
+                      <Languages className="h-5 w-5" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-popover" align={isRTL ? "end" : "start"}>
+                    <DropdownMenuItem
+                      onClick={() => changeLanguage("en")}
+                      className={`cursor-pointer ${currentLanguage === "en" ? 'bg-secondary' : ''}`}
+                    >
+                      English
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => changeLanguage("ar")}
+                      className={`cursor-pointer ${currentLanguage === "ar" ? 'bg-secondary' : ''}`}
+                    >
+                      العربية
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Theme Toggle */}
+                <ThemeToggleCompact />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.aside>
     </>
   );

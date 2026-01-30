@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import useLanguage from '@/hooks/useLanguage';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -54,8 +55,8 @@ type EditClientFormData = z.infer<typeof editClientSchema>;
 
 const EditClient = () => {
   const { id } = useParams<{ id: string }>();
-  const { i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -110,8 +111,8 @@ const EditClient = () => {
     } catch (error) {
       console.error('Error loading client:', error);
       toast({
-        title: 'Error loading client',
-        description: 'Please try again',
+        title: t('admin.clients.deleteError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -145,7 +146,7 @@ const EditClient = () => {
 
       if (updated) {
         toast({
-          title: 'Client updated successfully!',
+          title: t('admin.clients.deleteSuccess'),
         });
         navigate(`/admin/clients/${id}`);
       } else {
@@ -153,8 +154,8 @@ const EditClient = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error updating client',
-        description: 'Please try again',
+        title: t('admin.clients.deleteError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -202,10 +203,10 @@ const EditClient = () => {
         <AdminSidebar />
         <div className={`flex-1 ${isRTL ? 'mr-16' : 'ml-16'} p-6`}>
           <div className="flex flex-col items-center justify-center h-[50vh] gap-4">
-            <h2 className="text-xl font-semibold">Client not found</h2>
+            <h2 className="text-xl font-semibold">{t('admin.clientProfile.clientNotFound')}</h2>
             <Button onClick={() => navigate('/admin/clients')}>
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Clients
+              {t('admin.clientProfile.back')}
             </Button>
           </div>
         </div>
@@ -228,7 +229,7 @@ const EditClient = () => {
               >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
-              <span className="text-foreground font-medium">Edit: {client.name}</span>
+              <span className="text-foreground font-medium">{t('admin.clientForm.editTitle')}: {client.name}</span>
             </div>
           </div>
         </header>
@@ -242,8 +243,8 @@ const EditClient = () => {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* Personal Information */}
-                <div className="bg-card border border-border rounded-xl p-6">
-                  <h2 className="text-lg font-semibold mb-6">Personal Information</h2>
+                <div className="bg-card border border-border rounded-xl p-6" dir={isRTL ? 'rtl' : 'ltr'}>
+                  <h2 className="text-lg font-semibold mb-6">{t('admin.clientForm.personalInfo')}</h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <FormField
@@ -251,9 +252,9 @@ const EditClient = () => {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name *</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.nameRequired')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Client name" />
+                            <Input {...field} dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -265,9 +266,9 @@ const EditClient = () => {
                       name="phoneNumber"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Phone Number *</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.phoneRequired')}</FormLabel>
                           <FormControl>
-                            <Input {...field} type="tel" placeholder="+20 xxx xxx xxxx" />
+                            <Input {...field} type="tel" placeholder="+20 xxx xxx xxxx" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -279,9 +280,9 @@ const EditClient = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email *</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.emailRequired')}</FormLabel>
                           <FormControl>
-                            <Input {...field} type="email" placeholder="client@example.com" />
+                            <Input {...field} type="email" placeholder="client@example.com" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -293,9 +294,9 @@ const EditClient = () => {
                       name="jobTitle"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Job Title</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.jobTitle')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="e.g. Software Engineer" />
+                            <Input {...field} placeholder="e.g. Software Engineer" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -306,7 +307,7 @@ const EditClient = () => {
                       name="age"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Age</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.age')}</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -315,6 +316,8 @@ const EditClient = () => {
                               value={field.value || ''}
                               onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : null)}
                               placeholder="Age"
+                              dir={isRTL ? 'rtl' : 'ltr'}
+                              className={isRTL ? 'text-right' : ''}
                             />
                           </FormControl>
                         </FormItem>
@@ -326,18 +329,18 @@ const EditClient = () => {
                       name="gender"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Gender</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.gender')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value || ''}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select gender" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'}>
+                                <SelectValue placeholder={t('admin.clientForm.fields.selectGender')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="Male">Male</SelectItem>
-                              <SelectItem value="Female">Female</SelectItem>
-                              <SelectItem value="Other">Other</SelectItem>
-                              <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                              <SelectItem value="Male">{t('admin.clientForm.fields.maleOption')}</SelectItem>
+                              <SelectItem value="Female">{t('admin.clientForm.fields.femaleOption')}</SelectItem>
+                              <SelectItem value="Other">{t('admin.clientForm.fields.otherOption')}</SelectItem>
+                              <SelectItem value="Prefer not to say">{t('admin.clientForm.fields.preferNotOption')}</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormItem>
@@ -349,9 +352,9 @@ const EditClient = () => {
                       name="city"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>City</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.city')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="City" />
+                            <Input {...field} placeholder="City" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -362,9 +365,9 @@ const EditClient = () => {
                       name="country"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Country</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.country')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Country" />
+                            <Input {...field} placeholder="Country" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -375,9 +378,9 @@ const EditClient = () => {
                       name="guardianNumber"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Guardian Number</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.guardianNumber')}</FormLabel>
                           <FormControl>
-                            <Input {...field} type="tel" placeholder="Guardian phone number" />
+                            <Input {...field} type="tel" placeholder="Guardian phone number" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -386,8 +389,8 @@ const EditClient = () => {
                 </div>
 
                 {/* Product Information */}
-                <div className="bg-card border border-border rounded-xl p-6">
-                  <h2 className="text-lg font-semibold mb-6">Product Information</h2>
+                <div className="bg-card border border-border rounded-xl p-6" dir={isRTL ? 'rtl' : 'ltr'}>
+                  <h2 className="text-lg font-semibold mb-6">{t('admin.clientForm.productInfo')}</h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <FormField
@@ -395,15 +398,15 @@ const EditClient = () => {
                       name="currentPath"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Current Path</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.currentPath')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value || ''}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select path" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'}>
+                                <SelectValue placeholder={t('admin.clientForm.fields.selectPath')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
+                              <SelectItem value="none">{t('admin.clientForm.fields.noneOption')}</SelectItem>
                               {systemOptions?.trainingPaths.map(path => (
                                 <SelectItem key={path.id} value={path.name}>
                                   {path.name}
@@ -420,9 +423,9 @@ const EditClient = () => {
                       name="currentProgram"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Current Program</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.currentProgram')}</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Current program" />
+                            <Input {...field} placeholder="Current program" dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''} />
                           </FormControl>
                         </FormItem>
                       )}
@@ -433,18 +436,18 @@ const EditClient = () => {
                       name="programType"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Program Type</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.programType')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value || ''}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select type" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'}>
+                                <SelectValue placeholder={t('admin.clientForm.fields.selectType')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
-                              <SelectItem value="One-on-One">One-on-One</SelectItem>
-                              <SelectItem value="Group">Group</SelectItem>
-                              <SelectItem value="Hybrid">Hybrid</SelectItem>
+                              <SelectItem value="none">{t('admin.clientForm.fields.noneOption')}</SelectItem>
+                              <SelectItem value="One-on-One">{t('admin.clientForm.fields.oneOnOne')}</SelectItem>
+                              <SelectItem value="Group">{t('admin.clientForm.fields.groupOption')}</SelectItem>
+                              <SelectItem value="Hybrid">{t('admin.clientForm.fields.hybridOption')}</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormItem>
@@ -456,20 +459,20 @@ const EditClient = () => {
                       name="source"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Source</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.source')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value || ''}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select source" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'}>
+                                <SelectValue placeholder={t('admin.clientForm.fields.selectSource')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
-                              <SelectItem value="Website">Website</SelectItem>
-                              <SelectItem value="Referral">Referral</SelectItem>
-                              <SelectItem value="Social Media">Social Media</SelectItem>
-                              <SelectItem value="Walk-in">Walk-in</SelectItem>
-                              <SelectItem value="Corporate">Corporate</SelectItem>
+                              <SelectItem value="none">{t('admin.clientForm.fields.noneOption')}</SelectItem>
+                              <SelectItem value="Website">{t('admin.clientForm.fields.website')}</SelectItem>
+                              <SelectItem value="Referral">{t('admin.clientForm.fields.referral')}</SelectItem>
+                              <SelectItem value="Social Media">{t('admin.clientForm.fields.socialMedia')}</SelectItem>
+                              <SelectItem value="Walk-in">{t('admin.clientForm.fields.walkIn')}</SelectItem>
+                              <SelectItem value="Corporate">{t('admin.clientForm.fields.corporate')}</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormItem>
@@ -481,15 +484,15 @@ const EditClient = () => {
                       name="assignedCoordinator"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Assigned Coordinator</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.assignedCoordinator')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value || ''}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select coordinator" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'}>
+                                <SelectValue placeholder={t('admin.clientForm.fields.selectCoordinator')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
+                              <SelectItem value="none">{t('admin.clientForm.fields.noneOption')}</SelectItem>
                               {systemOptions?.coordinators.map(coord => (
                                 <SelectItem key={coord.id} value={coord.id}>
                                   {coord.name} ({coord.role})
@@ -506,15 +509,15 @@ const EditClient = () => {
                       name="underCompany"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Under Company</FormLabel>
+                          <FormLabel>{t('admin.clientForm.fields.underCompany')}</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value || ''}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select company" />
+                              <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'}>
+                                <SelectValue placeholder={t('admin.clientForm.fields.selectCompany')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
+                              <SelectItem value="none">{t('admin.clientForm.fields.noneOption')}</SelectItem>
                               {systemOptions?.companies.map(company => (
                                 <SelectItem key={company.id} value={company.name}>
                                   {company.name}
@@ -530,7 +533,7 @@ const EditClient = () => {
                   {/* Tags Section */}
                   <div className="mt-6 border-t border-border pt-6">
                     <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      Tags
+                      {t('admin.clientForm.fields.tags')}
                     </label>
                     <TagsSelector
                       tags={systemOptions?.tags || []}
@@ -548,11 +551,11 @@ const EditClient = () => {
                     variant="outline"
                     onClick={() => navigate(`/admin/clients/${id}`)}
                   >
-                    Cancel
+                    {t('admin.clientForm.fields.cancel')}
                   </Button>
                   <Button type="submit" disabled={saving}>
                     <Save className="h-4 w-4 mr-2" />
-                    {saving ? 'Saving...' : 'Save Changes'}
+                    {saving ? t('admin.clientForm.fields.saving') : t('admin.clientForm.fields.saveChanges')}
                   </Button>
                 </div>
               </form>

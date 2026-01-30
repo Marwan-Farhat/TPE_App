@@ -49,7 +49,17 @@ const initializeClients = (): Client[] => {
 };
 
 const initializeExtraFields = (): ExtraField[] => {
-  return getStoredData<ExtraField[]>(STORAGE_KEYS.EXTRA_FIELDS, mockExtraFieldsData.extraFields as ExtraField[]);
+  const stored = getStoredData<ExtraField[]>(STORAGE_KEYS.EXTRA_FIELDS, mockExtraFieldsData.extraFields as ExtraField[]);
+  return stored.map(field => {
+    const defaultField = (mockExtraFieldsData.extraFields as ExtraField[]).find(f => f.code === field.code);
+    return {
+      ...defaultField,
+      ...field,
+      titleEn: field.titleEn ?? defaultField?.titleEn,
+      titleAr: field.titleAr ?? defaultField?.titleAr,
+      title: field.title || defaultField?.title || field.titleEn || field.titleAr || '',
+    };
+  });
 };
 
 // In-memory cache (synced with localStorage)
@@ -355,10 +365,13 @@ export const extraFieldService = {
     await new Promise(resolve => setTimeout(resolve, 100));
 
     const now = new Date().toISOString();
+    const resolvedTitle = payload.title || payload.titleEn || payload.titleAr || '';
     const newField: ExtraField = {
       id: `ef-${Date.now()}`,
       code: payload.code,
-      title: payload.title,
+      title: resolvedTitle,
+      titleEn: payload.titleEn,
+      titleAr: payload.titleAr,
       description: payload.description,
       type: payload.type,
       defaultValue: payload.defaultValue,
@@ -385,9 +398,11 @@ export const extraFieldService = {
     const index = extraFields.findIndex(f => f.id === id);
     if (index === -1) return null;
 
+    const resolvedTitle = payload.title || payload.titleEn || payload.titleAr || extraFields[index].title;
     const updated: ExtraField = {
       ...extraFields[index],
       ...payload,
+      title: resolvedTitle,
       updatedAt: new Date().toISOString(),
     };
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit2, Trash2, ChevronUp, ChevronDown, X, Info, Search } from 'lucide-react';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,6 +37,7 @@ import {
 import { ExtraField, ExtraFieldType, CreateExtraFieldPayload, ExtraFieldOption } from '@/types/extraField';
 import { extraFieldService } from '@/services/clientService';
 import { useToast } from '@/hooks/use-toast';
+import useLanguage from '@/hooks/useLanguage';
 
 interface ExtraFieldsManagerProps {
   open: boolean;
@@ -57,6 +59,8 @@ const fieldTypeOptions: { value: ExtraFieldType; label: string }[] = [
 ];
 
 const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManagerProps) => {
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const { toast } = useToast();
   const [fields, setFields] = useState<ExtraField[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,6 +71,8 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
   // Form state
   const [formData, setFormData] = useState<CreateExtraFieldPayload>({
     title: '',
+    titleEn: '',
+    titleAr: '',
     description: '',
     type: 'text',
     code: '',
@@ -99,6 +105,8 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
   const resetForm = () => {
     setFormData({
       title: '',
+      titleEn: '',
+      titleAr: '',
       description: '',
       type: 'text',
       code: '',
@@ -121,6 +129,8 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
     setEditingField(field);
     setFormData({
       title: field.title,
+      titleEn: field.titleEn || field.title || '',
+      titleAr: field.titleAr || '',
       description: field.description || '',
       type: field.type,
       code: field.code,
@@ -135,8 +145,12 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
   };
 
   const handleSave = async () => {
-    if (!formData.title.trim()) {
-      toast({ title: 'Field name is required', variant: 'destructive' });
+    if (!formData.titleEn?.trim()) {
+      toast({ title: t('admin.extraFieldsManager.fieldNameEnRequired'), variant: 'destructive' });
+      return;
+    }
+    if (!formData.titleAr?.trim()) {
+      toast({ title: t('admin.extraFieldsManager.fieldNameArRequired'), variant: 'destructive' });
       return;
     }
 
@@ -152,9 +166,11 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
         }));
     }
 
+    const baseTitle = formData.titleEn || formData.titleAr || formData.title || '';
     const payload: CreateExtraFieldPayload = {
       ...formData,
-      code: formData.code || formData.title.toLowerCase().replace(/\s+/g, '_'),
+      title: baseTitle,
+      code: formData.code || baseTitle.toLowerCase().replace(/\s+/g, '_'),
       options: parsedOptions.length > 0 ? parsedOptions : undefined,
     };
 
@@ -198,22 +214,24 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
   const handleMoveUp = async (index: number) => {
     if (index === 0) return;
     await extraFieldService.reorder(index, index - 1);
-    loadFields();
+    await loadFields();
+    onFieldsChange?.();
   };
 
   const handleMoveDown = async (index: number) => {
     if (index === fields.length - 1) return;
     await extraFieldService.reorder(index, index + 1);
-    loadFields();
+    await loadFields();
+    onFieldsChange?.();
   };
 
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
+        <DialogContent className={`max-w-4xl max-h-[85vh] overflow-hidden flex flex-col ${isRTL ? 'dir-rtl' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              Extra information manager: <span className="text-primary underline">Clients</span>
+              {t('admin.extraFieldsManager.title')}: <span className="text-primary underline">{t('admin.extraFieldsManager.subtitle')}</span>
             </DialogTitle>
           </DialogHeader>
 
@@ -221,15 +239,15 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
           <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-start gap-3">
             <Info className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
             <p className="text-sm text-foreground">
-              Here you can manage and add to the "Clients" extra information. "Extra information" can help you extend the amount of data you can add to this type of content.
+              {t('admin.extraFieldsManager.description')}
             </p>
           </div>
 
           {/* Add New Field Button */}
-          <div className="flex justify-end">
+          <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
             <Button onClick={openAddDialog} className="gap-2">
               <Plus className="h-4 w-4" />
-              Add new field
+              {t('admin.extraFieldsManager.addNewField')}
             </Button>
           </div>
 
@@ -238,11 +256,11 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
             <table className="w-full">
               <thead className="bg-muted/50 sticky top-0">
                 <tr>
-                  <th className="text-left p-3 text-sm font-medium">#</th>
-                  <th className="text-left p-3 text-sm font-medium">Field</th>
-                  <th className="text-left p-3 text-sm font-medium">Information type</th>
-                  <th className="text-left p-3 text-sm font-medium">Default value</th>
-                  <th className="text-left p-3 text-sm font-medium">Created at</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>#</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.field')}</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.informationType')}</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.defaultValue')}</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.createdAt')}</th>
                   <th className="p-3 text-sm font-medium w-20"></th>
                 </tr>
               </thead>
@@ -273,7 +291,7 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
                       <td className="p-3">
                         <div>
                           <div className="font-medium text-sm flex items-center gap-2">
-                            {field.title}
+                            {isRTL ? field.titleAr || field.titleEn || field.title : field.titleEn || field.title || field.titleAr}
                             {field.allowOwnerEdit && (
                               <Edit2 className="h-3 w-3 text-amber-500" />
                             )}
@@ -353,7 +371,7 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
           <DialogFooter>
             <Button variant="outline" onClick={onClose}>
               <X className="h-4 w-4 mr-2" />
-              Close
+              {t('admin.extraFieldsManager.close')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -361,84 +379,105 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
 
       {/* Add/Edit Field Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="max-w-xl">
+        <DialogContent className={`max-w-xl max-h-[90vh] overflow-y-auto ${isRTL ? 'dir-rtl' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
           <DialogHeader>
             <DialogTitle>
-              {editingField ? 'Edit field' : 'New information field'}
+              {editingField ? t('admin.extraFieldsManager.editField') : t('admin.extraFieldsManager.newField')}
             </DialogTitle>
             <DialogDescription>
               <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 mt-2">
-                Here you can add a new extra information field. Pick a name for the field, a type, and a default value (optional).
+                {t('admin.extraFieldsManager.newFieldDescription')}
               </div>
             </DialogDescription>
           </DialogHeader>
 
           <div className="grid grid-cols-2 gap-4">
-            {/* Field Title */}
+            {/* Field Title (EN) */}
             <div className="space-y-2">
-              <Label htmlFor="title">Field *</Label>
+              <Label htmlFor="titleEn">{t('admin.extraFieldsManager.fieldNameEn')} *</Label>
               <Input
-                id="title"
-                value={formData.title}
-                onChange={e => setFormData({ ...formData, title: e.target.value })}
-                placeholder="Field name"
+                id="titleEn"
+                value={formData.titleEn || ''}
+                onChange={e => setFormData({ ...formData, titleEn: e.target.value })}
+                placeholder={t('admin.extraFieldsManager.fieldNameEn')}
+                className={isRTL ? 'text-right' : ''}
+                dir={isRTL ? 'rtl' : 'ltr'}
+              />
+            </div>
+
+            {/* Field Title (AR) */}
+            <div className="space-y-2">
+              <Label htmlFor="titleAr">{t('admin.extraFieldsManager.fieldNameAr')} *</Label>
+              <Input
+                id="titleAr"
+                value={formData.titleAr || ''}
+                onChange={e => setFormData({ ...formData, titleAr: e.target.value })}
+                placeholder={t('admin.extraFieldsManager.fieldNameAr')}
+                className={isRTL ? 'text-right' : ''}
+                dir={isRTL ? 'rtl' : 'ltr'}
               />
             </div>
 
             {/* Default Value */}
             <div className="space-y-2">
-              <Label htmlFor="defaultValue">Default value</Label>
+              <Label htmlFor="defaultValue">{t('admin.extraFieldsManager.defaultValueLabel')}</Label>
               <Input
                 id="defaultValue"
                 value={formData.defaultValue?.toString() || ''}
                 onChange={e => setFormData({ ...formData, defaultValue: e.target.value })}
-                placeholder="Default value"
+                placeholder={t('admin.extraFieldsManager.defaultValue')}
+                className={isRTL ? 'text-right' : ''}
+                dir={isRTL ? 'rtl' : 'ltr'}
               />
               <p className="text-xs text-muted-foreground">
-                The default value for this new information field
+                {t('admin.extraFieldsManager.defaultValueHelper')}
               </p>
             </div>
 
             {/* Description */}
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">{t('admin.extraFieldsManager.fieldDescription')}</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={e => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Field description"
+                placeholder={t('admin.extraFieldsManager.fieldDescriptionPlaceholder')}
                 rows={2}
+                className={isRTL ? 'text-right' : ''}
+                dir={isRTL ? 'rtl' : 'ltr'}
               />
             </div>
 
             {/* Code */}
             <div className="space-y-2">
-              <Label htmlFor="code">Code</Label>
+              <Label htmlFor="code">{t('admin.extraFieldsManager.code')}</Label>
               <Input
                 id="code"
                 value={formData.code}
                 onChange={e => setFormData({ ...formData, code: e.target.value })}
-                placeholder="Unique code"
+                placeholder={t('admin.extraFieldsManager.code')}
+                className={isRTL ? 'text-right' : ''}
+                dir={isRTL ? 'rtl' : 'ltr'}
               />
               <p className="text-xs text-muted-foreground">
-                The unique code for this field
+                {t('admin.extraFieldsManager.codeHelper')}
               </p>
             </div>
 
             {/* Information Type */}
             <div className="space-y-2 col-span-2">
-              <Label>Information type *</Label>
+              <Label>{t('admin.extraFieldsManager.fieldType')} *</Label>
               <Select
                 value={formData.type}
                 onValueChange={(value: ExtraFieldType) => setFormData({ ...formData, type: value })}
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
+                <SelectTrigger dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'text-right' : ''}>
+                  <SelectValue placeholder={t('admin.clientForm.selectPlaceholder')} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent dir={isRTL ? 'rtl' : 'ltr'}>
                   {fieldTypeOptions.map(option => (
                     <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                      {t(`admin.extraFieldsManager.fieldTypes.${option.value}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -451,12 +490,14 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
             {/* Options textarea (only for 'options' type) */}
             {formData.type === 'options' && (
               <div className="space-y-2 col-span-2">
-                <Label>Options (one per line)</Label>
+                <Label>{t('admin.extraFieldsManager.fieldTypes.options')} (one per line)</Label>
                 <Textarea
                   value={optionsText}
                   onChange={e => setOptionsText(e.target.value)}
                   placeholder="Option 1&#10;Option 2&#10;Option 3"
                   rows={4}
+                  className={isRTL ? 'text-right' : ''}
+                  dir={isRTL ? 'rtl' : 'ltr'}
                 />
               </div>
             )}
@@ -473,7 +514,7 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
                 />
                 <div>
                   <Label htmlFor="allowOwnerEdit" className="cursor-pointer font-medium">
-                    Allow owner to edit this information
+                    {t('admin.extraFieldsManager.allowOwnerEdit')}
                   </Label>
                   <p className="text-xs text-muted-foreground">
                     The owner (client or instructor) can modify and update this field value from his account anytime.
@@ -491,7 +532,7 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
                 />
                 <div>
                   <Label htmlFor="isSearchable" className="cursor-pointer font-medium">
-                    Field is searchable
+                    {t('admin.extraFieldsManager.isSearchable')}
                   </Label>
                   <p className="text-xs text-muted-foreground">
                     Show this field in filtering/search options
@@ -509,7 +550,7 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
                 />
                 <div>
                   <Label htmlFor="isMandatory" className="cursor-pointer font-medium">
-                    Mandatory field
+                    {t('admin.extraFieldsManager.isMandatory')}
                   </Label>
                   <p className="text-xs text-muted-foreground">
                     This field must be filled when creating a client
@@ -521,10 +562,10 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
 
           <DialogFooter className="gap-2">
             <Button variant="default" onClick={handleSave}>
-              {editingField ? 'Update' : '✓ Add'}
+              {editingField ? t('admin.extraFieldsManager.save') : '✓ ' + t('admin.extraFieldsManager.add')}
             </Button>
             <Button variant="destructive" onClick={() => setIsAddDialogOpen(false)}>
-              ✕ Cancel
+              {t('admin.extraFieldsManager.cancel')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -532,17 +573,17 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
 
       {/* Delete Confirmation */}
       <AlertDialog open={!!deleteField} onOpenChange={() => setDeleteField(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent dir={isRTL ? 'rtl' : 'ltr'}>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Field</AlertDialogTitle>
+            <AlertDialogTitle>{t('admin.extraFieldsManager.deleteConfirm')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{deleteField?.title}"? This action cannot be undone.
+              {t('admin.extraFieldsManager.deleteMessage').replace('{field}', deleteField?.title || '')} {deleteField?.title}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('admin.extraFieldsManager.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
-              Delete
+              {t('admin.extraFieldsManager.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

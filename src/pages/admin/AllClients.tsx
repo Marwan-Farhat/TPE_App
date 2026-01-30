@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import useLanguage from '@/hooks/useLanguage';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -59,8 +60,8 @@ const statusColors: Record<ClientStatus, string> = {
 };
 
 const AllClients = () => {
-  const { i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -128,7 +129,7 @@ const AllClients = () => {
       const success = await clientService.delete(deleteDialog.clientId);
       if (success) {
         toast({
-          title: 'Client deleted successfully',
+          title: t('admin.clients.deleteSuccess'),
         });
         setClients(clients.filter(c => c.id !== deleteDialog.clientId));
         setDeleteDialog({ isOpen: false, clientId: null });
@@ -137,8 +138,8 @@ const AllClients = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error deleting client',
-        description: 'Please try again',
+        title: t('admin.clients.deleteError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -157,10 +158,10 @@ const AllClients = () => {
             <div className="flex items-center gap-2 text-sm">
               <span className="text-primary font-medium">
                 <User className="h-4 w-4 inline mr-1" />
-                Clients
+                {t('admin.sidebar.clients')}
               </span>
               <span className="text-muted-foreground">/</span>
-              <span className="text-foreground font-medium">All Clients</span>
+              <span className="text-foreground font-medium">{t('admin.clients.title')}</span>
             </div>
             
             <Button 
@@ -169,7 +170,7 @@ const AllClients = () => {
               onClick={() => navigate('/admin/clients/add')}
             >
               <Plus className="h-4 w-4" />
-              Add New Client
+              {t('admin.clients.addNew')}
             </Button>
           </div>
         </header>
@@ -188,7 +189,7 @@ const AllClients = () => {
                   <Search className={`absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
                   <Input
                     type="text"
-                    placeholder="Search by name, phone, or email..."
+                    placeholder={t('admin.clients.search')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={`${isRTL ? 'pr-10' : 'pl-10'}`}
@@ -196,22 +197,22 @@ const AllClients = () => {
                 </div>
                 <Button variant="outline" size="sm" className="gap-2">
                   <Filter className="h-4 w-4" />
-                  Filters
+                  {t('admin.clients.filter')}
                 </Button>
               </div>
             </div>
 
             {/* Clients Table */}
-            <div className="bg-card border border-border rounded-xl overflow-hidden">
+            <div className="bg-card border border-border rounded-xl overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Program</TableHead>
-                    <TableHead>Added</TableHead>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.table.name')}</TableHead>
+                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.table.contactInfo')}</TableHead>
+                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.table.status')}</TableHead>
+                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.program')}</TableHead>
+                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.added')}</TableHead>
+                    <TableHead className={`w-12 ${isRTL ? 'text-left' : ''}`}></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -241,11 +242,11 @@ const AllClients = () => {
                         <div className="flex flex-col items-center gap-3 text-muted-foreground">
                           <User className="h-12 w-12 opacity-50" />
                           <div>
-                            <p className="font-medium">No clients found</p>
+                            <p className="font-medium">{t('admin.clients.noClients')}</p>
                             <p className="text-sm">
                               {searchQuery 
-                                ? 'Try adjusting your search query' 
-                                : 'Add your first client to get started'
+                                ? t('admin.clients.noSearchResults')
+                                : t('admin.clients.addFirstClient')
                               }
                             </p>
                           </div>
@@ -255,7 +256,7 @@ const AllClients = () => {
                               onClick={() => navigate('/admin/clients/add')}
                             >
                               <Plus className="h-4 w-4 mr-2" />
-                              Add New Client
+                              {t('admin.clients.addNew')}
                             </Button>
                           )}
                         </div>
@@ -268,9 +269,9 @@ const AllClients = () => {
                         className="cursor-pointer hover:bg-muted/50"
                         onClick={() => handleViewClient(client.id)}
                       >
-                        <TableCell>
+                        <TableCell className={isRTL ? 'text-right' : ''}>
                           <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                               <span className="text-primary font-medium">
                                 {client.name.charAt(0).toUpperCase()}
                               </span>
@@ -281,31 +282,31 @@ const AllClients = () => {
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={isRTL ? 'text-right' : ''}>
                           <div className="space-y-1">
-                            <div className="flex items-center gap-1 text-sm">
-                              <Mail className="h-3 w-3 text-muted-foreground" />
+                            <div className={`flex items-center gap-1 text-sm ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+                              <Mail className="h-3 w-3 text-muted-foreground flex-shrink-0" />
                               {client.email}
                             </div>
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                              <Phone className="h-3 w-3" />
+                            <div className={`flex items-center gap-1 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+                              <Phone className="h-3 w-3 flex-shrink-0" />
                               {client.phoneNumber}
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={isRTL ? 'text-right' : ''}>
                           <Badge className={statusColors[client.status as ClientStatus]}>
                             {client.status}
                           </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={isRTL ? 'text-right' : ''}>
                           <span className="text-sm">
                             {client.currentProgram || '-'}
                           </span>
                         </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Calendar className="h-3 w-3" />
+                        <TableCell className={isRTL ? 'text-right' : ''}>
+                          <div className={`flex items-center gap-1 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+                            <Calendar className="h-3 w-3 flex-shrink-0" />
                             {format(new Date(client.createdAt), 'MMM d, yyyy')}
                           </div>
                         </TableCell>
@@ -322,14 +323,14 @@ const AllClients = () => {
                                 handleViewClient(client.id);
                               }}>
                                 <Eye className="h-4 w-4 mr-2" />
-                                View Profile
+                                {t('admin.clients.view')}
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={(e) => {
                                 e.stopPropagation();
                                 handleEditClient(client.id);
                               }}>
                                 <Edit2 className="h-4 w-4 mr-2" />
-                                Edit
+                                {t('admin.clients.edit')}
                               </DropdownMenuItem>
                               <DropdownMenuItem 
                                 className="text-destructive"
@@ -339,7 +340,7 @@ const AllClients = () => {
                                 }}
                               >
                                 <Trash2 className="h-4 w-4 mr-2" />
-                                Delete
+                                {t('admin.clients.delete')}
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -354,7 +355,7 @@ const AllClients = () => {
             {/* Results count */}
             {!loading && clients.length > 0 && (
               <div className="mt-4 text-sm text-muted-foreground">
-                Showing {clients.length} client{clients.length !== 1 ? 's' : ''}
+                {t('admin.clients.showing')} {clients.length} {clients.length !== 1 ? t('admin.clients.clients') : t('admin.clients.client')}
               </div>
             )}
           </motion.div>
@@ -368,9 +369,9 @@ const AllClients = () => {
         }}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete Client</AlertDialogTitle>
+              <AlertDialogTitle>{t('admin.clients.deleteConfirm')}</AlertDialogTitle>
               <AlertDialogDescription>
-                Are you sure you want to delete this client? This action cannot be undone.
+                {t('admin.clients.deleteMessage')}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogAction
@@ -378,10 +379,10 @@ const AllClients = () => {
               disabled={deleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {deleting ? 'Deleting...' : 'Delete'}
+              {deleting ? t('admin.clientProfile.deleting') : t('admin.clients.delete')}
             </AlertDialogAction>
             <AlertDialogCancel disabled={deleting}>
-              Cancel
+              {t('admin.clients.cancel')}
             </AlertDialogCancel>
           </AlertDialogContent>
         </AlertDialog>

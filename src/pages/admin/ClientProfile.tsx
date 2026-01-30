@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import useLanguage from '@/hooks/useLanguage';
 
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -64,8 +65,8 @@ const statusColors: Record<ClientStatus, string> = {
 
 const ClientProfile = () => {
   const { id } = useParams<{ id: string }>();
-  const { i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -126,7 +127,7 @@ const ClientProfile = () => {
       const success = await clientService.delete(id);
       if (success) {
         toast({
-          title: 'Client deleted successfully',
+          title: t('admin.clients.deleteSuccess'),
         });
         navigate('/admin/clients');
       } else {
@@ -134,8 +135,8 @@ const ClientProfile = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error deleting client',
-        description: 'Please try again',
+        title: t('admin.clients.deleteError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -151,14 +152,14 @@ const ClientProfile = () => {
       // Simulate force logout API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       toast({
-        title: 'Client logged out successfully',
-        description: 'The client has been logged out from all devices.',
+        title: t('admin.clientProfile.forceLogoutSuccess'),
+        description: t('admin.clientProfile.forceLogoutDescription'),
       });
       setForceLogoutDialog(false);
     } catch (error) {
       toast({
-        title: 'Error logging out client',
-        description: 'Please try again',
+        title: t('admin.clientProfile.forceLogoutError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -181,8 +182,8 @@ const ClientProfile = () => {
       if (updated) {
         setClient({ ...client, password: newPassword });
         toast({
-          title: 'Password reset successfully',
-          description: `New temporary password: ${newPassword}`,
+          title: t('admin.clientProfile.resetPasswordSuccess'),
+          description: `${t('admin.clientProfile.newPasswordPrefix')}${newPassword}`,
         });
         setResetPasswordDialog(false);
       } else {
@@ -190,8 +191,8 @@ const ClientProfile = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error resetting password',
-        description: 'Please try again',
+        title: t('admin.clientProfile.resetPasswordError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -210,10 +211,10 @@ const ClientProfile = () => {
       if (updated) {
         setClient({ ...client, isActive: newStatus });
         toast({
-          title: newStatus ? 'Account activated' : 'Account deactivated',
+          title: newStatus ? t('admin.clientProfile.accountActivated') : t('admin.clientProfile.accountDeactivated'),
           description: newStatus 
-            ? 'The client account has been activated successfully.' 
-            : 'The client account has been deactivated successfully.',
+            ? t('admin.clientProfile.accountActivatedMessage')
+            : t('admin.clientProfile.accountDeactivatedMessage'),
         });
         setDeactivateDialog(false);
       } else {
@@ -221,8 +222,8 @@ const ClientProfile = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error updating account status',
-        description: 'Please try again',
+        title: t('admin.clientProfile.accountStatusError'),
+        description: t('admin.clients.tryAgain'),
         variant: 'destructive',
       });
     } finally {
@@ -254,11 +255,11 @@ const ClientProfile = () => {
         <div className={`flex-1 ${isRTL ? 'mr-16' : 'ml-16'} p-6`}>
           <div className="flex flex-col items-center justify-center h-[50vh] gap-4">
             <User className="h-16 w-16 text-muted-foreground opacity-50" />
-            <h2 className="text-xl font-semibold">Client not found</h2>
-            <p className="text-muted-foreground">The client you're looking for doesn't exist.</p>
+            <h2 className="text-xl font-semibold">{t('admin.clientProfile.clientNotFound')}</h2>
+            <p className="text-muted-foreground">{t('admin.clientProfile.clientNotFoundMessage')}</p>
             <Button onClick={() => navigate('/admin/clients')}>
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Clients
+              {t('admin.clientProfile.back')}
             </Button>
           </div>
         </div>
@@ -287,7 +288,7 @@ const ClientProfile = () => {
                   className="text-primary cursor-pointer hover:underline"
                   onClick={() => navigate('/admin/clients')}
                 >
-                  Clients
+                  {t('admin.clientProfile.clients')}
                 </span>
                 <span className="text-muted-foreground">/</span>
                 <span className="text-foreground font-medium">{client.name}</span>
@@ -302,32 +303,32 @@ const ClientProfile = () => {
                 onClick={() => navigate(`/admin/clients/${id}/edit`)}
               >
                 <Edit2 className="h-4 w-4" />
-                Edit Profile
+                {t('admin.clientProfile.editProfile')}
               </Button>
               
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button size="sm" variant="destructive" className="gap-2">
                     <Trash2 className="h-4 w-4" />
-                    Delete
+                    {t('admin.clientProfile.delete')}
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent dir={isRTL ? 'rtl' : 'ltr'}>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Client</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Are you sure you want to delete <strong>{client.name}</strong>? 
-                      This action cannot be undone and will permanently remove all client data.
+                    <AlertDialogTitle className={isRTL ? 'text-right' : ''}>{t('admin.clientProfile.deleteClient')}</AlertDialogTitle>
+                    <AlertDialogDescription className={isRTL ? 'text-right' : ''}>
+                      {t('admin.clientProfile.deleteConfirm')} <strong>{client.name}</strong>? 
+                      {t('admin.clientProfile.deleteWarning')}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogFooter className="gap-2">
+                    <AlertDialogCancel>{t('admin.clientProfile.cancel')}</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleDeleteClient}
                       className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                       disabled={isDeleting}
                     >
-                      {isDeleting ? 'Deleting...' : 'Delete Client'}
+                      {isDeleting ? t('admin.clientProfile.deleting') : t('admin.clientProfile.deleteClient')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -399,7 +400,7 @@ const ClientProfile = () => {
                     </div>
                     <span className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
-                      Joined {format(new Date(client.createdAt), 'MMM d, yyyy')}
+                      {t('admin.clientProfile.joined')} {format(new Date(client.createdAt), 'MMM d, yyyy')}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mt-3">
@@ -419,20 +420,20 @@ const ClientProfile = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <User className="h-5 w-5" />
-                      Personal Information
+                      {t('admin.clientProfile.personalInfo')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 gap-4">
-                      <InfoRow icon={User} label="Name" value={client.name} />
-                      <InfoRow icon={Phone} label="Phone" value={client.phoneNumber} />
-                      <InfoRow icon={Mail} label="Email" value={client.email} />
-                      <InfoRow icon={Briefcase} label="Job Title" value={client.jobTitle} />
-                      <InfoRow label="Age" value={client.age?.toString()} />
-                      <InfoRow label="Gender" value={client.gender} />
-                      <InfoRow icon={MapPin} label="City" value={client.city} />
-                      <InfoRow label="Country" value={client.country} />
-                      <InfoRow icon={Phone} label="Guardian Number" value={client.guardianNumber} />
+                      <InfoRow icon={User} label={t('admin.clientProfile.name')} value={client.name} />
+                      <InfoRow icon={Phone} label={t('admin.clientProfile.phone')} value={client.phoneNumber} />
+                      <InfoRow icon={Mail} label={t('admin.clientProfile.email')} value={client.email} />
+                      <InfoRow icon={Briefcase} label={t('admin.clientProfile.jobTitle')} value={client.jobTitle} />
+                      <InfoRow label={t('admin.clientProfile.age')} value={client.age?.toString()} />
+                      <InfoRow label={t('admin.clientProfile.gender')} value={client.gender} />
+                      <InfoRow icon={MapPin} label={t('admin.clientProfile.city')} value={client.city} />
+                      <InfoRow label={t('admin.clientProfile.country')} value={client.country} />
+                      <InfoRow icon={Phone} label={t('admin.clientProfile.guardianNumber')} value={client.guardianNumber} />
                     </div>
                   </CardContent>
                 </Card>
@@ -442,21 +443,21 @@ const ClientProfile = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Briefcase className="h-5 w-5" />
-                      Product Information
+                      {t('admin.clientProfile.productInfo')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 gap-4">
-                      <InfoRow label="Current Path" value={client.currentPath} />
-                      <InfoRow label="Current Program" value={client.currentProgram} />
-                      <InfoRow label="Program Type" value={client.programType} />
-                      <InfoRow label="Source" value={client.source} />
-                      <InfoRow icon={CreditCard} label="Path Cost" value={client.pathCost ? `$${client.pathCost}` : undefined} />
-                      <InfoRow label="Paid for Path" value={client.paidForPath ? `$${client.paidForPath}` : undefined} />
-                      <InfoRow label="Remaining" value={client.remainingForPath ? `$${client.remainingForPath}` : undefined} />
-                      <InfoRow label="Total Paid Ever" value={client.totalPaidEver ? `$${client.totalPaidEver}` : undefined} />
-                      <InfoRow icon={Users} label="Coordinator" value={getCoordinatorName(client.assignedCoordinator)} />
-                      <InfoRow icon={Building} label="Company" value={client.underCompany} />
+                      <InfoRow label={t('admin.clientProfile.currentPath')} value={client.currentPath} />
+                      <InfoRow label={t('admin.clientProfile.currentProgram')} value={client.currentProgram} />
+                      <InfoRow label={t('admin.clientProfile.programType')} value={client.programType} />
+                      <InfoRow label={t('admin.clientProfile.source')} value={client.source} />
+                      <InfoRow icon={CreditCard} label={t('admin.clientProfile.pathCost')} value={client.pathCost ? `$${client.pathCost}` : undefined} />
+                      <InfoRow label={t('admin.clientProfile.paidForPath')} value={client.paidForPath ? `$${client.paidForPath}` : undefined} />
+                      <InfoRow label={t('admin.clientProfile.remaining')} value={client.remainingForPath ? `$${client.remainingForPath}` : undefined} />
+                      <InfoRow label={t('admin.clientProfile.totalPaidEver')} value={client.totalPaidEver ? `$${client.totalPaidEver}` : undefined} />
+                      <InfoRow icon={Users} label={t('admin.clientProfile.coordinator')} value={getCoordinatorName(client.assignedCoordinator)} />
+                      <InfoRow icon={Building} label={t('admin.clientProfile.company')} value={client.underCompany} />
                     </div>
 
                     {/* Tags */}
@@ -464,7 +465,7 @@ const ClientProfile = () => {
                     <div className="space-y-2">
                       <label className="text-sm font-medium flex items-center gap-2">
                         <Tag className="h-4 w-4" />
-                        Tags
+                        {t('admin.clientProfile.tags')}
                       </label>
                       <div className="flex flex-wrap gap-2">
                         {getTagNames(client.tags).length > 0 ? (
@@ -478,7 +479,7 @@ const ClientProfile = () => {
                             </Badge>
                           ))
                         ) : (
-                          <span className="text-sm text-muted-foreground">No tags</span>
+                          <span className="text-sm text-muted-foreground">{t('admin.clientProfile.noTags')}</span>
                         )}
                       </div>
                     </div>
@@ -488,7 +489,7 @@ const ClientProfile = () => {
                     <div className="space-y-2">
                       <label className="text-sm font-medium flex items-center gap-2">
                         <Clock className="h-4 w-4" />
-                        Selected Time Slots
+                        {t('admin.clientProfile.timeSlots')}
                       </label>
                       <div className="flex flex-wrap gap-2">
                         {client.selectedTimeSlots && client.selectedTimeSlots.length > 0 ? (
@@ -498,7 +499,7 @@ const ClientProfile = () => {
                             </Badge>
                           ))
                         ) : (
-                          <span className="text-sm text-muted-foreground">No time slots selected</span>
+                          <span className="text-sm text-muted-foreground">{t('admin.clientProfile.noTimeSlots')}</span>
                         )}
                       </div>
                     </div>
@@ -506,7 +507,7 @@ const ClientProfile = () => {
                     {/* Training Days */}
                     <Separator className="my-4" />
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Preferred Training Days</label>
+                      <label className="text-sm font-medium">{t('admin.clientProfile.preferredTrainingDays')}</label>
                       <div className="flex flex-wrap gap-2">
                         {client.preferredTrainingDays && client.preferredTrainingDays.length > 0 ? (
                           client.preferredTrainingDays.map((day) => (
@@ -515,7 +516,7 @@ const ClientProfile = () => {
                             </Badge>
                           ))
                         ) : (
-                          <span className="text-sm text-muted-foreground">No days selected</span>
+                          <span className="text-sm text-muted-foreground">{t('admin.clientProfile.noDaysSelected')}</span>
                         )}
                       </div>
                     </div>
@@ -527,18 +528,23 @@ const ClientProfile = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        Extra Information
+                        {t('admin.clientProfile.extraInfo')}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-2 gap-4">
-                        {extraFields.map((field) => (
-                          <InfoRow 
-                            key={field.id}
-                            label={field.title}
-                            value={(client as any).extraFields?.[field.id]?.toString() || field.defaultValue?.toString()}
-                          />
-                        ))}
+                        {extraFields.map((field) => {
+                          const fieldLabel = isRTL
+                            ? field.titleAr || field.titleEn || field.title
+                            : field.titleEn || field.title || field.titleAr;
+                          return (
+                            <InfoRow 
+                              key={field.id}
+                              label={fieldLabel}
+                              value={(client as any).extraFields?.[field.id]?.toString() || field.defaultValue?.toString()}
+                            />
+                          );
+                        })}
                       </div>
                     </CardContent>
                   </Card>
@@ -552,19 +558,19 @@ const ClientProfile = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Shield className="h-5 w-5" />
-                      System Account
+                      {t('admin.clientProfile.accountInfo')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Account Status</span>
+                      <span className="text-sm text-muted-foreground">{t('admin.clientProfile.accountStatus')}</span>
                       <Badge variant={client.isActive ? 'default' : 'secondary'}>
-                        {client.isActive ? 'Active' : 'Inactive'}
+                        {client.isActive ? t('admin.clientProfile.active') : t('admin.clientProfile.inactive')}
                       </Badge>
                     </div>
                     <Separator />
-                    <InfoRow icon={User} label="Username" value={client.username} />
-                    <InfoRow icon={Key} label="Initial Password" value={client.password || undefined} />
+                    <InfoRow icon={User} label={t('admin.clientProfile.username')} value={client.username} />
+                    <InfoRow icon={Key} label={t('admin.clientProfile.password')} value={client.password || undefined} />
                     <InfoRow icon={Calendar} label="Created At" value={format(new Date(client.createdAt), 'MMM d, yyyy HH:mm')} />
                     <InfoRow label="Created By" value={client.addedBy?.userId} />
                     <InfoRow label="Last Login" value="-" />
@@ -572,38 +578,38 @@ const ClientProfile = () => {
                     
                     <Separator />
                     <div className="space-y-3 pt-3">
-                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Account Actions</p>
-                      <div className="grid grid-cols-2 gap-2 max-w-[320px] mx-auto justify-items-center">
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{t('admin.clientProfile.accountActions')}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full justify-center h-10 text-sm font-medium bg-gradient-to-r from-blue-50 to-blue-100/50 hover:from-blue-100 hover:to-blue-200/50 dark:from-blue-950/40 dark:to-blue-900/20 dark:hover:from-blue-900/50 dark:hover:to-blue-800/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 shadow-sm hover:shadow transition-all duration-200 truncate"
+                          className="w-full justify-center h-auto py-2 px-3 text-xs sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-blue-100/50 hover:from-blue-100 hover:to-blue-200/50 dark:from-blue-950/40 dark:to-blue-900/20 dark:hover:from-blue-900/50 dark:hover:to-blue-800/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 shadow-sm hover:shadow transition-all duration-200 whitespace-normal"
                           onClick={() => setForceLogoutDialog(true)}
                         >
-                          <LogOut className="h-4 w-4 mr-2" />
-                          Force Logout
+                          <LogOut className="h-4 w-4 flex-shrink-0" />
+                          <span className={isRTL ? 'mr-2' : 'ml-2'}>{t('admin.clientProfile.forceLogout')}</span>
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full justify-center h-10 text-sm font-medium bg-gradient-to-r from-purple-50 to-purple-100/50 hover:from-purple-100 hover:to-purple-200/50 dark:from-purple-950/40 dark:to-purple-900/20 dark:hover:from-purple-900/50 dark:hover:to-purple-800/30 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 shadow-sm hover:shadow transition-all duration-200 truncate"
+                          className="w-full justify-center h-auto py-2 px-3 text-xs sm:text-sm font-medium bg-gradient-to-r from-purple-50 to-purple-100/50 hover:from-purple-100 hover:to-purple-200/50 dark:from-purple-950/40 dark:to-purple-900/20 dark:hover:from-purple-900/50 dark:hover:to-purple-800/30 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 shadow-sm hover:shadow transition-all duration-200 whitespace-normal"
                           onClick={() => setResetPasswordDialog(true)}
                         >
-                          <RefreshCw className="h-4 w-4 mr-2" />
-                          Reset Password
+                          <RefreshCw className="h-4 w-4 flex-shrink-0" />
+                          <span className={isRTL ? 'mr-2' : 'ml-2'}>{t('admin.clientProfile.resetPassword')}</span>
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
-                          className={`col-span-2 w-full justify-center h-10 text-sm font-medium shadow-sm hover:shadow transition-all duration-200 truncate ${
+                          className={`col-span-1 sm:col-span-2 w-full justify-center h-auto py-2 px-3 text-xs sm:text-sm font-medium shadow-sm hover:shadow transition-all duration-200 whitespace-normal ${
                             client.isActive 
                               ? 'bg-gradient-to-r from-red-50 to-red-100/50 hover:from-red-100 hover:to-red-200/50 dark:from-red-950/40 dark:to-red-900/20 dark:hover:from-red-900/50 dark:hover:to-red-800/30 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300' 
                               : 'bg-gradient-to-r from-green-50 to-green-100/50 hover:from-green-100 hover:to-green-200/50 dark:from-green-950/40 dark:to-green-900/20 dark:hover:from-green-900/50 dark:hover:to-green-800/30 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300'
                           }`}
                           onClick={() => setDeactivateDialog(true)}
                         >
-                          <UserX className="h-4 w-4 mr-2" />
-                          {client.isActive ? 'Deactivate Account' : 'Activate Account'}
+                          <UserX className="h-4 w-4 flex-shrink-0" />
+                          <span className={isRTL ? 'mr-2' : 'ml-2'}>{client.isActive ? t('admin.clientProfile.deactivateAccount') : t('admin.clientProfile.activateAccount')}</span>
                         </Button>
                       </div>
                     </div>
@@ -613,24 +619,27 @@ const ClientProfile = () => {
                 {/* Status History */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Status History</CardTitle>
+                    <CardTitle>{t('admin.clientProfile.statusHistory')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
                       {client.statusHistory && client.statusHistory.length > 0 ? (
-                        client.statusHistory.slice().reverse().map((history, index) => (
-                          <div key={index} className="flex items-start gap-3">
-                            <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                            <div className="flex-1">
-                              <p className="text-sm font-medium">{history.status}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {format(new Date(history.changedAt), 'MMM d, yyyy HH:mm')}
-                              </p>
+                        client.statusHistory.slice().reverse().map((history, index) => {
+                          const statusKey = `admin.status.${history.status.replace(/\s+/g, '')}`;
+                          return (
+                            <div key={index} className="flex items-start gap-3">
+                              <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                              <div className="flex-1">
+                                <p className="text-sm font-medium">{t(statusKey, history.status)}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {format(new Date(history.changedAt), 'MMM d, yyyy HH:mm')}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        ))
+                          );
+                        })
                       ) : (
-                        <p className="text-sm text-muted-foreground">No status history</p>
+                        <p className="text-sm text-muted-foreground">{t('admin.clientProfile.noStatusHistory')}</p>
                       )}
                     </div>
                   </CardContent>
@@ -642,21 +651,20 @@ const ClientProfile = () => {
 
         {/* Force Logout Dialog */}
         <AlertDialog open={forceLogoutDialog} onOpenChange={setForceLogoutDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent dir={isRTL ? 'rtl' : 'ltr'}>
             <AlertDialogHeader>
-              <AlertDialogTitle>Force Logout</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to force logout <strong>{client.name}</strong>? 
-                This will log them out from all devices immediately.
+              <AlertDialogTitle className={isRTL ? 'text-right' : ''}>{t('admin.clientProfile.forceLogoutTitle')}</AlertDialogTitle>
+              <AlertDialogDescription className={isRTL ? 'text-right' : ''}>
+                {t('admin.clientProfile.forceLogoutMessage')}
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel disabled={isProcessing}>Cancel</AlertDialogCancel>
+            <AlertDialogFooter className="gap-2">
+              <AlertDialogCancel disabled={isProcessing}>{t('admin.clientProfile.cancel')}</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleForceLogout}
                 disabled={isProcessing}
               >
-                {isProcessing ? 'Logging out...' : 'Force Logout'}
+                {isProcessing ? t('admin.clientProfile.processing') : t('admin.clientProfile.forceLogout')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -664,21 +672,20 @@ const ClientProfile = () => {
 
         {/* Reset Password Dialog */}
         <AlertDialog open={resetPasswordDialog} onOpenChange={setResetPasswordDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent dir={isRTL ? 'rtl' : 'ltr'}>
             <AlertDialogHeader>
-              <AlertDialogTitle>Reset Password</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to reset the password for <strong>{client.name}</strong>? 
-                A new temporary password will be generated and displayed.
+              <AlertDialogTitle className={isRTL ? 'text-right' : ''}>{t('admin.clientProfile.resetPasswordTitle')}</AlertDialogTitle>
+              <AlertDialogDescription className={isRTL ? 'text-right' : ''}>
+                {t('admin.clientProfile.resetPasswordMessage')}
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel disabled={isProcessing}>Cancel</AlertDialogCancel>
+            <AlertDialogFooter className="gap-2">
+              <AlertDialogCancel disabled={isProcessing}>{t('admin.clientProfile.cancel')}</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleResetPassword}
                 disabled={isProcessing}
               >
-                {isProcessing ? 'Resetting...' : 'Reset Password'}
+                {isProcessing ? t('admin.clientProfile.processing') : t('admin.clientProfile.resetPassword')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -686,33 +693,26 @@ const ClientProfile = () => {
 
         {/* Deactivate/Activate Account Dialog */}
         <AlertDialog open={deactivateDialog} onOpenChange={setDeactivateDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent dir={isRTL ? 'rtl' : 'ltr'}>
             <AlertDialogHeader>
-              <AlertDialogTitle>
-                {client.isActive ? 'Deactivate Account' : 'Activate Account'}
+              <AlertDialogTitle className={isRTL ? 'text-right' : ''}>
+                {client.isActive ? t('admin.clientProfile.deactivateTitle') : t('admin.clientProfile.activateTitle')}
               </AlertDialogTitle>
-              <AlertDialogDescription>
-                {client.isActive ? (
-                  <>
-                    Are you sure you want to deactivate the account for <strong>{client.name}</strong>? 
-                    They will not be able to log in until the account is reactivated.
-                  </>
-                ) : (
-                  <>
-                    Are you sure you want to activate the account for <strong>{client.name}</strong>? 
-                    They will be able to log in again.
-                  </>
-                )}
+              <AlertDialogDescription className={isRTL ? 'text-right' : ''}>
+                {client.isActive 
+                  ? t('admin.clientProfile.deactivateMessage')
+                  : t('admin.clientProfile.activateMessage')
+                }
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel disabled={isProcessing}>Cancel</AlertDialogCancel>
+            <AlertDialogFooter className="gap-2">
+              <AlertDialogCancel disabled={isProcessing}>{t('admin.clientProfile.cancel')}</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleDeactivateAccount}
                 disabled={isProcessing}
                 className={client.isActive ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' : ''}
               >
-                {isProcessing ? 'Processing...' : (client.isActive ? 'Deactivate' : 'Activate')}
+                {isProcessing ? t('admin.clientProfile.processing') : (client.isActive ? t('admin.clientProfile.deactivateAccount') : t('admin.clientProfile.activateAccount'))}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

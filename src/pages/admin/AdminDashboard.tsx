@@ -27,9 +27,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Switch } from '@/components/ui/switch';
 import AdminSidebar from '@/components/admin/AdminSidebar';
+import useLanguage from '@/hooks/useLanguage';
 
 const AdminDashboard = () => {
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
@@ -78,10 +80,10 @@ const AdminDashboard = () => {
   }, []);
 
   const stats = [
-    { label: 'Total Clients', value: totalClients.toLocaleString(), change: '+12%', icon: Users },
-    { label: 'Active Courses', value: '56', change: '+4%', icon: GraduationCap },
-    { label: 'This Month Revenue', value: '$45,230', change: '+18%', icon: LayoutDashboard },
-    { label: 'Pending Tasks', value: '23', change: '-5%', icon: Bell },
+    { label: t('admin.dashboard.totalClients'), value: totalClients.toLocaleString(), change: '+12%', icon: Users },
+    { label: t('admin.dashboard.activeCourses'), value: '56', change: '+4%', icon: GraduationCap },
+    { label: t('admin.dashboard.monthlyRevenue'), value: '$45,230', change: '+18%', icon: LayoutDashboard },
+    { label: t('admin.dashboard.pendingTasks'), value: '23', change: '-5%', icon: Bell },
   ];
 
   return (
@@ -90,7 +92,7 @@ const AdminDashboard = () => {
       <AdminSidebar />
 
       {/* Main Wrapper - offset by sidebar width */}
-      <div className="flex-1 ml-16">
+      <div className={`flex-1 ${isRTL ? 'mr-16' : 'ml-16'}`}>
         {/* Header */}
         <header className="sticky top-0 z-40 bg-card border-b border-border">
           <div className="flex items-center justify-end px-6 h-16">
@@ -120,33 +122,71 @@ const AdminDashboard = () => {
                     <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem>
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
+                <DropdownMenuContent align={isRTL ? 'start' : 'end'} className={`w-56 ${isRTL ? 'text-right' : 'text-left'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+                  <DropdownMenuItem className="flex items-center">
+                    {isRTL ? (
+                      <>
+                        <Settings className="h-4 w-4 flex-shrink-0" />
+                        <span className="mr-2"> {t('admin.header.settings')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Settings className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span>{t('admin.header.settings')}</span>
+                      </>
+                    )}
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     className="flex items-center justify-between cursor-pointer"
                     onSelect={(e) => e.preventDefault()}
                   >
-                    <div className="flex items-center">
-                      {theme === 'dark' ? (
-                        <Moon className="h-4 w-4 mr-2" />
-                      ) : (
-                        <Sun className="h-4 w-4 mr-2" />
-                      )}
-                      Dark Mode
-                    </div>
-                    <Switch
-                      checked={theme === 'dark'}
-                      onCheckedChange={toggleTheme}
-                      className="scale-75"
-                    />
+                    {isRTL ? (
+                      <>
+                        <div className="flex items-center">
+                          {theme === 'dark' ? (
+                            <Moon className="h-4 w-4 flex-shrink-0" />
+                          ) : (
+                            <Sun className="h-4 w-4 flex-shrink-0" />
+                          )}
+                          <span className="mr-2"> {t('admin.header.darkMode')}</span>
+                        </div>
+                        <Switch
+                          checked={theme === 'dark'}
+                          onCheckedChange={toggleTheme}
+                          className="scale-75"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center">
+                          {theme === 'dark' ? (
+                            <Moon className="h-4 w-4 mr-2 flex-shrink-0" />
+                          ) : (
+                            <Sun className="h-4 w-4 mr-2 flex-shrink-0" />
+                          )}
+                          <span>{t('admin.header.darkMode')}</span>
+                        </div>
+                        <Switch
+                          checked={theme === 'dark'}
+                          onCheckedChange={toggleTheme}
+                          className="scale-75"
+                        />
+                      </>
+                    )}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
+                  <DropdownMenuItem onClick={handleLogout} className="text-destructive flex items-center">
+                    {isRTL ? (
+                      <>
+                        <LogOut className="h-4 w-4 flex-shrink-0" />
+                        <span className="mr-2"> {t('admin.header.logout')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <LogOut className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span>{t('admin.header.logout')}</span>
+                      </>
+                    )}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -164,10 +204,10 @@ const AdminDashboard = () => {
           {/* Welcome Section */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">
-              Welcome back, {user?.fullName?.split(' ')[0]}! 👋
+              {t('admin.dashboard.welcome')}, {user?.fullName?.split(' ')[0]}! 👋
             </h1>
             <p className="text-muted-foreground mt-1">
-              Here's what's happening with your platform today.
+              {t('admin.dashboard.subtitle')}
             </p>
           </div>
 
@@ -205,14 +245,14 @@ const AdminDashboard = () => {
               <LayoutDashboard className="h-8 w-8 text-muted-foreground" />
             </div>
             <h2 className="text-xl font-semibold text-foreground mb-2">
-              Admin Dashboard
+              {t('admin.dashboard.placeholder.title')}
             </h2>
             <p className="text-muted-foreground max-w-md mx-auto">
-              This is a placeholder for the Admin interface. You can add more features and pages here based on your requirements.
+              {t('admin.dashboard.placeholder.description')}
             </p>
             <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
-              <span className="px-2 py-1 bg-secondary rounded">Role: {user?.role}</span>
-              <span className="px-2 py-1 bg-secondary rounded">Interface: {user?.interface}</span>
+              <span className="px-2 py-1 bg-secondary rounded">{t('admin.dashboard.placeholder.role')}: {user?.role}</span>
+              <span className="px-2 py-1 bg-secondary rounded">{t('admin.dashboard.placeholder.interface')}: {user?.interface}</span>
             </div>
           </div>
         </motion.div>

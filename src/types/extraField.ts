@@ -20,6 +20,8 @@ export interface ExtraField {
   id: string;
   code: string; // Unique code for the field
   title: string;
+  titleEn?: string;
+  titleAr?: string;
   description?: string;
   type: ExtraFieldType;
   defaultValue?: string | number | boolean;
@@ -40,6 +42,8 @@ export interface ExtraFieldValue {
 // Create/Update payload
 export interface CreateExtraFieldPayload {
   title: string;
+  titleEn?: string;
+  titleAr?: string;
   description?: string;
   type: ExtraFieldType;
   code: string;
