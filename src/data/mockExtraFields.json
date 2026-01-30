@@ -1,0 +1,66 @@
+{
+  "extraFields": [
+    {
+      "id": "ef-001",
+      "code": "current_program",
+      "title": "CURRENT PROGRAM",
+      "description": "نوع البرنامج",
+      "type": "options",
+      "defaultValue": "3IN1",
+      "options": [
+        { "value": "3IN1", "label": "3IN1" },
+        { "value": "2IN1", "label": "2IN1" },
+        { "value": "3IN1_TEENS", "label": "3IN1 TEENS" },
+        { "value": "BUSINESS_ENGLISH", "label": "BUSINESS ENGLISH" },
+        { "value": "OTHER", "label": "OTHER" }
+      ],
+      "isMandatory": false,
+      "isSearchable": true,
+      "allowOwnerEdit": false,
+      "createdAt": "2024-02-10T04:30:00Z",
+      "updatedAt": "2024-02-10T04:30:00Z"
+    },
+    {
+      "id": "ef-002",
+      "code": "program_type",
+      "title": "PROGRAM TYPE",
+      "description": "نوع البرنامج",
+      "type": "options",
+      "defaultValue": "GROUP",
+      "options": [
+        { "value": "VIP", "label": "VIP" },
+        { "value": "GROUP", "label": "GROUP" }
+      ],
+      "isMandatory": false,
+      "isSearchable": true,
+      "allowOwnerEdit": false,
+      "createdAt": "2024-04-10T05:36:00Z",
+      "updatedAt": "2024-04-10T05:36:00Z"
+    },
+    {
+      "id": "ef-003",
+      "code": "source",
+      "title": "Source",
+      "description": "مصدر العميل",
+      "type": "options",
+      "options": [
+        { "value": "facebook", "label": "Facebook" },
+        { "value": "tiktok", "label": "Tiktok" },
+        { "value": "instagram", "label": "Instagram" },
+        { "value": "current_client", "label": "Current client" },
+        { "value": "friends_offers", "label": "Friends Offers" },
+        { "value": "friends_family", "label": "Friends Or Family" },
+        { "value": "b2b", "label": "B2B" },
+        { "value": "referral", "label": "Referral" },
+        { "value": "youtube", "label": "Youtube" },
+        { "value": "google", "label": "Google" },
+        { "value": "website", "label": "Website" }
+      ],
+      "isMandatory": false,
+      "isSearchable": true,
+      "allowOwnerEdit": false,
+      "createdAt": "2024-04-10T05:04:00Z",
+      "updatedAt": "2024-04-10T05:04:00Z"
+    }
+  ]
+}

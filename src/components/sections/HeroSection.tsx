@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Play, Users, Award, TrendingUp, ArrowRight, Star } from "lucide-react";
+import { Users, Award, TrendingUp, ArrowRight, Star } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import useLanguage from "@/hooks/useLanguage";
+import logo from "@/assets/logo.png";
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -121,14 +122,7 @@ const HeroSection = () => {
                 {t("hero.cta")}
                 <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-border text-foreground hover:bg-secondary gap-2 font-medium btn-interactive hover:border-primary/50"
-              >
-                <Play className="w-4 h-4" />
-                {t("hero.watchVideo")}
-              </Button>
+
             </motion.div>
 
             {/* Stats Cards */}
@@ -152,56 +146,54 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Video Thumbnail */}
+          {/* Right Content - Logo with powerful context */}
           <motion.div 
-            className="relative mt-8 lg:mt-0"
+            className="relative mt-8 lg:mt-0 flex items-center justify-center"
             initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           >
-            <div className="relative max-w-lg mx-auto lg:max-w-none">
-              {/* Video container with styled frame like reference */}
+            <div className="relative max-w-lg mx-auto lg:max-w-none w-full">
+              {/* Animated gradient background circles */}
               <motion.div 
-                className="relative bg-card rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border border-border/50 aspect-video"
-                whileHover={{ scale: 1.02 }}
+                className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-emerald-400/20 rounded-3xl blur-3xl"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              
+              {/* Logo container with glass effect */}
+              <motion.div 
+                className="relative bg-card/50 backdrop-blur-xl rounded-3xl lg:rounded-3xl overflow-hidden shadow-2xl border border-border/50 p-0 lg:p-2 flex items-center justify-center"
+                whileHover={{ scale: 1.03, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)" }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Placeholder for video thumbnail */}
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary to-muted flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto mb-3 lg:mb-4 rounded-full bg-card flex items-center justify-center shadow-lg">
-                      <Users className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary" />
-                    </div>
-                    <p className="font-medium text-sm md:text-base">{t("hero.professionalTeacher")}</p>
-                  </div>
-                </div>
+                {/* Animated background pattern */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-primary/10 to-emerald-400/10"
+                  animate={{ opacity: [0.5, 0.8, 0.5] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
                 
-                {/* Play button overlay */}
-                <motion.button 
-                  className="absolute inset-0 flex items-center justify-center group"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <motion.div 
-                    className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-foreground/80 backdrop-blur-sm flex items-center justify-center shadow-lg"
-                    whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary))" }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Play className={`w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-background fill-background ${isRTL ? 'mr-0.5 lg:mr-1' : 'ml-0.5 lg:ml-1'}`} />
-                  </motion.div>
-                </motion.button>
+                {/* Logo image */}
+                <motion.img
+                  src={logo}
+                  alt="Pro English Logo"
+                  className="relative w-56 h-56 lg:w-80 lg:h-80 object-contain drop-shadow-lg"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                />
               </motion.div>
 
-              {/* Decorative elements */}
+              {/* Decorative corner elements */}
               <motion.div 
-                className={`absolute -bottom-3 ${isRTL ? '-left-3 lg:-left-4' : '-right-3 lg:-right-4'} w-16 h-16 lg:w-24 lg:h-24 bg-emerald-400/20 rounded-full blur-sm`}
-                animate={{ scale: [1, 1.1, 1] }}
+                className={`absolute -bottom-4 ${isRTL ? '-left-4 lg:-left-6' : '-right-4 lg:-right-6'} w-20 h-20 lg:w-32 lg:h-32 bg-emerald-400/20 rounded-full blur-lg`}
+                animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.div 
-                className={`absolute -top-3 ${isRTL ? '-right-3 lg:-right-4' : '-left-3 lg:-left-4'} w-12 h-12 lg:w-16 lg:h-16 bg-primary/20 rounded-full blur-sm`}
-                animate={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className={`absolute -top-4 ${isRTL ? '-right-4 lg:-right-6' : '-left-4 lg:-left-6'} w-16 h-16 lg:w-24 lg:h-24 bg-primary/20 rounded-full blur-lg`}
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               />
             </div>
           </motion.div>

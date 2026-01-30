@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -51,8 +52,33 @@ const AdminDashboard = () => {
       .slice(0, 2);
   };
 
+  const [totalClients, setTotalClients] = useState<number>(0);
+
+  useEffect(() => {
+    const loadTotalClients = () => {
+      try {
+        const stored = localStorage.getItem('proenglish_clients');
+        const clients = stored ? JSON.parse(stored) : [];
+        setTotalClients(Array.isArray(clients) ? clients.length : 0);
+      } catch (error) {
+        console.error('Error reading clients from localStorage:', error);
+        setTotalClients(0);
+      }
+    };
+
+    loadTotalClients();
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === 'proenglish_clients') {
+        loadTotalClients();
+      }
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
   const stats = [
-    { label: 'Total Clients', value: '1,234', change: '+12%', icon: Users },
+    { label: 'Total Clients', value: totalClients.toLocaleString(), change: '+12%', icon: Users },
     { label: 'Active Courses', value: '56', change: '+4%', icon: GraduationCap },
     { label: 'This Month Revenue', value: '$45,230', change: '+18%', icon: LayoutDashboard },
     { label: 'Pending Tasks', value: '23', change: '-5%', icon: Bell },

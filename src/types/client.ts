@@ -8,7 +8,7 @@ export type ClientStatus =
   | 'Inactive';
 
 // Gender options
-export type Gender = 'Male' | 'Female' | 'Other' | 'Prefer not to say';
+export type Gender = 'Male' | 'Female';
 
 // ================================
 // 1️⃣ SYSTEM DATA (Auto-generated)
@@ -83,6 +83,8 @@ export interface Client extends ClientSystemData, ClientPersonalInfo, ClientProd
   username?: string;
   isActive: boolean;
   avatarUrl?: string;
+  // Extra Fields (Dynamic)
+  extraFields?: Record<string, string | number | boolean>;
 }
 
 // Client creation payload (minimal required fields)
@@ -91,6 +93,8 @@ export interface CreateClientPayload {
   phoneNumber: string;
   email: string;
   password: string;
+  // Extra Fields
+  extraFields?: Record<string, string | number | boolean>;
 }
 
 // Client update payload (partial update)

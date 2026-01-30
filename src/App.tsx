@@ -11,6 +11,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AddNewClient from "./pages/admin/AddNewClient";
+import AllClients from "./pages/admin/AllClients";
+import ClientProfile from "./pages/admin/ClientProfile";
+import EditClient from "./pages/admin/EditClient";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import ClientDashboard from "./pages/client/ClientDashboard";
 
@@ -36,10 +40,42 @@ const App = () => (
               
               {/* Protected Admin Routes */}
               <Route
-                path="/admin/*"
+                path="/admin"
                 element={
                   <ProtectedRoute requiredInterface="Admin">
                     <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/clients"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <AllClients />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/clients/add"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <AddNewClient />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/clients/:id"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <ClientProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/clients/:id/edit"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <EditClient />
                   </ProtectedRoute>
                 }
               />

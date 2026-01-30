@@ -1,0 +1,54 @@
+{
+  "trainingPaths": [
+    { "id": "path-001", "name": "General English", "type": "pre-designed" },
+    { "id": "path-002", "name": "Business English", "type": "pre-designed" },
+    { "id": "path-003", "name": "IELTS Preparation", "type": "pre-designed" },
+    { "id": "path-004", "name": "Teen English Program", "type": "pre-designed" },
+    { "id": "path-005", "name": "Custom Path", "type": "custom" }
+  ],
+  "timeSlots": [
+    { "id": "slot-001", "label": "09:00 - 10:30", "value": "09:00-10:30" },
+    { "id": "slot-002", "label": "10:30 - 12:00", "value": "10:30-12:00" },
+    { "id": "slot-003", "label": "12:00 - 13:30", "value": "12:00-13:30" },
+    { "id": "slot-004", "label": "14:00 - 15:30", "value": "14:00-15:30" },
+    { "id": "slot-005", "label": "15:30 - 17:00", "value": "15:30-17:00" },
+    { "id": "slot-006", "label": "17:00 - 18:30", "value": "17:00-18:30" },
+    { "id": "slot-007", "label": "18:30 - 20:00", "value": "18:30-20:00" },
+    { "id": "slot-008", "label": "20:00 - 21:30", "value": "20:00-21:30" }
+  ],
+  "tags": [
+    { "id": "tag-001", "name": "VIP", "color": "#8b5cf6" },
+    { "id": "tag-002", "name": "Corporate", "color": "#06b6d4" },
+    { "id": "tag-003", "name": "New Lead", "color": "#22c55e" },
+    { "id": "tag-004", "name": "Teen", "color": "#f59e0b" },
+    { "id": "tag-005", "name": "Completed", "color": "#64748b" },
+    { "id": "tag-006", "name": "Priority", "color": "#ef4444" }
+  ],
+  "companies": [
+    { "id": "company-001", "name": "Tech Solutions LLC" },
+    { "id": "company-002", "name": "Global Enterprises" },
+    { "id": "company-003", "name": "Innovation Hub" },
+    { "id": "company-004", "name": "Business Corp" }
+  ],
+  "coordinators": [
+    { "id": "admin-001", "name": "Ahmed Al-Rashid", "role": "SuperAdmin" },
+    { "id": "admin-002", "name": "Sarah Johnson", "role": "Manager" },
+    { "id": "admin-003", "name": "Mohammed Ali", "role": "Supervisor" },
+    { "id": "admin-004", "name": "Fatima Hassan", "role": "Agent" }
+  ],
+  "trainingDays": [
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday"
+  ],
+  "availabilityOptions": [
+    "Morning",
+    "Afternoon",
+    "Evening",
+    "Flexible"
+  ]
+}
