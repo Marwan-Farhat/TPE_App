@@ -254,14 +254,14 @@ const ExtraFieldsManager = ({ open, onClose, onFieldsChange }: ExtraFieldsManage
           {/* Fields Table */}
           <div className="flex-1 overflow-auto border rounded-lg">
             <table className="w-full">
-              <thead className="bg-muted/50 sticky top-0">
+              <thead className="sticky top-0 z-10">
                 <tr>
-                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>#</th>
-                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.field')}</th>
-                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.informationType')}</th>
-                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.defaultValue')}</th>
-                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium`}>{t('admin.extraFieldsManager.createdAt')}</th>
-                  <th className="p-3 text-sm font-medium w-20"></th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium border-b bg-slate-100 dark:bg-slate-900`}>#</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium border-b bg-slate-100 dark:bg-slate-900`}>{t('admin.extraFieldsManager.field')}</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium border-b bg-slate-100 dark:bg-slate-900`}>{t('admin.extraFieldsManager.informationType')}</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium border-b bg-slate-100 dark:bg-slate-900`}>{t('admin.extraFieldsManager.defaultValue')}</th>
+                  <th className={`${isRTL ? 'text-right' : 'text-left'} p-3 text-sm font-medium border-b bg-slate-100 dark:bg-slate-900`}>{t('admin.extraFieldsManager.createdAt')}</th>
+                  <th className="p-3 text-sm font-medium w-20 border-b bg-slate-100 dark:bg-slate-900"></th>
                 </tr>
               </thead>
               <tbody>

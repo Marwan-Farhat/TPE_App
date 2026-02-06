@@ -15,6 +15,7 @@ import AddNewClient from "./pages/admin/AddNewClient";
 import AllClients from "./pages/admin/AllClients";
 import ClientProfile from "./pages/admin/ClientProfile";
 import EditClient from "./pages/admin/EditClient";
+import TaskDetail from "./pages/admin/TaskDetail";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import ClientDashboard from "./pages/client/ClientDashboard";
 
@@ -79,7 +80,14 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
-              
+              <Route
+               path="/admin/tasks/:id"
+               element={
+                 <ProtectedRoute requiredInterface="Admin">
+                   <TaskDetail />
+                 </ProtectedRoute>
+               }
+             />
               {/* Protected Teacher Routes */}
               <Route
                 path="/teacher/*"

@@ -1,40 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { 
-  Search, 
-  Plus, 
-  Filter,
-  MoreVertical,
-  Eye,
-  Edit2,
-  Trash2,
-  User,
-  Phone,
-  Mail,
-  Calendar
-} from 'lucide-react';
-import { format } from 'date-fns';
-import { useTranslation } from 'react-i18next';
-import useLanguage from '@/hooks/useLanguage';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Search, Plus, Filter, MoreVertical, Eye, Edit2, Trash2, User, Phone, Mail, Calendar } from "lucide-react";
+import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
+import useLanguage from "@/hooks/useLanguage";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,20 +25,20 @@ import {
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/hooks/use-toast';
-import AdminSidebar from '@/components/admin/AdminSidebar';
-import { clientService } from '@/services/clientService';
-import { Client, ClientStatus } from '@/types/client';
+} from "@/components/ui/alert-dialog";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import { clientService } from "@/services/clientService";
+import { Client, ClientStatus } from "@/types/client";
 
 const statusColors: Record<ClientStatus, string> = {
-  'New': 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-  'Booked a placement test': 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-  'Waiting': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-  'In training': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-  'Completed training': 'bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400',
-  'Inactive': 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
+  New: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+  "Booked a placement test": "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
+  Waiting: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
+  "In training": "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+  "Completed training": "bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400",
+  Inactive: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400",
 };
 
 const AllClients = () => {
@@ -64,10 +46,10 @@ const AllClients = () => {
   const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [deleteDialog, setDeleteDialog] = useState<{ isOpen: boolean; clientId: string | null }>({
     isOpen: false,
     clientId: null,
@@ -91,7 +73,7 @@ const AllClients = () => {
       const data = await clientService.getAll();
       setClients(data);
     } catch (error) {
-      console.error('Error loading clients:', error);
+      console.error("Error loading clients:", error);
     } finally {
       setLoading(false);
     }
@@ -103,7 +85,7 @@ const AllClients = () => {
       const results = await clientService.search(query);
       setClients(results);
     } catch (error) {
-      console.error('Error searching clients:', error);
+      console.error("Error searching clients:", error);
     } finally {
       setLoading(false);
     }
@@ -129,261 +111,276 @@ const AllClients = () => {
       const success = await clientService.delete(deleteDialog.clientId);
       if (success) {
         toast({
-          title: t('admin.clients.deleteSuccess'),
+          title: t("admin.clients.deleteSuccess"),
         });
-        setClients(clients.filter(c => c.id !== deleteDialog.clientId));
+        setClients(clients.filter((c) => c.id !== deleteDialog.clientId));
         setDeleteDialog({ isOpen: false, clientId: null });
       } else {
-        throw new Error('Delete failed');
+        throw new Error("Delete failed");
       }
     } catch (error) {
       toast({
-        title: t('admin.clients.deleteError'),
-        description: t('admin.clients.tryAgain'),
-        variant: 'destructive',
+        title: t("admin.clients.deleteError"),
+        description: t("admin.clients.tryAgain"),
+        variant: "destructive",
       });
     } finally {
       setDeleting(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background flex">
+    return (
+    <div className="min-h-screen bg-admin-bg flex">
       <AdminSidebar />
-      
-      <div className={`flex-1 ${isRTL ? 'mr-16' : 'ml-16'}`}>
+
+      <div className={`flex-1 ${isRTL ? "mr-16" : "ml-16"}`}>
         {/* Header */}
-        <header className="sticky top-0 z-40 bg-card border-b border-border">
+        <header className="sticky top-0 z-40 bg-card border-b border-admin-border-light shadow-[0_2px_8px_hsl(220_20%_20%/0.08)]">
           <div className="flex items-center justify-between px-6 h-14">
             <div className="flex items-center gap-2 text-sm">
               <span className="text-primary font-medium">
                 <User className="h-4 w-4 inline mr-1" />
-                {t('admin.sidebar.clients')}
+                {t("admin.sidebar.clients")}
               </span>
               <span className="text-muted-foreground">/</span>
-              <span className="text-foreground font-medium">{t('admin.clients.title')}</span>
+              <span className="text-foreground font-medium">{t("admin.clients.title")}</span>
             </div>
-            
-            <Button 
-              size="sm" 
-              className="gap-2"
-              onClick={() => navigate('/admin/clients/add')}
-            >
+
+            <Button size="sm" className="gap-2" onClick={() => navigate("/admin/clients/add")}>
               <Plus className="h-4 w-4" />
-              {t('admin.clients.addNew')}
+              {t("admin.clients.addNew")}
             </Button>
           </div>
         </header>
 
         {/* Main Content */}
         <main className="p-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {/* Search and Filters */}
-            <div className="bg-card border border-border rounded-xl p-4 mb-6">
-              <div className="flex items-center gap-4">
-                <div className="relative flex-1 max-w-md">
-                  <Search className={`absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
-                  <Input
-                    type="text"
-                    placeholder={t('admin.clients.search')}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className={`${isRTL ? 'pr-10' : 'pl-10'}`}
-                  />
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+            {/* Page Title Card */}
+            <Card className="mb-6 overflow-hidden">
+              <CardHeader className="bg-admin-section-alt border-b border-admin-border-light py-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <User className="h-5 w-5" />
+                    {t("admin.clients.title")}
+                  </CardTitle>
+                  <Badge variant="secondary" className="text-sm">
+                    {clients.length} {clients.length !== 1 ? t("admin.clients.clients") : t("admin.clients.client")}
+                  </Badge>
                 </div>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Filter className="h-4 w-4" />
-                  {t('admin.clients.filter')}
-                </Button>
-              </div>
-            </div>
+              </CardHeader>
+              <CardContent className="pt-4 pb-4">
+                {/* Search and Filters */}
+                <div className="flex items-center gap-4">
+                  <div className="relative flex-1 max-w-md">
+                    <Search
+                      className={`absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground ${isRTL ? "right-3" : "left-3"}`}
+                    />
+                    <Input
+                      type="text"
+                      placeholder={t("admin.clients.search")}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className={`${isRTL ? "pr-10" : "pl-10"}`}
+                    />
+                  </div>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Filter className="h-4 w-4" />
+                    {t("admin.clients.filter")}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
 
-            {/* Clients Table */}
-            <div className="bg-card border border-border rounded-xl overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.table.name')}</TableHead>
-                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.table.contactInfo')}</TableHead>
-                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.table.status')}</TableHead>
-                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.program')}</TableHead>
-                    <TableHead className={isRTL ? 'text-right' : ''}>{t('admin.clients.added')}</TableHead>
-                    <TableHead className={`w-12 ${isRTL ? 'text-left' : ''}`}></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {loading ? (
-                    // Loading skeleton
-                    Array.from({ length: 5 }).map((_, i) => (
-                      <TableRow key={i}>
-                        <TableCell>
-                          <div className="flex items-center gap-3">
-                            <Skeleton className="h-10 w-10 rounded-full" />
-                            <div className="space-y-1">
-                              <Skeleton className="h-4 w-32" />
-                              <Skeleton className="h-3 w-20" />
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell><Skeleton className="h-4 w-40" /></TableCell>
-                        <TableCell><Skeleton className="h-6 w-20" /></TableCell>
-                        <TableCell><Skeleton className="h-4 w-28" /></TableCell>
-                        <TableCell><Skeleton className="h-4 w-24" /></TableCell>
-                        <TableCell><Skeleton className="h-8 w-8" /></TableCell>
-                      </TableRow>
-                    ))
-                  ) : clients.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center py-12">
-                        <div className="flex flex-col items-center gap-3 text-muted-foreground">
-                          <User className="h-12 w-12 opacity-50" />
-                          <div>
-                            <p className="font-medium">{t('admin.clients.noClients')}</p>
-                            <p className="text-sm">
-                              {searchQuery 
-                                ? t('admin.clients.noSearchResults')
-                                : t('admin.clients.addFirstClient')
-                              }
-                            </p>
-                          </div>
-                          {!searchQuery && (
-                            <Button 
-                              size="sm" 
-                              onClick={() => navigate('/admin/clients/add')}
-                            >
-                              <Plus className="h-4 w-4 mr-2" />
-                              {t('admin.clients.addNew')}
-                            </Button>
-                          )}
-                        </div>
-                      </TableCell>
+            {/* Clients Table Card */}
+            <Card className="overflow-hidden">
+              <CardHeader className="bg-admin-section-alt border-b border-admin-border-light py-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  {t("admin.clients.clientsList") || "Clients List"}
+                </CardTitle>
+              </CardHeader>
+              <div dir={isRTL ? "rtl" : "ltr"}>
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-muted/30">
+                      <TableHead className={isRTL ? "text-right" : ""}>{t("admin.clients.table.name")}</TableHead>
+                      <TableHead className={isRTL ? "text-right" : ""}>{t("admin.clients.table.contactInfo")}</TableHead>
+                      <TableHead className={isRTL ? "text-right" : ""}>{t("admin.clients.table.status")}</TableHead>
+                      <TableHead className={isRTL ? "text-right" : ""}>{t("admin.clients.program")}</TableHead>
+                      <TableHead className={isRTL ? "text-right" : ""}>{t("admin.clients.added")}</TableHead>
+                      <TableHead className={`w-12 ${isRTL ? "text-left" : ""}`}></TableHead>
                     </TableRow>
-                  ) : (
-                    clients.map((client) => (
-                      <TableRow 
-                        key={client.id} 
-                        className="cursor-pointer hover:bg-muted/50"
-                        onClick={() => handleViewClient(client.id)}
-                      >
-                        <TableCell className={isRTL ? 'text-right' : ''}>
-                          <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                              <span className="text-primary font-medium">
-                                {client.name.charAt(0).toUpperCase()}
-                              </span>
+                  </TableHeader>
+                  <TableBody>
+                    {loading ? (
+                      // Loading skeleton
+                      Array.from({ length: 5 }).map((_, i) => (
+                        <TableRow key={i}>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <Skeleton className="h-10 w-10 rounded-full" />
+                              <div className="space-y-1">
+                                <Skeleton className="h-4 w-32" />
+                                <Skeleton className="h-3 w-20" />
+                              </div>
                             </div>
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-40" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-6 w-20" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-28" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-24" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-8 w-8" />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : clients.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center py-12">
+                          <div className="flex flex-col items-center gap-3 text-muted-foreground">
+                            <User className="h-12 w-12 opacity-50" />
                             <div>
-                              <p className="font-medium">{client.name}</p>
-                              <p className="text-xs text-muted-foreground">{client.id}</p>
+                              <p className="font-medium">{t("admin.clients.noClients")}</p>
+                              <p className="text-sm">
+                                {searchQuery ? t("admin.clients.noSearchResults") : t("admin.clients.addFirstClient")}
+                              </p>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className={isRTL ? 'text-right' : ''}>
-                          <div className="space-y-1">
-                            <div className={`flex items-center gap-1 text-sm ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-                              <Mail className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                              {client.email}
-                            </div>
-                            <div className={`flex items-center gap-1 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-                              <Phone className="h-3 w-3 flex-shrink-0" />
-                              {client.phoneNumber}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className={isRTL ? 'text-right' : ''}>
-                          <Badge className={statusColors[client.status as ClientStatus]}>
-                            {client.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className={isRTL ? 'text-right' : ''}>
-                          <span className="text-sm">
-                            {client.currentProgram || '-'}
-                          </span>
-                        </TableCell>
-                        <TableCell className={isRTL ? 'text-right' : ''}>
-                          <div className={`flex items-center gap-1 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-                            <Calendar className="h-3 w-3 flex-shrink-0" />
-                            {format(new Date(client.createdAt), 'MMM d, yyyy')}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
-                                <MoreVertical className="h-4 w-4" />
+                            {!searchQuery && (
+                              <Button size="sm" onClick={() => navigate("/admin/clients/add")}>
+                                <Plus className="h-4 w-4 mr-2" />
+                                {t("admin.clients.addNew")}
                               </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewClient(client.id);
-                              }}>
-                                <Eye className="h-4 w-4 mr-2" />
-                                {t('admin.clients.view')}
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={(e) => {
-                                e.stopPropagation();
-                                handleEditClient(client.id);
-                              }}>
-                                <Edit2 className="h-4 w-4 mr-2" />
-                                {t('admin.clients.edit')}
-                              </DropdownMenuItem>
-                              <DropdownMenuItem 
-                                className="text-destructive"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDeleteClick(client.id);
-                                }}
-                              >
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                {t('admin.clients.delete')}
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
+                            )}
+                          </div>
                         </TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-
-            {/* Results count */}
-            {!loading && clients.length > 0 && (
-              <div className="mt-4 text-sm text-muted-foreground">
-                {t('admin.clients.showing')} {clients.length} {clients.length !== 1 ? t('admin.clients.clients') : t('admin.clients.client')}
+                    ) : (
+                      clients.map((client) => (
+                        <TableRow
+                          key={client.id}
+                          className="cursor-pointer hover:bg-muted/50"
+                          onClick={() => handleViewClient(client.id)}
+                        >
+                          <TableCell className={isRTL ? "text-right" : ""}>
+                            <div className="flex items-center gap-3">
+                              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <span className="text-primary font-medium">{client.name.charAt(0).toUpperCase()}</span>
+                              </div>
+                              <div>
+                                <p className="font-medium">{client.name}</p>
+                                <p className="text-xs text-muted-foreground">{client.id}</p>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className={isRTL ? "text-right" : ""}>
+                            <div className="space-y-1">
+                              <div
+                                className={`flex items-center gap-1 text-sm ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+                              >
+                                <Mail className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                                {client.email}
+                              </div>
+                              <div
+                                className={`flex items-center gap-1 text-sm text-muted-foreground ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+                              >
+                                <Phone className="h-3 w-3 flex-shrink-0" />
+                                {client.phoneNumber}
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className={isRTL ? "text-right" : ""}>
+                            <Badge className={statusColors[client.status as ClientStatus]}>{client.status}</Badge>
+                          </TableCell>
+                          <TableCell className={isRTL ? "text-right" : ""}>
+                            <span className="text-sm">{client.currentProgram || "-"}</span>
+                          </TableCell>
+                          <TableCell className={isRTL ? "text-right" : ""}>
+                            <div
+                              className={`flex items-center gap-1 text-sm text-muted-foreground ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+                            >
+                              <Calendar className="h-3 w-3 flex-shrink-0" />
+                              {format(new Date(client.createdAt), "MMM d, yyyy")}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleViewClient(client.id);
+                                  }}
+                                >
+                                  <Eye className="h-4 w-4 mr-2" />
+                                  {t("admin.clients.view")}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEditClient(client.id);
+                                  }}
+                                >
+                                  <Edit2 className="h-4 w-4 mr-2" />
+                                  {t("admin.clients.edit")}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  className="text-destructive"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDeleteClick(client.id);
+                                  }}
+                                >
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  {t("admin.clients.delete")}
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
               </div>
-            )}
+            </Card>
           </motion.div>
         </main>
 
         {/* Delete Confirmation Dialog */}
-        <AlertDialog open={deleteDialog.isOpen} onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            setDeleteDialog({ isOpen: false, clientId: null });
-          }
-        }}>
+        <AlertDialog
+          open={deleteDialog.isOpen}
+          onOpenChange={(isOpen) => {
+            if (!isOpen) {
+              setDeleteDialog({ isOpen: false, clientId: null });
+            }
+          }}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{t('admin.clients.deleteConfirm')}</AlertDialogTitle>
-              <AlertDialogDescription>
-                {t('admin.clients.deleteMessage')}
-              </AlertDialogDescription>
+              <AlertDialogTitle>{t("admin.clients.deleteConfirm")}</AlertDialogTitle>
+              <AlertDialogDescription>{t("admin.clients.deleteMessage")}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               disabled={deleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {deleting ? t('admin.clientProfile.deleting') : t('admin.clients.delete')}
+              {deleting ? t("admin.clientProfile.deleting") : t("admin.clients.delete")}
             </AlertDialogAction>
-            <AlertDialogCancel disabled={deleting}>
-              {t('admin.clients.cancel')}
-            </AlertDialogCancel>
+            <AlertDialogCancel disabled={deleting}>{t("admin.clients.cancel")}</AlertDialogCancel>
           </AlertDialogContent>
         </AlertDialog>
       </div>

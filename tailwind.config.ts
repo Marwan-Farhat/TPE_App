@@ -60,6 +60,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        admin: {
+          bg: "hsl(var(--admin-bg))",
+          section: "hsl(var(--admin-section))",
+          "section-alt": "hsl(var(--admin-section-alt))",
+          "section-nested": "hsl(var(--admin-section-nested))",
+          "header-bg": "hsl(var(--admin-header-bg))",
+          border: "hsl(var(--admin-border))",
+          "border-light": "hsl(var(--admin-border-light))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
