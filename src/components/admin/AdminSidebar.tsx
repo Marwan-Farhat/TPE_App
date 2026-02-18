@@ -1,21 +1,42 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Users, UserPlus, List, Search, ChevronRight, User, Phone, Mail, Loader2, Languages, ChevronDown } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { cn } from '@/lib/utils';
-import logo from '@/assets/logo.png';
-import { clientService } from '@/services/clientService';
-import { Client } from '@/types/client';
-import useLanguage from '@/hooks/useLanguage';
-import { ThemeToggleCompact } from '@/components/ThemeToggle';
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Users,
+  UserPlus,
+  List,
+  Search,
+  ChevronRight,
+  User,
+  Phone,
+  Mail,
+  Loader2,
+  Languages,
+  ChevronDown,
+  CalendarClock,
+  Clock,
+  ClipboardList,
+  FileText,
+  BookOpen,
+  HelpCircle,
+  Mic,
+  CalendarDays,
+  ListChecks,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
+import { clientService } from "@/services/clientService";
+import { Client } from "@/types/client";
+import useLanguage from "@/hooks/useLanguage";
+import { ThemeToggleCompact } from "@/components/ThemeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 const AdminSidebar = () => {
   const { t, i18n } = useTranslation();
@@ -23,12 +44,14 @@ const AdminSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isClientsOpen, setIsClientsOpen] = useState(
-    location.pathname.includes('/admin/clients')
-  );
+  const [isClientsOpen, setIsClientsOpen] = useState(location.pathname.includes("/admin/clients"));
+  const [isCoordinationOpen, setIsCoordinationOpen] = useState(location.pathname.includes("/admin/coordination"));
+  const [isPlacementTestsOpen, setIsPlacementTestsOpen] = useState(location.pathname.includes("/admin/placement-tests"));
+  const [isTestingCenterOpen, setIsTestingCenterOpen] = useState(location.pathname.includes("/admin/testing-center"));
+  const [isOralExamsOpen, setIsOralExamsOpen] = useState(location.pathname.includes("/admin/oral-exams"));
 
   // Search state
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Client[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -51,8 +74,8 @@ const AdminSidebar = () => {
         setShowResults(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Debounced search
@@ -74,7 +97,7 @@ const AdminSidebar = () => {
         setSearchResults(results.slice(0, 5)); // Limit to 5 results
         setShowResults(true);
       } catch (error) {
-        console.error('Search error:', error);
+        console.error("Search error:", error);
       } finally {
         setIsSearching(false);
       }
@@ -99,20 +122,60 @@ const AdminSidebar = () => {
   const handleOverlayClick = () => {
     setIsExpanded(false);
     setIsClientsOpen(false);
+    setIsCoordinationOpen(false);
+    setIsPlacementTestsOpen(false);
+    setIsTestingCenterOpen(false);
+    setIsOralExamsOpen(false);
     setShowResults(false);
+  };
+
+  const handleCoordinationClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+      setIsCoordinationOpen(true);
+    } else {
+      setIsCoordinationOpen(!isCoordinationOpen);
+    }
+  };
+
+  const handlePlacementTestsClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+      setIsPlacementTestsOpen(true);
+    } else {
+      setIsPlacementTestsOpen(!isPlacementTestsOpen);
+    }
+  };
+
+  const handleTestingCenterClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+      setIsTestingCenterOpen(true);
+    } else {
+      setIsTestingCenterOpen(!isTestingCenterOpen);
+    }
+  };
+
+  const handleOralExamsClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+      setIsOralExamsOpen(true);
+    } else {
+      setIsOralExamsOpen(!isOralExamsOpen);
+    }
   };
 
   const handleNavigation = (path: string) => {
     navigate(path);
     setIsExpanded(false);
-    setSearchQuery('');
+    setSearchQuery("");
     setShowResults(false);
   };
 
   const handleResultClick = (clientId: string) => {
     navigate(`/admin/clients/${clientId}`);
     setIsExpanded(false);
-    setSearchQuery('');
+    setSearchQuery("");
     setShowResults(false);
   };
 
@@ -122,10 +185,16 @@ const AdminSidebar = () => {
 
   const highlightMatch = (text: string, query: string) => {
     if (!query.trim()) return text;
-    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
     const parts = text.split(regex);
-    return parts.map((part, i) => 
-      regex.test(part) ? <mark key={i} className="bg-primary/30 text-foreground rounded px-0.5">{part}</mark> : part
+    return parts.map((part, i) =>
+      regex.test(part) ? (
+        <mark key={i} className="bg-primary/30 text-foreground rounded px-0.5">
+          {part}
+        </mark>
+      ) : (
+        part
+      ),
     );
   };
 
@@ -148,7 +217,7 @@ const AdminSidebar = () => {
       <motion.aside
         className={cn(
           "fixed top-0 h-screen bg-card border-border z-50 flex flex-col overflow-hidden",
-          isRTL ? "right-0 border-l" : "left-0 border-r"
+          isRTL ? "right-0 border-l" : "left-0 border-r",
         )}
         initial="collapsed"
         animate={isExpanded ? "expanded" : "collapsed"}
@@ -156,9 +225,9 @@ const AdminSidebar = () => {
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         {/* Logo Header - Clickable to navigate to admin home */}
-        <div 
+        <div
           className="h-16 border-b border-border flex items-center px-3 gap-3 flex-shrink-0 cursor-pointer hover:bg-muted/50 transition-colors"
-          onClick={() => navigate('/admin')}
+          onClick={() => navigate("/admin")}
         >
           <img src={logo} alt="The Pro English" className="h-10 flex-shrink-0" />
           <AnimatePresence>
@@ -170,7 +239,7 @@ const AdminSidebar = () => {
                 exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
                 transition={{ duration: 0.2 }}
               >
-                {t('admin.sidebar.admin')}
+                {t("admin.sidebar.admin")}
               </motion.span>
             )}
           </AnimatePresence>
@@ -189,29 +258,33 @@ const AdminSidebar = () => {
             >
               <div className="relative w-full">
                 {isSearching ? (
-                  <Loader2 className={cn(
-                    "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground animate-spin",
-                    isRTL ? "right-3" : "left-3"
-                  )} />
+                  <Loader2
+                    className={cn(
+                      "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground animate-spin",
+                      isRTL ? "right-3" : "left-3",
+                    )}
+                  />
                 ) : (
-                  <Search className={cn(
-                    "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground",
-                    isRTL ? "right-3" : "left-3"
-                  )} />
+                  <Search
+                    className={cn(
+                      "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground",
+                      isRTL ? "right-3" : "left-3",
+                    )}
+                  />
                 )}
                 <input
                   type="text"
-                  placeholder={t('admin.sidebar.search')}
+                  placeholder={t("admin.sidebar.search")}
                   dir={isRTL ? "rtl" : "ltr"}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => searchQuery.trim() && setShowResults(true)}
                   className={cn(
                     "w-full h-10 bg-secondary/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20",
-                    isRTL ? "pr-10 pl-4" : "pl-10 pr-4"
+                    isRTL ? "pr-10 pl-4" : "pl-10 pr-4",
                   )}
                 />
-                
+
                 {/* Search Results Dropdown */}
                 <AnimatePresence>
                   {showResults && searchResults.length > 0 && (
@@ -253,18 +326,18 @@ const AdminSidebar = () => {
                           </button>
                         ))}
                       </div>
-                      
+
                       {/* View All Results */}
                       <button
                         onClick={() => {
                           navigate(`/admin/clients?search=${encodeURIComponent(searchQuery)}`);
                           setIsExpanded(false);
-                          setSearchQuery('');
+                          setSearchQuery("");
                           setShowResults(false);
                         }}
                         className="w-full p-2 text-xs text-center text-primary hover:bg-accent transition-colors border-t border-border"
                       >
-                        {t('admin.sidebar.viewAllResults')} →
+                        {t("admin.sidebar.viewAllResults")} →
                       </button>
                     </motion.div>
                   )}
@@ -281,7 +354,7 @@ const AdminSidebar = () => {
                     >
                       <div className="flex flex-col items-center gap-2 text-muted-foreground">
                         <User className="h-6 w-6 opacity-50" />
-                        <p className="text-sm">{t('admin.sidebar.noClientsFound')}</p>
+                        <p className="text-sm">{t("admin.sidebar.noClientsFound")}</p>
                       </div>
                     </motion.div>
                   )}
@@ -299,7 +372,7 @@ const AdminSidebar = () => {
               onClick={handleClientsClick}
               className={cn(
                 "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
-                (isClientsOpen && isExpanded) && "bg-secondary/50 text-foreground"
+                isClientsOpen && isExpanded && "bg-secondary/50 text-foreground",
               )}
             >
               {/* Chevron - Only show when expanded */}
@@ -313,12 +386,9 @@ const AdminSidebar = () => {
                   <ChevronRight className="h-4 w-4" />
                 </motion.div>
               )}
-              
+
               {/* Icon - Always visible */}
-              <div className={cn(
-                "flex-shrink-0 flex items-center justify-center",
-                !isExpanded && "w-full"
-              )}>
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
                 <Users className="h-5 w-5 text-primary" />
               </div>
 
@@ -332,7 +402,7 @@ const AdminSidebar = () => {
                     exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {t('admin.sidebar.clients')}
+                    {t("admin.sidebar.clients")}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -351,30 +421,314 @@ const AdminSidebar = () => {
                   <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
                     {/* Add New Client */}
                     <button
-                      onClick={() => handleNavigation('/admin/clients/add')}
+                      onClick={() => handleNavigation("/admin/clients/add")}
                       className={cn(
                         "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
-                        isActiveRoute('/admin/clients/add')
+                        isActiveRoute("/admin/clients/add")
                           ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
                       )}
                     >
                       <UserPlus className="h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">{t('admin.sidebar.addNewClient')}</span>
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.addNewClient")}</span>
                     </button>
 
                     {/* All Clients */}
                     <button
-                      onClick={() => handleNavigation('/admin/clients')}
+                      onClick={() => handleNavigation("/admin/clients")}
                       className={cn(
                         "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
-                        isActiveRoute('/admin/clients')
+                        isActiveRoute("/admin/clients")
                           ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
                       )}
                     >
                       <List className="h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">{t('admin.sidebar.allClients')}</span>
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.allClients")}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Coordination Category */}
+          <div>
+            <button
+              onClick={handleCoordinationClick}
+              className={cn(
+                "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
+                isCoordinationOpen && isExpanded && "bg-secondary/50 text-foreground",
+              )}
+            >
+              {isExpanded && (
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: isCoordinationOpen ? 90 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-shrink-0"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              )}
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
+                <CalendarClock className="h-5 w-5 text-primary" />
+              </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.span
+                    className="font-medium text-sm whitespace-nowrap flex-1 text-start"
+                    initial={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t("admin.sidebar.coordination")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <AnimatePresence>
+              {isExpanded && isCoordinationOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
+                    <button
+                      onClick={() => handleNavigation("/admin/coordination/time-slots")}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
+                        location.pathname.includes("/admin/coordination/time-slots")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
+                      )}
+                    >
+                      <Clock className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.timeSlots")}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Placement Tests Category */}
+          <div>
+            <button
+              onClick={handlePlacementTestsClick}
+              className={cn(
+                "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
+                isPlacementTestsOpen && isExpanded && "bg-secondary/50 text-foreground",
+              )}
+            >
+              {isExpanded && (
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: isPlacementTestsOpen ? 90 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-shrink-0"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              )}
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
+                <ClipboardList className="h-5 w-5 text-primary" />
+              </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.span
+                    className="font-medium text-sm whitespace-nowrap flex-1 text-start"
+                    initial={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t("admin.sidebar.placementTests")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <AnimatePresence>
+              {isExpanded && isPlacementTestsOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
+                    <button
+                      onClick={() => handleNavigation("/admin/placement-tests/templates")}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
+                        location.pathname.includes("/admin/placement-tests/templates")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
+                      )}
+                    >
+                      <FileText className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.testTemplates")}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Testing Center Category */}
+          <div>
+            <button
+              onClick={handleTestingCenterClick}
+              className={cn(
+                "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
+                isTestingCenterOpen && isExpanded && "bg-secondary/50 text-foreground",
+              )}
+            >
+              {isExpanded && (
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: isTestingCenterOpen ? 90 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-shrink-0"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              )}
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
+                <BookOpen className="h-5 w-5 text-primary" />
+              </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.span
+                    className="font-medium text-sm whitespace-nowrap flex-1 text-start"
+                    initial={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t("admin.sidebar.testingCenter")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <AnimatePresence>
+              {isExpanded && isTestingCenterOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
+                    <button
+                      onClick={() => handleNavigation("/admin/testing-center/quizzes")}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
+                        location.pathname.includes("/admin/testing-center/quizzes")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
+                      )}
+                    >
+                      <HelpCircle className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.quizzes")}</span>
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/admin/testing-center/questions")}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
+                        location.pathname.includes("/admin/testing-center/questions")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
+                      )}
+                    >
+                      <FileText className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.questions")}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Oral Exams Category */}
+          <div>
+            <button
+              onClick={handleOralExamsClick}
+              className={cn(
+                "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
+                isOralExamsOpen && isExpanded && "bg-secondary/50 text-foreground",
+              )}
+            >
+              {isExpanded && (
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: isOralExamsOpen ? 90 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-shrink-0"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              )}
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
+                <Mic className="h-5 w-5 text-primary" />
+              </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.span
+                    className="font-medium text-sm whitespace-nowrap flex-1 text-start"
+                    initial={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: isRTL ? 10 : -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t("admin.sidebar.oralExams")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <AnimatePresence>
+              {isExpanded && isOralExamsOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
+                    <button
+                      onClick={() => handleNavigation("/admin/oral-exams/slots")}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
+                        location.pathname.includes("/admin/oral-exams/slots")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
+                      )}
+                    >
+                      <CalendarDays className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.examSlots")}</span>
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/admin/oral-exams/test-types")}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors",
+                        location.pathname.includes("/admin/oral-exams/test-types")
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground",
+                      )}
+                    >
+                      <ListChecks className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.testTypes")}</span>
                     </button>
                   </div>
                 </motion.div>
@@ -408,13 +762,13 @@ const AdminSidebar = () => {
                     <DropdownMenuContent className="bg-popover" align={isRTL ? "end" : "start"}>
                       <DropdownMenuItem
                         onClick={() => changeLanguage("en")}
-                        className={`cursor-pointer ${currentLanguage === "en" ? 'bg-secondary' : ''}`}
+                        className={`cursor-pointer ${currentLanguage === "en" ? "bg-secondary" : ""}`}
                       >
                         English
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => changeLanguage("ar")}
-                        className={`cursor-pointer ${currentLanguage === "ar" ? 'bg-secondary' : ''}`}
+                        className={`cursor-pointer ${currentLanguage === "ar" ? "bg-secondary" : ""}`}
                       >
                         العربية
                       </DropdownMenuItem>
@@ -446,13 +800,13 @@ const AdminSidebar = () => {
                   <DropdownMenuContent className="bg-popover" align={isRTL ? "end" : "start"}>
                     <DropdownMenuItem
                       onClick={() => changeLanguage("en")}
-                      className={`cursor-pointer ${currentLanguage === "en" ? 'bg-secondary' : ''}`}
+                      className={`cursor-pointer ${currentLanguage === "en" ? "bg-secondary" : ""}`}
                     >
                       English
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => changeLanguage("ar")}
-                      className={`cursor-pointer ${currentLanguage === "ar" ? 'bg-secondary' : ''}`}
+                      className={`cursor-pointer ${currentLanguage === "ar" ? "bg-secondary" : ""}`}
                     >
                       العربية
                     </DropdownMenuItem>

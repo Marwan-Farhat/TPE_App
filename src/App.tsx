@@ -16,6 +16,15 @@ import AllClients from "./pages/admin/AllClients";
 import ClientProfile from "./pages/admin/ClientProfile";
 import EditClient from "./pages/admin/EditClient";
 import TaskDetail from "./pages/admin/TaskDetail";
+import TimeSlotsList from "./pages/admin/coordination/TimeSlotsList";
+import TimeSlotForm from "./pages/admin/coordination/TimeSlotForm";
+import TimeSlotDetail from "./pages/admin/coordination/TimeSlotDetail";
+import TestTemplatesList from "./pages/admin/placementTests/TestTemplatesList";
+import QuizzesList from "./pages/admin/testingCenter/QuizzesList";
+import QuestionsList from "./pages/admin/testingCenter/QuestionsList";
+import QuizQuestionsPage from "./pages/admin/testingCenter/QuizQuestionsPage";
+import OralTestTypesList from "./pages/admin/oralExams/OralTestTypesList";
+import ExamSlotsList from "./pages/admin/oralExams/ExamSlotsList";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import ClientDashboard from "./pages/client/ClientDashboard";
 
@@ -38,7 +47,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
-              
+
               {/* Protected Admin Routes */}
               <Route
                 path="/admin"
@@ -80,7 +89,7 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
-              <Route
+             <Route
                path="/admin/tasks/:id"
                element={
                  <ProtectedRoute requiredInterface="Admin">
@@ -88,7 +97,95 @@ const App = () => (
                  </ProtectedRoute>
                }
              />
-              {/* Protected Teacher Routes */}
+
+              {/* Coordination - Time Slots */}
+              <Route
+                path="/admin/coordination/time-slots"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <TimeSlotsList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/coordination/time-slots/add"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <TimeSlotForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/coordination/time-slots/:id"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <TimeSlotDetail />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/coordination/time-slots/:id/edit"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <TimeSlotForm editMode />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Placement Tests */}
+              <Route
+                path="/admin/placement-tests/templates"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <TestTemplatesList />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Testing Center */}
+              <Route
+                path="/admin/testing-center/quizzes"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <QuizzesList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/testing-center/quizzes/:id/questions"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <QuizQuestionsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/testing-center/questions"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <QuestionsList />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Oral Exams */}
+              <Route
+                path="/admin/oral-exams/test-types"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <OralTestTypesList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/oral-exams/slots"
+                element={
+                  <ProtectedRoute requiredInterface="Admin">
+                    <ExamSlotsList />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/teacher/*"
                 element={
@@ -97,7 +194,7 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
-              
+
               {/* Protected Client Routes */}
               <Route
                 path="/client/*"
@@ -107,7 +204,7 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
-              
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
