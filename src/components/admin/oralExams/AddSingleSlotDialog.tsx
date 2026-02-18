@@ -29,15 +29,23 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   selectedDate: Date;
   onSave: () => void;
+  initialValues?: {
+    groupId: string;
+    teacherId: string;
+    oralTestTypeId: string;
+    date: string;
+    startTime: string;
+  } | null;
 }
 
-const AddSingleSlotDialog = ({ open, onOpenChange, selectedDate, onSave }: Props) => {
+const AddSingleSlotDialog = ({ open, onOpenChange, selectedDate, onSave, initialValues = null }: Props) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const { isRTL } = useLanguage();
 
   const [teacherId, setTeacherId] = useState("");
   const [oralTestTypeId, setOralTestTypeId] = useState("");
+  const [slotDate, setSlotDate] = useState("");
   const [startTime, setStartTime] = useState("");
 
   const tKey = (key: string) => t(`admin.oralExams.examSlots.${key}`);
@@ -47,28 +55,42 @@ const AddSingleSlotDialog = ({ open, onOpenChange, selectedDate, onSave }: Props
   );
 
   const testTypes = oralTestTypeService.getActive();
-  const dateStr = format(selectedDate, "yyyy-MM-dd");
-  const dateLabel = format(selectedDate, "EEEE, MMMM d");
+  const dateStr = initialValues?.date ?? format(selectedDate, "yyyy-MM-dd");
+  const dateLabel = slotDate
+    ? format(new Date(`${slotDate}T00:00:00`), "EEEE, MMMM d")
+    : format(new Date(`${dateStr}T00:00:00`), "EEEE, MMMM d");
+  const isEditMode = !!initialValues;
 
   useEffect(() => {
     if (open) {
-      setTeacherId("");
-      setOralTestTypeId("");
-      setStartTime("");
+      setTeacherId(initialValues?.teacherId ?? "");
+      setOralTestTypeId(initialValues?.oralTestTypeId ?? "");
+      setSlotDate(initialValues?.date ?? dateStr);
+      setStartTime(initialValues?.startTime ?? "");
     }
-  }, [open]);
+  }, [open, initialValues, dateStr]);
 
   const handleSubmit = () => {
-    if (!teacherId || !oralTestTypeId || !startTime) {
+    if (!teacherId || !oralTestTypeId || !startTime || !slotDate) {
       toast({ title: tKey("validation.fillRequired"), variant: "destructive" });
       return;
     }
 
     const teacher = teachers.find((t) => t.id === teacherId);
-    const result = examSlotService.createSingle(
-      { teacherId, oralTestTypeId, startTime },
-      dateStr
-    );
+    const selectedSlotDate = slotDate || dateStr;
+
+    const result = isEditMode && initialValues
+      ? examSlotService.updateSingleGroup(
+          initialValues.groupId,
+          { teacherId, oralTestTypeId, startTime },
+          selectedSlotDate,
+          teacher?.fullName || "",
+        )
+      : examSlotService.createSingle(
+          { teacherId, oralTestTypeId, startTime },
+          selectedSlotDate,
+          teacher?.fullName || "",
+        );
 
     if (!result.success) {
       if (result.error === "overlap") {
@@ -81,17 +103,7 @@ const AddSingleSlotDialog = ({ open, onOpenChange, selectedDate, onSave }: Props
       return;
     }
 
-    // Update teacher name on the slot
-    if (result.slot && teacher) {
-      const allSlots = JSON.parse(localStorage.getItem("proenglish_exam_slots") || "[]");
-      const idx = allSlots.findIndex((s: any) => s.id === result.slot!.id);
-      if (idx !== -1) {
-        allSlots[idx].teacherName = teacher.fullName;
-        localStorage.setItem("proenglish_exam_slots", JSON.stringify(allSlots));
-      }
-    }
-
-    toast({ title: tKey("createSuccess") });
+    toast({ title: isEditMode ? tKey("updateSuccess") : tKey("createSuccess") });
     onSave();
     onOpenChange(false);
   };
@@ -100,10 +112,21 @@ const AddSingleSlotDialog = ({ open, onOpenChange, selectedDate, onSave }: Props
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md" dir={isRTL ? "rtl" : "ltr"}>
         <DialogHeader>
-          <DialogTitle>{tKey("addSlotFor")} {dateLabel}</DialogTitle>
+          <DialogTitle>
+            {isEditMode ? tKey("editSingleSlot") : tKey("addSlotFor")} {dateLabel}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 py-2">
+          <div className="space-y-2">
+            <Label>{tKey("fields.startDate")} *</Label>
+            <Input
+              type="date"
+              value={slotDate}
+              onChange={(e) => setSlotDate(e.target.value)}
+            />
+          </div>
+
           {/* Teacher */}
           <div className="space-y-2">
             <Label>{tKey("fields.teacher")} *</Label>
@@ -154,7 +177,7 @@ const AddSingleSlotDialog = ({ open, onOpenChange, selectedDate, onSave }: Props
             {tKey("cancel")}
           </Button>
           <Button onClick={handleSubmit} className="gradient-primary text-white">
-            {tKey("assign")}
+            {isEditMode ? tKey("save") : tKey("assign")}
           </Button>
         </DialogFooter>
       </DialogContent>

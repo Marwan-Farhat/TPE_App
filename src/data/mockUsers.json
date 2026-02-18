@@ -106,6 +106,21 @@
       "updatedAt": "2024-02-05T00:00:00Z"
     },
     {
+      "id": "teacher-004",
+      "email": "tester2@proenglish.com",
+      "username": "tester2",
+      "password": "123456",
+      "role": "PlacementTester",
+      "interface": "Teacher",
+      "isActive": true,
+      "fullName": "Dr. Samih Loai",
+      "department": "Assessment",
+      "phoneNumber": "+971509123456",
+      "avatarUrl": "",
+      "createdAt": "2024-03-01T00:00:00Z",
+      "updatedAt": "2024-03-01T00:00:00Z"
+    },
+    {
       "id": "admin-005",
       "email": "inactive@proenglish.com",
       "username": "inactive",

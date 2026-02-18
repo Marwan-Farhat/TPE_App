@@ -1,13 +1,51 @@
-import { ExamSlot, BulkSlotFormData, SingleSlotFormData } from '@/types/examSlot';
+import { ExamSlot, BulkSlotFormData, SingleSlotFormData, ExamSlotGroup } from '@/types/examSlot';
 import { oralTestTypeService } from './oralTestTypeService';
 import { format, addMinutes, parse, eachDayOfInterval, getDay } from 'date-fns';
 
 const STORAGE_KEY = 'proenglish_exam_slots';
 
+const toNormalizedSlot = (slot: ExamSlot): ExamSlot => {
+  const groupId = slot.groupId ?? slot.id;
+  const groupStartDate = slot.groupStartDate ?? slot.date;
+  const groupEndDate = slot.groupEndDate ?? slot.date;
+  const daysIncluded = slot.groupDaysOfWeek ?? [new Date(`${slot.date}T00:00:00`).getDay()];
+
+  return {
+    ...slot,
+    creationType: slot.creationType ?? 'single',
+    groupId,
+    groupStartDate,
+    groupEndDate,
+    groupDaysOfWeek: daysIncluded,
+  };
+};
+
+const getGroupKey = (slot: ExamSlot): string => slot.groupId ?? slot.id;
+
+const hasOverlapInSlots = (
+  slots: ExamSlot[],
+  teacherId: string,
+  date: string,
+  startTime: string,
+  endTime: string,
+  excludeId?: string,
+): boolean => {
+  const existing = slots.filter((s) => s.teacherId === teacherId && s.date === date && (!excludeId || s.id !== excludeId));
+  const newStart = parse(startTime, 'HH:mm', new Date()).getTime();
+  const newEnd = parse(endTime, 'HH:mm', new Date()).getTime();
+
+  return existing.some((slot) => {
+    const slotStart = parse(slot.startTime, 'HH:mm', new Date()).getTime();
+    const slotEnd = parse(slot.endTime, 'HH:mm', new Date()).getTime();
+    return newStart < slotEnd && newEnd > slotStart;
+  });
+};
+
 const getAll = (): ExamSlot[] => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    const slots = stored ? (JSON.parse(stored) as ExamSlot[]) : [];
+    return slots.map(toNormalizedSlot);
   } catch {
     return [];
   }
@@ -30,6 +68,61 @@ const getByTeacherAndDate = (teacherId: string, date: string): ExamSlot[] => {
   return getAll().filter((s) => s.teacherId === teacherId && s.date === date);
 };
 
+const getGroups = (): ExamSlotGroup[] => {
+  const all = getAll();
+  const grouped = new Map<string, ExamSlot[]>();
+
+  for (const slot of all) {
+    const key = getGroupKey(slot);
+    if (!grouped.has(key)) {
+      grouped.set(key, []);
+    }
+    grouped.get(key)!.push(slot);
+  }
+
+  return Array.from(grouped.entries()).map(([groupId, slots]) => {
+    const sortedByDateTime = [...slots].sort((a, b) => {
+      const aDt = new Date(`${a.date}T${a.startTime}:00`).getTime();
+      const bDt = new Date(`${b.date}T${b.startTime}:00`).getTime();
+      return aDt - bDt;
+    });
+    const first = sortedByDateTime[0];
+    const last = sortedByDateTime[sortedByDateTime.length - 1];
+    const daysIncluded = Array.from(
+      new Set(
+        (first.groupDaysOfWeek && first.groupDaysOfWeek.length > 0)
+          ? first.groupDaysOfWeek
+          : sortedByDateTime.map((slot) => new Date(`${slot.date}T00:00:00`).getDay()),
+      ),
+    ).sort((a, b) => a - b);
+
+    return {
+      id: groupId,
+      teacherId: first.teacherId,
+      teacherName: first.teacherName,
+      oralTestTypeId: first.oralTestTypeId,
+      oralTestTypeName: first.oralTestTypeName,
+      slotCreationType: first.creationType ?? 'single',
+      startDate: first.groupStartDate ?? first.date,
+      endDate: first.groupEndDate ?? last.date,
+      daysIncluded,
+      startTime: sortedByDateTime[0].startTime,
+      endTime: sortedByDateTime[sortedByDateTime.length - 1].endTime,
+      timeRanges: first.bulkTimeRanges && first.bulkTimeRanges.length > 0
+        ? first.bulkTimeRanges
+        : [
+            {
+              id: crypto.randomUUID(),
+              startTime: sortedByDateTime[0].startTime,
+              endTime: sortedByDateTime[sortedByDateTime.length - 1].endTime,
+              slotType: 'work',
+            },
+          ],
+      slotsCount: slots.length,
+    };
+  });
+};
+
 /**
  * Check if time range aligns with duration
  */
@@ -46,15 +139,7 @@ const validateTimeRange = (startTime: string, endTime: string, duration: number)
  * Check for overlapping slots
  */
 const hasOverlap = (teacherId: string, date: string, startTime: string, endTime: string, excludeId?: string): boolean => {
-  const existing = getByTeacherAndDate(teacherId, date).filter((s) => !excludeId || s.id !== excludeId);
-  const newStart = parse(startTime, 'HH:mm', new Date()).getTime();
-  const newEnd = parse(endTime, 'HH:mm', new Date()).getTime();
-
-  return existing.some((slot) => {
-    const slotStart = parse(slot.startTime, 'HH:mm', new Date()).getTime();
-    const slotEnd = parse(slot.endTime, 'HH:mm', new Date()).getTime();
-    return newStart < slotEnd && newEnd > slotStart;
-  });
+  return hasOverlapInSlots(getAll(), teacherId, date, startTime, endTime, excludeId);
 };
 
 /**
@@ -87,6 +172,7 @@ const generateSlotsFromRange = (
 const createSingle = (
   data: SingleSlotFormData,
   date: string,
+  teacherName?: string,
 ): { success: boolean; error?: string; slot?: ExamSlot } => {
   const oralTestType = oralTestTypeService.getById(data.oralTestTypeId);
   if (!oralTestType) return { success: false, error: 'invalid_test_type' };
@@ -107,10 +193,17 @@ const createSingle = (
   }
 
   const all = getAll();
+  const groupId = crypto.randomUUID();
+  const dayOfWeek = new Date(`${date}T00:00:00`).getDay();
   const newSlot: ExamSlot = {
     id: crypto.randomUUID(),
+    creationType: 'single',
+    groupId,
+    groupStartDate: date,
+    groupEndDate: date,
+    groupDaysOfWeek: [dayOfWeek],
     teacherId: data.teacherId,
-    teacherName: '', // will be set by caller
+    teacherName: teacherName ?? '',
     oralTestTypeId: data.oralTestTypeId,
     oralTestTypeName: oralTestType.title,
     date,
@@ -140,6 +233,7 @@ const createBulk = (
   const errors: string[] = [];
   let created = 0;
   const all = getAll();
+  const groupId = crypto.randomUUID();
 
   // Validate all time ranges first
   for (const range of data.timeRanges) {
@@ -174,6 +268,12 @@ const createBulk = (
 
         const newSlot: ExamSlot = {
           id: crypto.randomUUID(),
+          creationType: 'bulk',
+          groupId,
+          groupStartDate: data.startDate,
+          groupEndDate: data.endDate,
+          groupDaysOfWeek: data.daysOfWeek,
+          bulkTimeRanges: data.timeRanges,
           teacherId: data.teacherId,
           teacherName,
           oralTestTypeId: data.oralTestTypeId,
@@ -204,6 +304,14 @@ const remove = (id: string): boolean => {
   return true;
 };
 
+const removeGroup = (groupId: string): number => {
+  const all = getAll();
+  const filtered = all.filter((s) => getGroupKey(s) !== groupId);
+  const removed = all.length - filtered.length;
+  save(filtered);
+  return removed;
+};
+
 const removeByTeacherAndDate = (teacherId: string, date: string): number => {
   const all = getAll();
   const filtered = all.filter((s) => !(s.teacherId === teacherId && s.date === date));
@@ -212,15 +320,62 @@ const removeByTeacherAndDate = (teacherId: string, date: string): number => {
   return removed;
 };
 
+const updateSingleGroup = (
+  groupId: string,
+  data: SingleSlotFormData,
+  date: string,
+  teacherName: string,
+): { success: boolean; error?: string; slot?: ExamSlot } => {
+  const snapshot = getAll();
+  const remaining = snapshot.filter((slot) => getGroupKey(slot) !== groupId);
+
+  const oralTestType = oralTestTypeService.getById(data.oralTestTypeId);
+  if (!oralTestType) return { success: false, error: 'invalid_test_type' };
+  if (!oralTestType.isActive) return { success: false, error: 'inactive_test_type' };
+
+  const startParsed = parse(data.startTime, 'HH:mm', new Date());
+  const endTime = format(addMinutes(startParsed, oralTestType.duration), 'HH:mm');
+
+  if (hasOverlapInSlots(remaining, data.teacherId, date, data.startTime, endTime)) {
+    return { success: false, error: 'overlap' };
+  }
+
+  save(remaining);
+  const result = createSingle(data, date, teacherName);
+  if (!result.success) {
+    save(snapshot);
+  }
+  return result;
+};
+
+const updateBulkGroup = (
+  groupId: string,
+  data: BulkSlotFormData,
+  teacherName: string,
+): { success: boolean; created: number; errors: string[] } => {
+  const snapshot = getAll();
+  const remaining = snapshot.filter((slot) => getGroupKey(slot) !== groupId);
+  save(remaining);
+  const result = createBulk(data, teacherName);
+  if (!result.success) {
+    save(snapshot);
+  }
+  return result;
+};
+
 export const examSlotService = {
   getAll,
   getByDate,
   getDatesWithSlots,
   getByTeacherAndDate,
+  getGroups,
   validateTimeRange,
   hasOverlap,
   createSingle,
   createBulk,
+  updateSingleGroup,
+  updateBulkGroup,
   remove,
+  removeGroup,
   removeByTeacherAndDate,
 };

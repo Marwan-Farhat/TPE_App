@@ -24,7 +24,8 @@ import useLanguage from "@/hooks/useLanguage";
  import { staffTaskService, taskCategoryService } from "@/services/staffTaskService";
  import AssignedTasksSection from "@/components/admin/dashboard/AssignedTasksSection";
  import QuickAccessSection from "@/components/admin/dashboard/QuickAccessSection";
- import DraggableSections, { DashboardSection } from "@/components/admin/dashboard/DraggableSections";
+  import DraggableSections, { DashboardSection } from "@/components/admin/dashboard/DraggableSections";
+  import OralExamScheduler from "@/components/admin/dashboard/OralExamScheduler";
  import ReassignTaskDialog from "@/components/admin/clients/tasks/ReassignTaskDialog";
  import mockUsersData from "@/data/mockUsers.json";
  import { useToast } from "@/hooks/use-toast";
@@ -207,11 +208,15 @@ const AdminDashboard = () => {
          />
        ),
      },
-     {
-       id: "quick-access",
-       component: <QuickAccessSection />,
-     },
-   ], [stats, tasks, categories, loadingTasks, t]);
+      {
+        id: "quick-access",
+        component: <QuickAccessSection />,
+      },
+      {
+        id: "oral-exam-scheduler",
+        component: <OralExamScheduler />,
+      },
+    ], [stats, tasks, categories, loadingTasks, t]);
 
   return (
     <div className="min-h-screen bg-admin-bg flex">
@@ -219,7 +224,7 @@ const AdminDashboard = () => {
       <AdminSidebar />
 
       {/* Main Wrapper - offset by sidebar width */}
-      <div className={`flex-1 ${isRTL ? "mr-16" : "ml-16"}`}>
+      <div className={`flex-1 overflow-x-hidden ${isRTL ? "mr-16" : "ml-16"}`}>
         {/* Header */}
         <header className="sticky top-0 z-40 bg-card border-b border-admin-border-light shadow-[0_2px_8px_hsl(220_20%_20%/0.08)]">
           <div className="flex items-center justify-end px-6 h-16">

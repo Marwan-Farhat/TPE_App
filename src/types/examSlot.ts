@@ -4,6 +4,12 @@ export interface ExamSlot {
   teacherName: string;
   oralTestTypeId: string;
   oralTestTypeName: string;
+  creationType?: 'bulk' | 'single';
+  groupId?: string;
+  groupStartDate?: string;
+  groupEndDate?: string;
+  groupDaysOfWeek?: number[];
+  bulkTimeRanges?: TimeRange[];
   date: string; // YYYY-MM-DD
   startTime: string; // HH:mm
   endTime: string; // HH:mm
@@ -33,4 +39,20 @@ export interface SingleSlotFormData {
   teacherId: string;
   oralTestTypeId: string;
   startTime: string;
+}
+
+export interface ExamSlotGroup {
+  id: string;
+  teacherId: string;
+  teacherName: string;
+  oralTestTypeId: string;
+  oralTestTypeName: string;
+  slotCreationType: 'bulk' | 'single';
+  startDate: string;
+  endDate: string;
+  daysIncluded: number[];
+  startTime: string;
+  endTime: string;
+  timeRanges: TimeRange[];
+  slotsCount: number;
 }

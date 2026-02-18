@@ -31,6 +31,15 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: () => void;
+  initialValues?: {
+    groupId: string;
+    teacherId: string;
+    oralTestTypeId: string;
+    startDate: string;
+    endDate: string;
+    daysOfWeek: number[];
+    timeRanges: TimeRange[];
+  } | null;
 }
 
 const DAYS_OF_WEEK = [
@@ -43,7 +52,7 @@ const DAYS_OF_WEEK = [
   { value: 6, labelKey: "saturday" },
 ];
 
-const BulkAddSlotsDialog = ({ open, onOpenChange, onSave }: Props) => {
+const BulkAddSlotsDialog = ({ open, onOpenChange, onSave, initialValues = null }: Props) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const { isRTL } = useLanguage();
@@ -58,6 +67,7 @@ const BulkAddSlotsDialog = ({ open, onOpenChange, onSave }: Props) => {
   ]);
 
   const tKey = (key: string) => t(`admin.oralExams.examSlots.${key}`);
+  const isEditMode = !!initialValues;
 
   const teachers = mockUsersData.staff.filter(
     (u) => u.role === "PlacementTester" && u.isActive
@@ -67,14 +77,18 @@ const BulkAddSlotsDialog = ({ open, onOpenChange, onSave }: Props) => {
 
   useEffect(() => {
     if (open) {
-      setTeacherId("");
-      setOralTestTypeId("");
-      setStartDate("");
-      setEndDate("");
-      setDaysOfWeek([]);
-      setTimeRanges([{ id: crypto.randomUUID(), startTime: "", endTime: "", slotType: "work" }]);
+      setTeacherId(initialValues?.teacherId ?? "");
+      setOralTestTypeId(initialValues?.oralTestTypeId ?? "");
+      setStartDate(initialValues?.startDate ?? "");
+      setEndDate(initialValues?.endDate ?? "");
+      setDaysOfWeek(initialValues?.daysOfWeek ?? []);
+      setTimeRanges(
+        initialValues?.timeRanges?.length
+          ? initialValues.timeRanges
+          : [{ id: crypto.randomUUID(), startTime: "", endTime: "", slotType: "work" }],
+      );
     }
-  }, [open]);
+  }, [open, initialValues]);
 
   const toggleDay = (day: number) => {
     setDaysOfWeek((prev) =>
@@ -138,13 +152,13 @@ const BulkAddSlotsDialog = ({ open, onOpenChange, onSave }: Props) => {
     }
 
     const teacher = teachers.find((t) => t.id === teacherId);
-    const result = examSlotService.createBulk(
-      { teacherId, oralTestTypeId, startDate, endDate, daysOfWeek, timeRanges },
-      teacher?.fullName || ""
-    );
+    const payload = { teacherId, oralTestTypeId, startDate, endDate, daysOfWeek, timeRanges };
+    const result = isEditMode && initialValues
+      ? examSlotService.updateBulkGroup(initialValues.groupId, payload, teacher?.fullName || "")
+      : examSlotService.createBulk(payload, teacher?.fullName || "");
 
     if (result.success) {
-      toast({ title: `${tKey("bulkSuccess")} (${result.created})` });
+      toast({ title: isEditMode ? tKey("updateSuccess") : `${tKey("bulkSuccess")} (${result.created})` });
       onSave();
       onOpenChange(false);
     } else {
@@ -157,7 +171,7 @@ const BulkAddSlotsDialog = ({ open, onOpenChange, onSave }: Props) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto" dir={isRTL ? "rtl" : "ltr"}>
         <DialogHeader>
-          <DialogTitle>{tKey("bulkAddSlots")}</DialogTitle>
+          <DialogTitle>{isEditMode ? tKey("editBulkSlots") : tKey("bulkAddSlots")}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 py-2">
@@ -313,7 +327,7 @@ const BulkAddSlotsDialog = ({ open, onOpenChange, onSave }: Props) => {
             {tKey("cancel")}
           </Button>
           <Button onClick={handleSubmit} className="gradient-primary text-white">
-            {tKey("bulkAdd")}
+            {isEditMode ? tKey("save") : tKey("bulkAdd")}
           </Button>
         </DialogFooter>
       </DialogContent>
