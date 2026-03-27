@@ -1,25 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  Trash2,
-  Edit2,
-  ChevronDown,
-  ChevronUp,
-  Layers,
-} from "lucide-react";
+import { Plus, ChevronLeft, ChevronRight, Trash2, Edit2, ChevronDown, ChevronUp, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -262,7 +247,13 @@ const ExamSlotsList = () => {
               <h1 className="text-2xl font-bold">{tKey("title")}</h1>
               <p className="text-muted-foreground">{tKey("subtitle")}</p>
             </div>
-            <Button onClick={() => { setEditBulkData(null); setShowBulkAdd(true); }} className="gradient-primary text-white gap-2">
+            <Button
+              onClick={() => {
+                setEditBulkData(null);
+                setShowBulkAdd(true);
+              }}
+              className="gradient-primary text-white gap-2"
+            >
               <Layers className="h-4 w-4" />
               {tKey("bulkAddSlots")}
             </Button>
@@ -275,13 +266,23 @@ const ExamSlotsList = () => {
               <p className="text-sm opacity-90">{tKey("bannerSubtitle")}</p>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-primary-foreground hover:bg-white/20"
+                onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+              >
                 {isRTL ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
               </Button>
               <span className="font-semibold min-w-[180px] text-center">
                 {format(currentMonth, "MMMM yyyy", { locale })}
               </span>
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-primary-foreground hover:bg-white/20"
+                onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+              >
                 {isRTL ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
               </Button>
             </div>
@@ -315,18 +316,30 @@ const ExamSlotsList = () => {
                         "aspect-square flex flex-col items-center justify-center rounded-xl transition-all text-sm relative p-2",
                         !isCurrentMonth && "text-muted-foreground/30",
                         isCurrentMonth && !isSelected && !dayHasSlots && "hover:bg-muted",
-                        isSelected && !dayHasSlots && "ring-2 ring-primary ring-offset-2 ring-offset-background font-bold text-primary",
-                        isSelected && dayHasSlots && "ring-2 ring-primary ring-offset-2 ring-offset-background bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 font-bold text-primary",
-                        !isSelected && dayHasSlots && isCurrentMonth && "bg-emerald-50 dark:bg-emerald-950/30 border border-dashed border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 font-semibold",
-                        !isSelected && isTodayDate && !dayHasSlots && "ring-2 ring-primary ring-offset-2 ring-offset-background font-bold text-primary"
+                        isSelected &&
+                          !dayHasSlots &&
+                          "ring-2 ring-primary ring-offset-2 ring-offset-background font-bold text-primary",
+                        isSelected &&
+                          dayHasSlots &&
+                          "ring-2 ring-primary ring-offset-2 ring-offset-background bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 font-bold text-primary",
+                        !isSelected &&
+                          dayHasSlots &&
+                          isCurrentMonth &&
+                          "bg-emerald-50 dark:bg-emerald-950/30 border border-dashed border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 font-semibold",
+                        !isSelected &&
+                          isTodayDate &&
+                          !dayHasSlots &&
+                          "ring-2 ring-primary ring-offset-2 ring-offset-background font-bold text-primary",
                       )}
                     >
                       <span className="text-sm">{format(day, "d")}</span>
                       {dayHasSlots && isCurrentMonth && (
-                        <span className={cn(
-                          "absolute bottom-1.5 h-2 w-2 rounded-full",
-                          isSelected ? "bg-primary" : "bg-emerald-500"
-                        )} />
+                        <span
+                          className={cn(
+                            "absolute bottom-1.5 h-2 w-2 rounded-full",
+                            isSelected ? "bg-primary" : "bg-emerald-500",
+                          )}
+                        />
                       )}
                     </button>
                   );
@@ -354,23 +367,34 @@ const ExamSlotsList = () => {
             <div className="bg-background rounded-lg border shadow-sm p-4">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-semibold">
-                    {format(selectedDate, "EEEE, MMMM d", { locale })}
-                  </h3>
+                  <h3 className="font-semibold">{format(selectedDate, "EEEE, MMMM d", { locale })}</h3>
                   <p className="text-sm text-muted-foreground">
                     {slots.length} {tKey("examSlotsCount")}
                   </p>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                      ● {slots.filter(s => s.status !== "reserved").length} {tKey("status.available")}
+                    </span>
+                    <span className="text-xs text-red-600 dark:text-red-400 font-medium">
+                      ● {slots.filter(s => s.status === "reserved").length} {tKey("status.reserved")}
+                    </span>
+                  </div>
                 </div>
-                <Button size="sm" onClick={() => { setEditSingleData(null); setShowAddSingle(true); }} className="gradient-primary text-white gap-1">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setEditSingleData(null);
+                    setShowAddSingle(true);
+                  }}
+                  className="gradient-primary text-white gap-1"
+                >
                   <Plus className="h-4 w-4" />
                   {tKey("addSlot")}
                 </Button>
               </div>
 
               {slotsByTeacher.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground text-sm">
-                  {tKey("noSlotsForDay")}
-                </div>
+                <div className="text-center py-8 text-muted-foreground text-sm">{tKey("noSlotsForDay")}</div>
               ) : (
                 <div className="space-y-3">
                   {slotsByTeacher.map((group) => {
@@ -381,7 +405,11 @@ const ExamSlotsList = () => {
                         <div className="flex items-center justify-between p-3 bg-muted/30">
                           <div className="flex items-center gap-3">
                             <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-bold text-primary">
-                              {group.teacherName.split(" ").map((n) => n[0]).join("").substring(0, 2)}
+                              {group.teacherName
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .substring(0, 2)}
                             </div>
                             <div>
                               <p className="font-medium text-sm">{group.teacherName}</p>
@@ -395,7 +423,12 @@ const ExamSlotsList = () => {
                               variant="ghost"
                               size="sm"
                               className="text-destructive text-xs gap-1 h-7"
-                              onClick={() => setDeleteTeacherInfo({ teacherId: group.teacherId, date: format(selectedDate, "yyyy-MM-dd") })}
+                              onClick={() =>
+                                setDeleteTeacherInfo({
+                                  teacherId: group.teacherId,
+                                  date: format(selectedDate, "yyyy-MM-dd"),
+                                })
+                              }
                             >
                               <Trash2 className="h-3 w-3" />
                               {tKey("deleteAll")}
@@ -414,37 +447,62 @@ const ExamSlotsList = () => {
                         {/* Slots */}
                         {isExpanded && (
                           <div className="p-2 space-y-2">
-                            {group.slots.map((slot) => (
-                              <div
-                                key={slot.id}
-                                className="flex items-center justify-between p-3 rounded-lg border border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950/30"
-                              >
-                                <div className="space-y-1">
-                                  <p className="font-semibold text-sm text-emerald-700 dark:text-emerald-400">
-                                    {formatTimeTo12h(slot.startTime)} - {formatTimeTo12h(slot.endTime)}
-                                    <span className="ms-2 text-xs font-normal text-muted-foreground">
-                                      {slot.duration}{t("admin.testingCenter.quizzes.minutes")}
-                                    </span>
-                                  </p>
-                                  <div className="flex items-center gap-2">
-                                    <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary/20">
-                                      {slot.oralTestTypeName}
-                                    </Badge>
-                                    <Badge variant="outline" className="text-xs bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700">
-                                      {tKey(`status.${slot.status}`)}
-                                    </Badge>
-                                  </div>
-                                </div>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 text-destructive hover:text-destructive"
-                                  onClick={() => setDeleteSlotId(slot.id)}
+                            {group.slots.map((slot) => {
+                              const isReserved = slot.status === "reserved";
+                              return (
+                                <div
+                                  key={slot.id}
+                                  className={cn(
+                                    "flex items-center justify-between p-3 rounded-lg border",
+                                    isReserved
+                                      ? "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950/30"
+                                      : "border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950/30"
+                                  )}
                                 >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            ))}
+                                  <div className="space-y-1">
+                                    <p className={cn(
+                                      "font-semibold text-sm",
+                                      isReserved
+                                        ? "text-red-700 dark:text-red-400"
+                                        : "text-emerald-700 dark:text-emerald-400"
+                                    )}>
+                                      {formatTimeTo12h(slot.startTime)} - {formatTimeTo12h(slot.endTime)}
+                                      <span className="ms-2 text-xs font-normal text-muted-foreground">
+                                        {slot.duration}
+                                        {t("admin.testingCenter.quizzes.minutes")}
+                                      </span>
+                                    </p>
+                                    <div className="flex items-center gap-2">
+                                      <Badge
+                                        variant="outline"
+                                        className="text-xs bg-primary/10 text-primary border-primary/20"
+                                      >
+                                        {slot.oralTestTypeName}
+                                      </Badge>
+                                      <Badge
+                                        variant="outline"
+                                        className={cn(
+                                          "text-xs",
+                                          isReserved
+                                            ? "bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700"
+                                            : "bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-700"
+                                        )}
+                                      >
+                                        {tKey(`status.${slot.status}`)}
+                                      </Badge>
+                                    </div>
+                                  </div>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 text-destructive hover:text-destructive"
+                                    onClick={() => setDeleteSlotId(slot.id)}
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -469,7 +527,9 @@ const ExamSlotsList = () => {
                 <SelectContent>
                   <SelectItem value="all">{tKey("all")}</SelectItem>
                   {teacherOptions.map(([id, name]) => (
-                    <SelectItem key={id} value={id}>{name}</SelectItem>
+                    <SelectItem key={id} value={id}>
+                      {name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -481,7 +541,9 @@ const ExamSlotsList = () => {
                 <SelectContent>
                   <SelectItem value="all">{tKey("all")}</SelectItem>
                   {testTypeOptions.map(([id, name]) => (
-                    <SelectItem key={id} value={id}>{name}</SelectItem>
+                    <SelectItem key={id} value={id}>
+                      {name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -535,13 +597,20 @@ const ExamSlotsList = () => {
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <div className="text-xs text-muted-foreground">{group.slotsCount} {tKey("examSlotsCount")}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {group.slotsCount} {tKey("examSlotsCount")}
+                      </div>
                       <div className="flex items-center gap-2">
                         <Button variant="outline" size="sm" className="gap-1" onClick={() => handleEditGroup(group)}>
                           <Edit2 className="h-4 w-4" />
                           {tKey("edit")}
                         </Button>
-                        <Button variant="destructive" size="sm" className="gap-1" onClick={() => setDeleteGroupId(group.id)}>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="gap-1"
+                          onClick={() => setDeleteGroupId(group.id)}
+                        >
                           <Trash2 className="h-4 w-4" />
                           {tKey("delete")}
                         </Button>
@@ -563,7 +632,9 @@ const ExamSlotsList = () => {
                 {isRTL ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
                 {tKey("paginationPrevious")}
               </Button>
-              <span className="text-sm text-muted-foreground">{overviewPage} / {totalPages}</span>
+              <span className="text-sm text-muted-foreground">
+                {overviewPage} / {totalPages}
+              </span>
               <Button
                 variant="outline"
                 size="sm"
@@ -624,7 +695,10 @@ const ExamSlotsList = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{tKey("cancel")}</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDeleteAllForTeacher} className="bg-destructive text-destructive-foreground">
+              <AlertDialogAction
+                onClick={handleDeleteAllForTeacher}
+                className="bg-destructive text-destructive-foreground"
+              >
                 {tKey("deleteAll")}
               </AlertDialogAction>
             </AlertDialogFooter>
