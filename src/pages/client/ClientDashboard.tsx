@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { 
-  BookOpen, 
-  Calendar, 
-  Trophy, 
-  Settings, 
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import {
+  BookOpen,
+  Calendar,
+  Trophy,
+  Settings,
   LogOut,
   Bell,
   Clock,
@@ -12,24 +12,24 @@ import {
   ChevronDown,
   PlayCircle,
   Moon,
-  Sun
-} from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { useTranslation } from 'react-i18next';
+  Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
 
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Switch } from '@/components/ui/switch';
-import logo from '@/assets/logo.png';
+} from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
+import logo from "@/assets/logo.png";
 
 const ClientDashboard = () => {
   const { t } = useTranslation();
@@ -39,44 +39,43 @@ const ClientDashboard = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const courseProgress = [
-    { name: 'Business English 101', progress: 75, totalLessons: 24, completedLessons: 18 },
-    { name: 'Business English 102', progress: 45, totalLessons: 20, completedLessons: 9 },
-    { name: 'Business English 103', progress: 10, totalLessons: 18, completedLessons: 2 },
+    { name: "Business English 101", progress: 75, totalLessons: 24, completedLessons: 18 },
+    { name: "Business English 102", progress: 45, totalLessons: 20, completedLessons: 9 },
+    { name: "Business English 103", progress: 10, totalLessons: 18, completedLessons: 2 },
   ];
 
   const upcomingSessions = [
-    { date: 'Today', time: '14:00', instructor: 'Dr. Emily Watson', topic: 'Business Negotiations' },
-    { date: 'Tomorrow', time: '09:00', instructor: 'James Miller', topic: 'Presentation Skills' },
-    { date: 'Friday', time: '14:00', instructor: 'Dr. Emily Watson', topic: 'Email Writing' },
+    { date: "Today", time: "14:00", instructor: "Dr. Emily Watson", topic: "Business Negotiations" },
+    { date: "Tomorrow", time: "09:00", instructor: "James Miller", topic: "Presentation Skills" },
+    { date: "Friday", time: "14:00", instructor: "Dr. Emily Watson", topic: "Email Writing" },
   ];
 
   const achievements = [
-    { icon: Trophy, label: 'First Session', earned: true },
-    { icon: Target, label: '10 Sessions', earned: true },
-    { icon: BookOpen, label: 'Fast Learner', earned: false },
-    { icon: Clock, label: 'Consistent', earned: false },
+    { icon: Trophy, label: "First Session", earned: true },
+    { icon: Target, label: "10 Sessions", earned: true },
+    { icon: BookOpen, label: "Fast Learner", earned: false },
+    { icon: Clock, label: "Consistent", earned: false },
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="sticky top-0 z-50 bg-card border-b border-border">
         <div className="flex items-center justify-between px-6 h-16">
           {/* Logo */}
@@ -99,7 +98,7 @@ const ClientDashboard = () => {
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={user?.avatarUrl} />
                     <AvatarFallback className="bg-amber-500 text-white text-xs">
-                      {user?.fullName ? getInitials(user.fullName) : 'ST'}
+                      {user?.fullName ? getInitials(user.fullName) : "ST"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="hidden md:block text-left">
@@ -114,23 +113,15 @@ const ClientDashboard = () => {
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   className="flex items-center justify-between cursor-pointer"
                   onSelect={(e) => e.preventDefault()}
                 >
                   <div className="flex items-center">
-                    {theme === 'dark' ? (
-                      <Moon className="h-4 w-4 mr-2" />
-                    ) : (
-                      <Sun className="h-4 w-4 mr-2" />
-                    )}
+                    {theme === "dark" ? <Moon className="h-4 w-4 mr-2" /> : <Sun className="h-4 w-4 mr-2" />}
                     Dark Mode
                   </div>
-                  <Switch
-                    checked={theme === 'dark'}
-                    onCheckedChange={toggleTheme}
-                    className="scale-75"
-                  />
+                  <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} className="scale-75" />
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="text-destructive">
@@ -145,19 +136,11 @@ const ClientDashboard = () => {
 
       {/* Main Content */}
       <main className="p-6 max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           {/* Welcome Section */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">
-              Welcome back, {user?.fullName?.split(' ')[0]}!
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Keep up the great work! You're making excellent progress.
-            </p>
+            <h1 className="text-3xl font-bold text-foreground">Welcome back, {user?.fullName?.split(" ")[0]}!</h1>
+            <p className="text-muted-foreground mt-1">Keep up the great work! You're making excellent progress.</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -208,20 +191,22 @@ const ClientDashboard = () => {
                     <motion.div
                       key={achievement.label}
                       className={`p-4 rounded-lg text-center ${
-                        achievement.earned 
-                          ? 'bg-amber-100 dark:bg-amber-900/30' 
-                          : 'bg-secondary/50 opacity-50'
+                        achievement.earned ? "bg-amber-100 dark:bg-amber-900/30" : "bg-secondary/50 opacity-50"
                       }`}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: achievement.earned ? 1 : 0.5, scale: 1 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
-                      <achievement.icon className={`h-8 w-8 mx-auto mb-2 ${
-                        achievement.earned ? 'text-amber-600' : 'text-muted-foreground'
-                      }`} />
-                      <p className={`text-xs font-medium ${
-                        achievement.earned ? 'text-foreground' : 'text-muted-foreground'
-                      }`}>
+                      <achievement.icon
+                        className={`h-8 w-8 mx-auto mb-2 ${
+                          achievement.earned ? "text-amber-600" : "text-muted-foreground"
+                        }`}
+                      />
+                      <p
+                        className={`text-xs font-medium ${
+                          achievement.earned ? "text-foreground" : "text-muted-foreground"
+                        }`}
+                      >
                         {achievement.label}
                       </p>
                     </motion.div>

@@ -1,33 +1,33 @@
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { 
-  GraduationCap, 
-  Users, 
-  Calendar, 
-  Settings, 
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import {
+  GraduationCap,
+  Users,
+  Calendar,
+  Settings,
   LogOut,
   Bell,
   BookOpen,
   Clock,
   ChevronDown,
   Moon,
-  Sun
-} from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { useTranslation } from 'react-i18next';
+  Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
 
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Switch } from '@/components/ui/switch';
-import logo from '@/assets/logo.png';
+} from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
+import logo from "@/assets/logo.png";
 
 const TeacherDashboard = () => {
   const { t } = useTranslation();
@@ -37,34 +37,34 @@ const TeacherDashboard = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const stats = [
-    { label: 'My Students', value: '48', icon: Users },
-    { label: 'Active Classes', value: '6', icon: BookOpen },
-    { label: 'Sessions Today', value: '4', icon: Clock },
-    { label: 'Upcoming Tests', value: '12', icon: Calendar },
+    { label: "My Students", value: "48", icon: Users },
+    { label: "Active Classes", value: "6", icon: BookOpen },
+    { label: "Sessions Today", value: "4", icon: Clock },
+    { label: "Upcoming Tests", value: "12", icon: Calendar },
   ];
 
   const todaySchedule = [
-    { time: '09:00 - 10:30', student: 'Omar Khalid', course: 'Business English', type: 'One-on-One' },
-    { time: '11:00 - 12:30', student: 'Group A', course: 'General English', type: 'Group' },
-    { time: '14:00 - 15:30', student: 'Layla Ahmed', course: 'IELTS Prep', type: 'One-on-One' },
-    { time: '16:00 - 17:30', student: 'Group B', course: 'Teen English', type: 'Group' },
+    { time: "09:00 - 10:30", student: "Omar Khalid", course: "Business English", type: "One-on-One" },
+    { time: "11:00 - 12:30", student: "Group A", course: "General English", type: "Group" },
+    { time: "14:00 - 15:30", student: "Layla Ahmed", course: "IELTS Prep", type: "One-on-One" },
+    { time: "16:00 - 17:30", student: "Group B", course: "Teen English", type: "Group" },
   ];
 
   return (
@@ -95,7 +95,7 @@ const TeacherDashboard = () => {
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={user?.avatarUrl} />
                     <AvatarFallback className="bg-emerald-500 text-white text-xs">
-                      {user?.fullName ? getInitials(user.fullName) : 'TC'}
+                      {user?.fullName ? getInitials(user.fullName) : "TC"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="hidden md:block text-left">
@@ -110,23 +110,15 @@ const TeacherDashboard = () => {
                   <Settings className="h-4 w-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   className="flex items-center justify-between cursor-pointer"
                   onSelect={(e) => e.preventDefault()}
                 >
                   <div className="flex items-center">
-                    {theme === 'dark' ? (
-                      <Moon className="h-4 w-4 mr-2" />
-                    ) : (
-                      <Sun className="h-4 w-4 mr-2" />
-                    )}
+                    {theme === "dark" ? <Moon className="h-4 w-4 mr-2" /> : <Sun className="h-4 w-4 mr-2" />}
                     Dark Mode
                   </div>
-                  <Switch
-                    checked={theme === 'dark'}
-                    onCheckedChange={toggleTheme}
-                    className="scale-75"
-                  />
+                  <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} className="scale-75" />
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="text-destructive">
@@ -141,19 +133,18 @@ const TeacherDashboard = () => {
 
       {/* Main Content */}
       <main className="p-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           {/* Welcome Section */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">
-              Good morning, {user?.fullName ? (user.fullName.split(' ').find(part => !['Dr.', 'Mr.', 'Ms.', 'Mrs.'].includes(part)) ?? user.fullName.split(' ')[0]) : 'Teacher'}!
+              Good morning,{" "}
+              {user?.fullName
+                ? (user.fullName.split(" ").find((part) => !["Dr.", "Mr.", "Ms.", "Mrs."].includes(part)) ??
+                  user.fullName.split(" ")[0])
+                : "Teacher"}
+              !
             </h1>
-            <p className="text-muted-foreground mt-1">
-              You have {todaySchedule.length} sessions scheduled for today.
-            </p>
+            <p className="text-muted-foreground mt-1">You have {todaySchedule.length} sessions scheduled for today.</p>
           </div>
 
           {/* Stats Grid */}
@@ -199,11 +190,13 @@ const TeacherDashboard = () => {
                       <p className="text-sm text-muted-foreground">{session.course}</p>
                     </div>
                   </div>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    session.type === 'One-on-One' 
-                      ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' 
-                      : 'bg-purple-100 text-purple-600 dark:bg-purple-900/30'
-                  }`}>
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      session.type === "One-on-One"
+                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30"
+                        : "bg-purple-100 text-purple-600 dark:bg-purple-900/30"
+                    }`}
+                  >
                     {session.type}
                   </span>
                 </motion.div>
@@ -216,11 +209,10 @@ const TeacherDashboard = () => {
             <div className="h-16 w-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <GraduationCap className="h-8 w-8 text-emerald-600" />
             </div>
-            <h2 className="text-xl font-semibold text-foreground mb-2">
-              Teacher Dashboard
-            </h2>
+            <h2 className="text-xl font-semibold text-foreground mb-2">Teacher Dashboard</h2>
             <p className="text-muted-foreground max-w-md mx-auto">
-              This is a placeholder for the Teacher interface. Additional features like student management, course materials, and assessments can be added here.
+              This is a placeholder for the Teacher interface. Additional features like student management, course
+              materials, and assessments can be added here.
             </p>
             <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
               <span className="px-2 py-1 bg-secondary rounded">Role: {user?.role}</span>

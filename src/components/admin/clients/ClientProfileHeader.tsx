@@ -62,7 +62,10 @@ const ClientProfileHeader: React.FC<ClientProfileHeaderProps> = ({ client, onDel
               <ArrowLeft className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
             </Button>
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-primary cursor-pointer hover:underline flex items-center gap-1" onClick={() => navigate("/admin/clients")}>
+              <span
+                className="text-primary cursor-pointer hover:underline flex items-center gap-1"
+                onClick={() => navigate("/admin/clients")}
+              >
                 {t("admin.clientProfile.clients")}
               </span>
               <span className="text-muted-foreground">/</span>
@@ -190,13 +193,13 @@ const ClientProfileHeader: React.FC<ClientProfileHeaderProps> = ({ client, onDel
               <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
                 {(client.remainingForPath || 0).toLocaleString()}
               </p>
-              <p className="text-xs text-muted-foreground">
-                {t("admin.clientProfile.totalPending")}
-              </p>
+              <p className="text-xs text-muted-foreground">{t("admin.clientProfile.totalPending")}</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-primary">
-                {((client.totalPaidEver || 0) - (client.paidForPath || 0)).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                {((client.totalPaidEver || 0) - (client.paidForPath || 0)).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                })}
               </p>
               <p className="text-xs text-muted-foreground">{t("admin.clientProfile.balance")}</p>
             </div>

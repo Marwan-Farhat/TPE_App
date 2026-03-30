@@ -403,7 +403,12 @@
       "questions": "الأسئلة",
       "oralExams": "الاختبارات الشفوية",
       "examSlots": "مواعيد الاختبارات",
-      "testTypes": "أنواع الاختبارات"
+      "testTypes": "أنواع الاختبارات",
+      "evaluation": "التقييم",
+      "courses": "الكورسات",
+      "levels": "المستويات",
+      "requests": "الطلبات",
+      "ptRequests": "طلبات إلغاء الاختبارات"
     },
     "header": {
       "notifications": "الإشعارات",
@@ -724,7 +729,31 @@
       "preferredTrainingDays": "أيام التدريب المفضلة",
       "noDaysSelected": "لم يتم تحديد أيام",
       "comingSoon": "قريباً...",
-      "featureNotAvailable": "ستكون هذه الميزة متاحة في تحديث مستقبلي."
+      "featureNotAvailable": "ستكون هذه الميزة متاحة في تحديث مستقبلي.",
+      "placement": {
+        "title": "اختبار التحديد",
+        "noSessions": "لا توجد جلسات اختبار تحديد لهذا العميل.",
+        "writtenTest": "الاختبار الكتابي",
+        "oralEvaluation": "التقييم الشفوي",
+        "teacher": "المعلم",
+        "course": "الكورس",
+        "level": "المستوى",
+        "studentFeedback": "ملاحظات الطالب",
+        "internalFeedback": "ملاحظات داخلية",
+        "strengths": "نقاط القوة",
+        "improvementAreas": "مجالات التحسين",
+        "internalNotes": "ملاحظات داخلية",
+        "evaluationPending": "التقييم قيد الانتظار.",
+        "answer": "الإجابة",
+        "correct": "الصحيحة",
+        "ratings": {
+          "grammar": "القواعد",
+          "speaking": "التحدث",
+          "listening": "الاستماع",
+          "pronunciation": "النطق",
+          "confidence": "الثقة"
+        }
+      }
     },
     "staffTasks": {
       "title": "مهام الموظفين",
@@ -1405,6 +1434,58 @@
           "inactive_test_type": "لا يمكن إنشاء مواعيد لنوع اختبار غير مفعل."
         }
       }
+    },
+    "evaluation": {
+      "courses": { "title": "إدارة الكورسات", "subtitle": "إدارة الكورسات المتاحة للتقييم.", "add": "إضافة كورس", "edit": "تعديل كورس", "createSuccess": "تم إنشاء الكورس بنجاح.", "updateSuccess": "تم تحديث الكورس بنجاح.", "deleteSuccess": "تم حذف الكورس بنجاح.", "deleteConfirm": "حذف الكورس", "deleteMessage": "هل أنت متأكد من حذف هذا الكورس؟" },
+      "levels": { "title": "إدارة المستويات", "subtitle": "إدارة المستويات المتاحة للتقييم.", "add": "إضافة مستوى", "edit": "تعديل مستوى", "order": "الترتيب", "createSuccess": "تم إنشاء المستوى بنجاح.", "updateSuccess": "تم تحديث المستوى بنجاح.", "deleteSuccess": "تم حذف المستوى بنجاح.", "deleteConfirm": "حذف المستوى", "deleteMessage": "هل أنت متأكد من حذف هذا المستوى؟" },
+      "nameEn": "الاسم (إنجليزي)", "nameAr": "الاسم (عربي)", "active": "نشط", "inactive": "غير نشط", "save": "حفظ", "cancel": "إلغاء", "delete": "حذف"
+    },
+    "ptRequests": {
+      "title": "طلبات إلغاء الاختبارات", "noRequests": "لا توجد طلبات إلغاء بعد.", "reason": "السبب", "rejectionReason": "سبب الرفض", "rejectionReasonPlaceholder": "أدخل سبب الرفض...", "approve": "موافقة", "deny": "رفض", "cancel": "إلغاء", "confirmDeny": "تأكيد الرفض", "denyTitle": "رفض طلب الإلغاء", "approveSuccess": "تمت الموافقة على الطلب.", "denySuccess": "تم رفض الطلب.",
+      "status": { "pending": "قيد الانتظار", "approved": "تمت الموافقة", "denied": "مرفوض" }
+    }
+  },
+  "teacher": {
+    "sidebar": { "teacher": "المعلم", "home": "الرئيسية", "calendar": "التقويم", "sessions": "الجلسات", "requests": "الطلبات", "profile": "الملف الشخصي" },
+    "header": { "settings": "الإعدادات", "darkMode": "الوضع الداكن", "logout": "تسجيل الخروج" },
+    "home": { "welcome": "مرحباً، {{name}}!", "subtitle": "لديك {{count}} جلسة مجدولة.", "teacher": "المعلم", "totalSessions": "إجمالي الجلسات", "scheduled": "مجدولة", "completed": "مكتملة", "pendingRequests": "طلبات معلقة", "upcomingSessions": "الجلسات القادمة", "viewAll": "عرض الكل", "noUpcoming": "لا توجد جلسات قادمة.", "openSession": "فتح الجلسة" },
+    "calendar": { "title": "جدول العمل", "selectDay": "اختر يوماً", "noSlots": "لا توجد مواعيد لهذا اليوم.", "reserved": "محجوز", "available": "متاح" },
+    "sessions": { "title": "الجلسات", "noSessions": "لا توجد جلسات.", "notFound": "الجلسة غير موجودة.", "goBack": "رجوع", "sessionDetail": "تفاصيل الجلسة", "student": "الطالب", "dateTime": "التاريخ والوقت", "writtenTest": "الاختبار الكتابي", "viewWrittenTest": "عرض الاختبار الكتابي", "noWrittenTest": "لا يوجد اختبار كتابي", "writtenTestResults": "نتائج الاختبار الكتابي", "studentAnswer": "إجابة الطالب", "correctAnswer": "الإجابة الصحيحة", "evaluated": "تم التقييم", "cancelRequest": "طلب إلغاء", "cancelRequestPending": "طلب إلغاء معلق", "cancelRequestTitle": "تقديم طلب إلغاء", "cancelRequestDesc": "يرجى تقديم سبب لإلغاء هذه الجلسة.", "cancelReasonPlaceholder": "أدخل السبب...", "cancel": "إلغاء", "submitCancelRequest": "تقديم الطلب", "cancelRequestSent": "تم تقديم طلب الإلغاء بنجاح.", "filter": { "all": "الكل", "scheduled": "مجدولة", "completed": "مكتملة", "cancelled": "ملغاة" }, "status": { "scheduled": "مجدولة", "completed": "مكتملة", "cancelled": "ملغاة" } },
+    "requests": { "title": "طلباتي", "noRequests": "لا توجد طلبات بعد.", "reason": "السبب", "rejectionReason": "سبب الرفض", "status": { "pending": "قيد الانتظار", "approved": "تمت الموافقة", "denied": "مرفوض" } },
+    "profile": { "title": "ملفي الشخصي", "fullName": "الاسم الكامل", "email": "البريد الإلكتروني", "role": "الدور", "interface": "الواجهة" },
+    "evaluation": { "title": "التقييم", "completed": "مكتمل", "course": "الكورس", "level": "المستوى", "selectCourse": "اختر الكورس", "selectLevel": "اختر المستوى", "studentFeedback": "ملاحظات الطالب", "studentFeedbackDesc": "هذه الملاحظات ستظهر للطالب.", "internalFeedback": "ملاحظات داخلية", "internalFeedbackDesc": "تظهر فقط للإدارة والموظفين.", "summary": "الملخص", "summaryPlaceholder": "اكتب ملخصاً عن أداء الطالب...", "strengths": "نقاط القوة", "improvementAreas": "مجالات التحسين", "addTag": "اكتب واضغط Enter...", "grammar": "القواعد", "speaking": "التحدث", "listening": "الاستماع", "pronunciation": "النطق", "confidence": "الثقة", "internalNotes": "ملاحظات داخلية", "internalNotesPlaceholder": "ملاحظات وتوصيات داخلية...", "save": "حفظ التقييم", "saveSuccess": "تم حفظ التقييم بنجاح." }
+  },
+  "client": {
+    "sidebar": {
+      "home": "الرئيسية",
+      "placement": "اختبار التحديد",
+      "profile": "الملف الشخصي",
+      "logout": "تسجيل الخروج"
+    },
+    "placement": {
+      "title": "نتائج اختبار التحديد",
+      "subtitle": "اطلع على جلسات اختبار التحديد والنتائج والملاحظات.",
+      "noSessions": "لا توجد جلسات اختبار تحديد.",
+      "writtenTest": "الاختبار الكتابي",
+      "score": "النتيجة",
+      "oralFeedback": "ملاحظات الجلسة الشفوية",
+      "course": "الكورس",
+      "level": "المستوى",
+      "strengths": "نقاط القوة",
+      "improvementAreas": "مجالات التحسين",
+      "evaluationPending": "التقييم قيد الانتظار. سيقدم المعلم ملاحظاته قريباً.",
+      "status": {
+        "scheduled": "مجدولة",
+        "completed": "مكتملة",
+        "cancelled": "ملغاة"
+      }
+    },
+    "profile": {
+      "title": "ملفي الشخصي",
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "interface": "الواجهة"
     }
   },
   "extraFields": {

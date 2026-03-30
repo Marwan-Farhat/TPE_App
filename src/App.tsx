@@ -25,8 +25,19 @@ import QuestionsList from "./pages/admin/testingCenter/QuestionsList";
 import QuizQuestionsPage from "./pages/admin/testingCenter/QuizQuestionsPage";
 import OralTestTypesList from "./pages/admin/oralExams/OralTestTypesList";
 import ExamSlotsList from "./pages/admin/oralExams/ExamSlotsList";
-import TeacherDashboard from "./pages/teacher/TeacherDashboard";
+import CoursesList from "./pages/admin/evaluation/CoursesList";
+import LevelsList from "./pages/admin/evaluation/LevelsList";
+import PTRequestsList from "./pages/admin/requests/PTRequestsList";
+import TeacherHome from "./pages/teacher/TeacherHome";
+import TeacherCalendar from "./pages/teacher/TeacherCalendar";
+import TeacherSessions from "./pages/teacher/TeacherSessions";
+import TeacherSessionDetail from "./pages/teacher/TeacherSessionDetail";
+import TeacherRequests from "./pages/teacher/TeacherRequests";
+import TeacherProfile from "./pages/teacher/TeacherProfile";
+import ClientLayout from "./components/client/ClientLayout";
 import ClientDashboard from "./pages/client/ClientDashboard";
+import ClientPlacement from "./pages/client/ClientPlacement";
+import ClientProfilePage from "./pages/client/ClientProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -49,161 +60,59 @@ const App = () => (
               <Route path="/login" element={<Login />} />
 
               {/* Protected Admin Routes */}
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/clients"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <AllClients />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/clients/add"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <AddNewClient />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/clients/:id"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <ClientProfile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/clients/:id/edit"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <EditClient />
-                  </ProtectedRoute>
-                }
-              />
-             <Route
-               path="/admin/tasks/:id"
-               element={
-                 <ProtectedRoute requiredInterface="Admin">
-                   <TaskDetail />
-                 </ProtectedRoute>
-               }
-             />
+              <Route path="/admin" element={<ProtectedRoute requiredInterface="Admin"><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/clients" element={<ProtectedRoute requiredInterface="Admin"><AllClients /></ProtectedRoute>} />
+              <Route path="/admin/clients/add" element={<ProtectedRoute requiredInterface="Admin"><AddNewClient /></ProtectedRoute>} />
+              <Route path="/admin/clients/:id" element={<ProtectedRoute requiredInterface="Admin"><ClientProfile /></ProtectedRoute>} />
+              <Route path="/admin/clients/:id/edit" element={<ProtectedRoute requiredInterface="Admin"><EditClient /></ProtectedRoute>} />
+              <Route path="/admin/tasks/:id" element={<ProtectedRoute requiredInterface="Admin"><TaskDetail /></ProtectedRoute>} />
 
-              {/* Coordination - Time Slots */}
-              <Route
-                path="/admin/coordination/time-slots"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <TimeSlotsList />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/coordination/time-slots/add"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <TimeSlotForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/coordination/time-slots/:id"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <TimeSlotDetail />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/coordination/time-slots/:id/edit"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <TimeSlotForm editMode />
-                  </ProtectedRoute>
-                }
-              />
+              {/* Coordination */}
+              <Route path="/admin/coordination/time-slots" element={<ProtectedRoute requiredInterface="Admin"><TimeSlotsList /></ProtectedRoute>} />
+              <Route path="/admin/coordination/time-slots/add" element={<ProtectedRoute requiredInterface="Admin"><TimeSlotForm /></ProtectedRoute>} />
+              <Route path="/admin/coordination/time-slots/:id" element={<ProtectedRoute requiredInterface="Admin"><TimeSlotDetail /></ProtectedRoute>} />
+              <Route path="/admin/coordination/time-slots/:id/edit" element={<ProtectedRoute requiredInterface="Admin"><TimeSlotForm editMode /></ProtectedRoute>} />
 
               {/* Placement Tests */}
-              <Route
-                path="/admin/placement-tests/templates"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <TestTemplatesList />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/admin/placement-tests/templates" element={<ProtectedRoute requiredInterface="Admin"><TestTemplatesList /></ProtectedRoute>} />
 
               {/* Testing Center */}
-              <Route
-                path="/admin/testing-center/quizzes"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <QuizzesList />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/testing-center/quizzes/:id/questions"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <QuizQuestionsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/testing-center/questions"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <QuestionsList />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/admin/testing-center/quizzes" element={<ProtectedRoute requiredInterface="Admin"><QuizzesList /></ProtectedRoute>} />
+              <Route path="/admin/testing-center/quizzes/:id/questions" element={<ProtectedRoute requiredInterface="Admin"><QuizQuestionsPage /></ProtectedRoute>} />
+              <Route path="/admin/testing-center/questions" element={<ProtectedRoute requiredInterface="Admin"><QuestionsList /></ProtectedRoute>} />
 
               {/* Oral Exams */}
-              <Route
-                path="/admin/oral-exams/test-types"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <OralTestTypesList />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/oral-exams/slots"
-                element={
-                  <ProtectedRoute requiredInterface="Admin">
-                    <ExamSlotsList />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/admin/oral-exams/test-types" element={<ProtectedRoute requiredInterface="Admin"><OralTestTypesList /></ProtectedRoute>} />
+              <Route path="/admin/oral-exams/slots" element={<ProtectedRoute requiredInterface="Admin"><ExamSlotsList /></ProtectedRoute>} />
 
-              <Route
-                path="/teacher/*"
-                element={
-                  <ProtectedRoute requiredInterface="Teacher">
-                    <TeacherDashboard />
-                  </ProtectedRoute>
-                }
-              />
+              {/* Evaluation (Courses & Levels) */}
+              <Route path="/admin/evaluation/courses" element={<ProtectedRoute requiredInterface="Admin"><CoursesList /></ProtectedRoute>} />
+              <Route path="/admin/evaluation/levels" element={<ProtectedRoute requiredInterface="Admin"><LevelsList /></ProtectedRoute>} />
+
+              {/* Requests */}
+              <Route path="/admin/requests/pt-requests" element={<ProtectedRoute requiredInterface="Admin"><PTRequestsList /></ProtectedRoute>} />
+
+              {/* Teacher Routes */}
+              <Route path="/teacher" element={<ProtectedRoute requiredInterface="Teacher"><TeacherHome /></ProtectedRoute>} />
+              <Route path="/teacher/calendar" element={<ProtectedRoute requiredInterface="Teacher"><TeacherCalendar /></ProtectedRoute>} />
+              <Route path="/teacher/sessions" element={<ProtectedRoute requiredInterface="Teacher"><TeacherSessions /></ProtectedRoute>} />
+              <Route path="/teacher/sessions/:id" element={<ProtectedRoute requiredInterface="Teacher"><TeacherSessionDetail /></ProtectedRoute>} />
+              <Route path="/teacher/requests" element={<ProtectedRoute requiredInterface="Teacher"><TeacherRequests /></ProtectedRoute>} />
+              <Route path="/teacher/profile" element={<ProtectedRoute requiredInterface="Teacher"><TeacherProfile /></ProtectedRoute>} />
 
               {/* Protected Client Routes */}
               <Route
-                path="/client/*"
+                path="/client"
                 element={
                   <ProtectedRoute requiredInterface="Client">
-                    <ClientDashboard />
+                    <ClientLayout />
                   </ProtectedRoute>
                 }
-              />
+              >
+                <Route index element={<ClientDashboard />} />
+                <Route path="placement" element={<ClientPlacement />} />
+                <Route path="profile" element={<ClientProfilePage />} />
+              </Route>
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

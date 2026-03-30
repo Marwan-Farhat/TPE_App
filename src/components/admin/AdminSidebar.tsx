@@ -22,6 +22,9 @@ import {
   Mic,
   CalendarDays,
   ListChecks,
+  GraduationCap,
+  Layers,
+  MessageSquare,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
@@ -49,6 +52,8 @@ const AdminSidebar = () => {
   const [isPlacementTestsOpen, setIsPlacementTestsOpen] = useState(location.pathname.includes("/admin/placement-tests"));
   const [isTestingCenterOpen, setIsTestingCenterOpen] = useState(location.pathname.includes("/admin/testing-center"));
   const [isOralExamsOpen, setIsOralExamsOpen] = useState(location.pathname.includes("/admin/oral-exams"));
+  const [isEvaluationOpen, setIsEvaluationOpen] = useState(location.pathname.includes("/admin/evaluation"));
+  const [isRequestsOpen, setIsRequestsOpen] = useState(location.pathname.includes("/admin/requests"));
 
   // Search state
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,7 +61,7 @@ const AdminSidebar = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const sidebarVariants = {
     collapsed: {
@@ -126,6 +131,8 @@ const AdminSidebar = () => {
     setIsPlacementTestsOpen(false);
     setIsTestingCenterOpen(false);
     setIsOralExamsOpen(false);
+    setIsEvaluationOpen(false);
+    setIsRequestsOpen(false);
     setShowResults(false);
   };
 
@@ -162,6 +169,24 @@ const AdminSidebar = () => {
       setIsOralExamsOpen(true);
     } else {
       setIsOralExamsOpen(!isOralExamsOpen);
+    }
+  };
+
+  const handleEvaluationClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+      setIsEvaluationOpen(true);
+    } else {
+      setIsEvaluationOpen(!isEvaluationOpen);
+    }
+  };
+
+  const handleRequestsClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+      setIsRequestsOpen(true);
+    } else {
+      setIsRequestsOpen(!isRequestsOpen);
     }
   };
 
@@ -729,6 +754,88 @@ const AdminSidebar = () => {
                     >
                       <ListChecks className="h-4 w-4 flex-shrink-0" />
                       <span className="text-sm whitespace-nowrap">{t("admin.sidebar.testTypes")}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Evaluation Category */}
+          <div>
+            <button
+              onClick={handleEvaluationClick}
+              className={cn(
+                "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
+                isEvaluationOpen && isExpanded && "bg-secondary/50 text-foreground",
+              )}
+            >
+              {isExpanded && (
+                <motion.div initial={{ rotate: 0 }} animate={{ rotate: isEvaluationOpen ? 90 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0">
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              )}
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
+                <GraduationCap className="h-5 w-5 text-primary" />
+              </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.span className="font-medium text-sm whitespace-nowrap flex-1 text-start" initial={{ opacity: 0, x: isRTL ? 10 : -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: isRTL ? 10 : -10 }} transition={{ duration: 0.2 }}>
+                    {t("admin.sidebar.evaluation")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+            <AnimatePresence>
+              {isExpanded && isEvaluationOpen && (
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+                  <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
+                    <button onClick={() => handleNavigation("/admin/evaluation/courses")} className={cn("w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors", location.pathname.includes("/admin/evaluation/courses") ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground")}>
+                      <BookOpen className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.courses")}</span>
+                    </button>
+                    <button onClick={() => handleNavigation("/admin/evaluation/levels")} className={cn("w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors", location.pathname.includes("/admin/evaluation/levels") ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground")}>
+                      <Layers className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.levels")}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Requests Category */}
+          <div>
+            <button
+              onClick={handleRequestsClick}
+              className={cn(
+                "w-full flex items-center gap-3 p-3 rounded-lg text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-colors",
+                isRequestsOpen && isExpanded && "bg-secondary/50 text-foreground",
+              )}
+            >
+              {isExpanded && (
+                <motion.div initial={{ rotate: 0 }} animate={{ rotate: isRequestsOpen ? 90 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0">
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              )}
+              <div className={cn("flex-shrink-0 flex items-center justify-center", !isExpanded && "w-full")}>
+                <MessageSquare className="h-5 w-5 text-primary" />
+              </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.span className="font-medium text-sm whitespace-nowrap flex-1 text-start" initial={{ opacity: 0, x: isRTL ? 10 : -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: isRTL ? 10 : -10 }} transition={{ duration: 0.2 }}>
+                    {t("admin.sidebar.requests")}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+            <AnimatePresence>
+              {isExpanded && isRequestsOpen && (
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+                  <div className={cn("mt-1 space-y-1", isRTL ? "pr-6" : "pl-6")}>
+                    <button onClick={() => handleNavigation("/admin/requests/pt-requests")} className={cn("w-full flex items-center gap-3 p-2.5 rounded-lg transition-colors", location.pathname.includes("/admin/requests/pt-requests") ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground")}>
+                      <MessageSquare className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">{t("admin.sidebar.ptRequests")}</span>
                     </button>
                   </div>
                 </motion.div>

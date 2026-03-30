@@ -5,6 +5,7 @@ import { User } from "lucide-react";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import useLanguage from "@/hooks/useLanguage";
+
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TabsContent } from "@/components/ui/tabs";
@@ -20,8 +21,9 @@ import StaffTasksSection from "@/components/admin/clients/sections/StaffTasksSec
 import NotesSection from "@/components/admin/clients/sections/NotesSection";
 import InformationTab from "@/components/admin/clients/tabs/InformationTab";
 import PlaceholderTab from "@/components/admin/clients/tabs/PlaceholderTab";
+import PlacementTab from "@/components/admin/clients/tabs/PlacementTab";
 import { clientService, extraFieldService, systemOptionsService, SystemOptions } from "@/services/clientService";
-import { taskTimelineService, TimelineEvent } from "@/services/staffTaskService";
+ import { taskTimelineService, TimelineEvent } from "@/services/staffTaskService";
 import { Client } from "@/types/client";
 import { ExtraField } from "@/types/extraField";
 import { useToast } from "@/hooks/use-toast";
@@ -317,7 +319,7 @@ const ClientProfile = () => {
               </TabsContent>
 
               <TabsContent value="placement" className="mt-6">
-                <PlaceholderTab tabName="placement" />
+                <PlacementTab clientId={client.id} />
               </TabsContent>
 
               <TabsContent value="waiting" className="mt-6">
