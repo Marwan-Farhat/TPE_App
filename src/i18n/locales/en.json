@@ -1,0 +1,1640 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "courses": "Courses",
+    "faqs": "FAQs",
+    "successStories": "Success Stories",
+    "news": "News",
+    "start": "Start",
+    "login": "Login"
+  },
+  "hero": {
+    "badge": "Learn English with certified experts",
+    "title": "Speak English from day one and achieve your dream the right way!",
+    "description": "Get rid of fear and shyness and start communicating with confidence and achieve your dream in work, travel, or study through interactive methods, conversation sessions, and daily practice in different ways from day one.",
+    "cta": "Take the first step towards your dream",
+    "watchVideo": "Watch Video",
+    "professionalTeacher": "Professional Teacher",
+    "stats": {
+      "trainee": "Trainee",
+      "trainer": "Trainer",
+      "program": "Program"
+    }
+  },
+  "about": {
+    "title": "Shorten your path and learn English the right way!",
+    "description": "We provide you with an interactive, direct, and enjoyable experience through constantly evolving content that helps you speak English quickly and easily.",
+    "benefits": {
+      "1": "Strong interactive curriculum focused on conversation and listening.",
+      "2": "Comprehensive platform for all content, schedules, and attendance.",
+      "3": "Professional trainers and friendly, motivating environment.",
+      "4": "Continuous support and customer service available 24/7.",
+      "5": "Individual and group sessions."
+    },
+    "cta": "Choose the right course for your dreams"
+  },
+  "features": {
+    "orientation": {
+      "title": "Free Orientation Session",
+      "description": "An introductory session at the beginning to map out your language journey and understand how we'll proceed the right way."
+    },
+    "conversation": {
+      "title": "Private Conversation Sessions",
+      "description": "Customized sessions so you can speak a lot and get special focus from the trainer."
+    },
+    "dailyPractice": {
+      "title": "Daily Practice",
+      "description": "You'll speak English 5 times a week and practice the language in an interactive and fun way."
+    },
+    "assessment": {
+      "title": "Personal Assessment",
+      "description": "With every session or task, you get personal evaluation or feedback to continuously improve."
+    },
+    "guarantee": {
+      "title": "The Pro English Guarantee",
+      "description": "Guarantee to repeat any level for free for a year if you commit to attendance and get the guarantee."
+    },
+    "platform": {
+      "title": "Lifetime Platform Access",
+      "description": "Once you join the course, you get lifetime access to the platform with all content files and exercises."
+    }
+  },
+  "courses": {
+    "title": "Choose the right plan for you!",
+    "subtitle": "We offer a variety of courses to match your learning goals and schedule.",
+    "subscribeNow": "Subscribe Now",
+    "moreInfo": "More Info",
+    "whatYouLearn": "What you'll learn:",
+    "theImpact": "The Impact:",
+    "3in1": {
+      "name": "3in1 Program",
+      "description": "Speak English from zero to confidence and fluency and develop your skills the right way.",
+      "intro": {
+        "1": "If every time you try to learn English you find academic methods like school and this makes you confused between many sources.",
+        "2": "In every situation you face, you feel shy and don't know how to respond to a word in English or start a conversation, and this causes you anxiety and tension from facing people and delays you from your dream and future.",
+        "3": "Imagine learning English through interactive methods and enjoyable practice all the time with games and different activities.",
+        "4": "After seeing many places offering English courses without real practice, we decided to create the right method that helped thousands of people learn English and make a real change in their lives.",
+        "5": "Through 3in1, an interactive program that helps you get rid of fear and shyness from communication and speak with confidence without any barriers and achieve your dream in work, travel, or study through interactive methods, conversation sessions, and daily practice in different ways."
+      },
+      "learn": {
+        "fluency": {
+          "title": "Fluency Sessions",
+          "description": "We help you break the fear barrier and speak with people at your level and from different cultures around the world, through 8 sessions weekly, 2 hours per session, where you get words, grammar, conversation, pronunciation."
+        },
+        "speaking": {
+          "title": "Speaking Sessions",
+          "description": "We help you reach confidence through private conversation sessions, where you get special focus and evaluation from the trainer and speak about topics you learned in the fluency session and about your normal day, through 8 sessions monthly, 30 minutes per session."
+        },
+        "accent": {
+          "title": "Accent Task Training",
+          "description": "Speak English like foreigners and open better opportunities for yourself through 4 monthly tasks (tasks) aimed at improving your accent and speaking the right way, you listen to a simple video explaining a specific sound and record your pronunciation and send it to the trainer to evaluate you and give you comprehensive feedback."
+        }
+      },
+      "impact": {
+        "1": "With every session or task you get detailed evaluation or feedback to continuously develop yourself.",
+        "2": "With The Pro English guarantee that gives you a guarantee through which you can repeat any level for free for a year if you book 8 levels and commit to attendance."
+      }
+    },
+    "2in1": {
+      "name": "2in1 Course",
+      "description": "Focus on speaking and listening skills with intensive practice sessions and real-world conversations.",
+      "intro": {
+        "1": "If your time is busy and you want to practice the language in a simple and fun way that leads to progress, then the 2in1 course is suitable for you, where you get:"
+      },
+      "learn": {
+        "speaking": {
+          "title": "Speaking Sessions",
+          "description": "Sessions where you practice the language privately and speak about common topics and situations from your normal day with special focus and evaluation from the trainer, through 12 sessions monthly, 60 minutes per session."
+        },
+        "accent": {
+          "title": "Accent Task Training",
+          "description": "Speak English like foreigners and open better opportunities for yourself through 4 monthly tasks (tasks) aimed at improving your accent and speaking the right way, you listen to a simple video explaining a specific sound and record your pronunciation and send it to the trainer to evaluate you and give you comprehensive feedback."
+        }
+      }
+    },
+    "teens": {
+      "name": "Teens Course",
+      "description": "Develop your skills and speak English with confidence, suitable for teenagers aged 13-17.",
+      "intro": {
+        "1": "If you want to build your children's future right and help them learn English the right way away from academic methods that depend on memorization and rote learning.",
+        "2": "Your goal is for them to speak English with confidence and know how to study in English without problems and come out ready for the job market.",
+        "3": "Then the Teens program is suitable for them!",
+        "4": "It will help them break the fear barrier and speak English with confidence through interactive methods that depend on fun games and activities, daily practice in different ways and follow-up through the platform."
+      },
+      "learn": {
+        "fluency": {
+          "title": "Fluency Sessions",
+          "description": "We help them learn English through interactive sessions with trainees at their level, where they get words, grammar, conversation, pronunciation, through 8 sessions weekly, 2 hours per session."
+        },
+        "speaking": {
+          "title": "Speaking Sessions",
+          "description": "They gain more confidence in themselves through private conversation sessions, where they get special focus and evaluation from the trainer, they speak about topics they studied in fluency sessions and common topics in their day, through 8 sessions monthly, 30 minutes per session."
+        },
+        "accent": {
+          "title": "Accent Task Training",
+          "description": "Speak English like foreigners and open better opportunities for yourself through 4 monthly tasks (tasks) aimed at improving your accent and speaking the right way, you listen to a simple video explaining a specific sound and record your pronunciation and send it to the trainer to evaluate you and give you comprehensive feedback."
+        },
+        "platform": {
+          "title": "All content and sessions in one place",
+          "description": "Through The Pro English platform you can download all content and files, and you can follow session schedules, and your child's absence and attendance days so you can track them through the website."
+        }
+      },
+      "impact": {
+        "1": "With The Pro English guarantee that gives you a guarantee through which you can repeat any level for free for a year if you book 8 levels and commit to attendance."
+      }
+    },
+    "vip": {
+      "name": "The Pro English VIP Course",
+      "description": "Reach your goal faster and develop your level with a customized plan through 1:1 individual sessions.",
+      "intro": {
+        "1": "If you need to learn English quickly and are looking for a course that provides you with a customized plan and focuses on your goal whether it's fluency, pronunciation, interviews, work, or travel.",
+        "2": "The course is designed specifically based on your goals and you can complete the level within a month or request intensification for two weeks according to your needs, with complete flexibility in time and content."
+      },
+      "learn": {
+        "individual": {
+          "title": "Individual 1:1 Sessions",
+          "description": "2 sessions weekly, including speech and fluency training through diverse topics, grammar in context, new vocabulary and different situations from your daily life."
+        },
+        "conversation": {
+          "title": "Conversation and Practical Application",
+          "description": "In each session, dedicated time for speaking and interactive conversation with pronunciation training and error correction through the trainer."
+        },
+        "pronunciation": {
+          "title": "Weekly Pronunciation Training",
+          "description": "Our goal is for you to speak English correctly, through 4 monthly tasks, with each task you listen to a simple video explaining a specific sound, record your pronunciation and send it to the trainer to get comprehensive evaluation and track your progress continuously."
+        }
+      },
+      "impact": {
+        "1": "Reach your goal in the shortest possible time with a 100% customized plan for your personal needs and goals."
+      }
+    }
+  },
+  "pricing": {
+    "title": "Choose the right plan for you!",
+    "subscribeNow": "Subscribe Now",
+    "bestseller": "Bestseller",
+    "plans": {
+      "3levels": {
+        "name": "3 Levels",
+        "duration": "3 months of daily English practice and speaking.",
+        "price": "3750 EGP",
+        "features": {
+          "1": "24 interactive sessions with learners at your level.",
+          "2": "24 private sessions with the trainer.",
+          "3": "12 accent improvement training sessions",
+          "4": "3 free orientation sessions.",
+          "5": "Continuous support and customer service available 24/7."
+        }
+      },
+      "8levels": {
+        "name": "8 Levels",
+        "duration": "12 months of daily English practice and speaking.",
+        "price": "8500 EGP",
+        "features": {
+          "1": "64 interactive sessions with learners at your level.",
+          "2": "64 private sessions with the trainer.",
+          "3": "32 accent improvement training sessions",
+          "4": "12 free orientation sessions.",
+          "5": "Continuous support and customer service available 24/7.",
+          "6": "Guarantee to repeat any level for free for a year if you commit to attendance."
+        }
+      },
+      "6levels": {
+        "name": "6 Levels",
+        "duration": "6 months of daily English practice and speaking.",
+        "price": "6900 EGP",
+        "features": {
+          "1": "48 interactive sessions with learners at your level.",
+          "2": "48 private sessions with the trainer.",
+          "3": "24 accent improvement training sessions",
+          "4": "6 free orientation sessions.",
+          "5": "Continuous support and customer service available 24/7.",
+          "6": "Guarantee to repeat any level for free for a year if you commit to attendance."
+        }
+      }
+    }
+  },
+  "coaching": {
+    "title": "Determine your level and evaluate your skills the right way!",
+    "description": "Start your journey with a Coaching Session individual consultation, 30 minutes with the trainer who speaks and chats with you in English to evaluate your skills and give you a detailed evaluation, plus an MCQ test to determine your level accurately and guide you to the next step.",
+    "cta": "Book Coaching Session"
+  },
+  "faqs": {
+    "title": "Do you have many questions in your mind?!",
+    "subtitle": "Get the answers the right way!",
+    "questions": {
+      "1": {
+        "question": "1- How do I choose the right course for me from The Pro English programs?",
+        "answer": "Through the Coaching Session, an individual consultation that serves as guidance for you and your life, where we get to know you better and your goals, so you get a comprehensive evaluation of your strengths and areas for improvement, and based on that we recommend the right course for your level and goals, and from here your development and change plan begins for the better."
+      },
+      "2": {
+        "question": "2- What is the specialization and experience of trainers at The Pro English?",
+        "answer": "At The Pro English, we believe that the quality and continuity of education starts with teachers, so we always ensure to choose the most competent and best trainers through very precise and diverse evaluation stages, including:\n\nProfessional language level: Every teacher speaks English fluently at a level equivalent to native speakers to ensure you learn and pronounce English as it's used globally.\n\nCertificates and experience: Trainers hold internationally recognized certificates such as CELTA or TEFL or have passed The Pro English's special training program or have long and deep experience in teaching.\n\nPersonal skills: Every teacher enjoys strong personal skills and high professionalism in teaching and communicating with trainees, to ensure a comfortable and fruitful experience."
+      },
+      "3": {
+        "question": "3- Can I start from scratch without level assessment?",
+        "answer": "To ensure maximum benefit from The Pro English courses, level assessment and Coaching Session are essential, as they will help you know your real level and start with trainees at your same level.\n\nMoreover, you might be at a higher level than zero; then you would waste your time and money on information you already know and lose enthusiasm with trainees whose level is lower than yours, so we ensure you start from the right point to continue."
+      },
+      "4": {
+        "question": "4- I know my level, can I start without level assessment?",
+        "answer": "To ensure maximum benefit for you, level assessment and Coaching Session in The Pro way are essential.\n\nBecause level assessment differs from place to place, for example, we rely on two parts:\n\n• Multiple choice MCQ test consisting of 50 questions from easy to difficult, measuring different aspects of your level such as reading, grammar, vocabulary, and comprehension speed.\n\n• Interactive 30-minute session with the trainer who speaks and chats with you in English to assess your language skills and give you a comprehensive evaluation.\n\nYou might have done it before and your level has decreased or increased, and we care that you start from the right level.\n\nIf you start from a level lower or higher than yours, you would waste your time and money on an inappropriate level and this would make you lose enthusiasm and feel lost, so we follow a specific system that helps you progress quickly."
+      },
+      "5": {
+        "question": "5- What distinguishes the Coaching session from anywhere else?",
+        "answer": "The difference is summarized in 5 points:\n\nFirst, you enter with the trainer in a session like a regular course... this makes you experience the course and get an idea before starting.\n\n30 minutes of speaking and chatting with you on common topics that help you speak and determine your level.\n\nHe tells you your strengths, the points you need to improve, and tells you how we'll continue the right way that leads you to your dream.\n\nAfter that, you start the course with us from the appropriate level for you and through it you can ask any question you want.\n\nAnd if you don't book with us, you've learned your level comprehensively and can continue on your own."
+      },
+      "6": {
+        "question": "6- What happens inside the Coaching Session for level assessment?!",
+        "answer": "The session is a nice chat with the trainer in a friendly way, he gets to know you first and gets an idea about your level.\n\nThen he speaks with you in English like a regular course with life questions from easy to difficult, from which he knows your listening level and evaluates your pronunciation of words and sentences.\n\nSo at the end of the session, he determines your strengths which include the words and sentences you pronounced correctly, and the shortcomings you have so you can start working on them and tells you what level you're at and what level you need to reach to achieve your dream."
+      },
+      "7": {
+        "question": "7- Are you available offline or online?",
+        "answer": "We are online only, our programs depend on interaction and take more than twice a week, and this is difficult to happen offline, besides offline problems in transportation, political situations and others, while online is easier, faster, and through it you get to know young people from different cultures around the world."
+      },
+      "8": {
+        "question": "8- Can I know more about The Pro English guarantee?",
+        "answer": "The guarantee is an additional unique feature for the owners of the right method at The Pro English, and it's a guarantee that allows you throughout the year to repeat any level you didn't succeed in at our expense, besides you can review any level and attend it again for free as if you're taking it for the first time if you commit to attending all lectures, and this is an exceptional experience that we are the only place in Egypt that offers it for the benefit of all Pro students."
+      },
+      "9": {
+        "question": "9- Will the course give me an accredited certificate?",
+        "answer": "The only accredited certificates in language are IELTS and TOEFL, and these are international certificates that you must take and pass specific tests to obtain, and this is what we prepare you for in The Pro English courses, besides our help with an intensive preparatory course that lasts a month so you're ready before entering the accredited certificate exams.\n\nIn addition to this, we provide you with an attendance certificate after successfully passing each level, and a program completion certificate that you can add to your personal profile on LinkedIn to highlight your strong language skills in front of HR officials in large companies."
+      },
+      "10": {
+        "question": "10- Is course price installment available?",
+        "answer": "We care that you're comfortable! So we provide you with a course price installment service within 30 days, you can pay 50% at the beginning and the rest after a month, besides you can pay it in 3 installments within 60 days at a rate of 40% at the beginning and then 30% and 30% if you take advantage of the opportunity and get the (guarantee)."
+      }
+    }
+  },
+  "successStories": {
+    "title": "Thousands of happy students",
+    "subtitle": "Hear from our students who have achieved their English learning goals and transformed their careers with Pro English Academy.",
+    "trustedBy": "Trusted by leading companies",
+    "companiesSubtitle": "Teams at these companies train their English with us",
+    "testimonials": {
+      "1": {
+        "name": "Sarah Ahmed",
+        "role": "Business Professional",
+        "text": "Pro English Academy transformed my career. After completing the 3in1 Program, I was promoted to a position that requires daily English communication. The teachers are amazing!"
+      },
+      "2": {
+        "name": "Mohamed Hassan",
+        "role": "Medical Student",
+        "text": "I needed to improve my English for my medical studies abroad. The VIP Course gave me the personalized attention I needed. Now I'm studying medicine in the UK!"
+      },
+      "3": {
+        "name": "Fatima Al-Sayed",
+        "role": "Marketing Manager",
+        "text": "The flexible schedule was perfect for my busy work life. I could attend classes in the evening and on weekends. My English improved dramatically in just 3 months."
+      },
+      "4": {
+        "name": "Ahmed Mostafa",
+        "role": "Software Developer",
+        "text": "As a developer, I needed English for documentation and international team meetings. Pro English made learning fun and practical. Highly recommended!"
+      }
+    }
+  },
+  "news": {
+    "title": "Stay updated with our blog",
+    "subtitle": "Latest articles, tips, and insights to help you on your English learning journey.",
+    "readMore": "Read more",
+    "newsletter": {
+      "title": "Join Our Newsletter",
+      "subtitle": "Get the latest tips, resources, and updates delivered to your inbox.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe",
+      "success": "You're subscribed!"
+    },
+    "blogs": {
+      "1": {
+        "title": "10 Tips to Improve Your English Speaking Skills",
+        "excerpt": "Discover practical strategies that will help you become more confident in English conversations.",
+        "category": "Speaking",
+        "date": "January 10, 2024"
+      },
+      "2": {
+        "title": "Common Grammar Mistakes to Avoid",
+        "excerpt": "Learn about the most frequent grammar errors and how to fix them in your writing and speech.",
+        "category": "Grammar",
+        "date": "January 5, 2024"
+      },
+      "3": {
+        "title": "How to Prepare for IELTS Successfully",
+        "excerpt": "A comprehensive guide to achieving your target IELTS score with proven study methods.",
+        "category": "IELTS",
+        "date": "December 28, 2023"
+      }
+    }
+  },
+  "start": {
+    "title": "Start Your Journey Now",
+    "subtitle": "Register for the placement test and book your free session",
+    "form": {
+      "title": "Placement Test Registration",
+      "subtitle": "Complete the registration to proceed to payment",
+      "testInfo": {
+        "title": "English Placement Test 2025",
+        "description": "Comprehensive English language assessment test",
+        "price": "100 EGP"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "gender": "Gender",
+        "selectGender": "Select Gender",
+        "male": "Male",
+        "female": "Female",
+        "dob": "Date of Birth"
+      },
+      "submit": "Register"
+    },
+    "success": {
+      "title": "Registration Successful!",
+      "message": "We've received your registration. Our team will contact you within 24 hours to confirm your placement test booking and payment details.",
+      "registerAnother": "Register another person"
+    }
+  },
+  "footer": {
+    "description": "Pro English Academy is your trusted partner in mastering the English language. Join thousands of successful learners and achieve your language goals.",
+    "company": "Company",
+    "support": "Support",
+    "links": {
+      "aboutUs": "About Us",
+      "ourCourses": "Our Courses",
+      "successStories": "Success Stories",
+      "blog": "Blog",
+      "faqs": "FAQs",
+      "contactUs": "Contact Us",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "location": "Cairo, Egypt",
+    "copyright": "© 2024 Pro English Academy. All rights reserved."
+  },
+  "scrollToTop": "Scroll to top",
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to your account",
+    "email": "Email or Username",
+    "emailPlaceholder": "Enter your email or username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "needHelp": "Need help? Contact your administrator."
+  },
+  "admin": {
+    "sidebar": {
+      "admin": "Admin",
+      "search": "Search name, phone, email...",
+      "clients": "Clients",
+      "addNewClient": "Add New Client",
+      "allClients": "All Clients",
+      "viewAllResults": "View all results",
+      "noClientsFound": "No clients found",
+      "coordination": "Coordination",
+      "timeSlots": "Time Slots",
+      "placementTests": "Placement Tests",
+      "testTemplates": "Test Templates",
+      "testingCenter": "Testing Center",
+      "quizzes": "Quizzes",
+      "questions": "Questions",
+      "oralExams": "Oral Exams",
+      "examSlots": "Exam Slots",
+      "testTypes": "Test Types",
+      "evaluation": "Evaluation",
+      "courses": "Courses",
+      "levels": "Levels",
+      "requests": "Requests",
+      "ptRequests": "PT Requests"
+    },
+    "header": {
+      "notifications": "Notifications",
+      "settings": "Settings",
+      "profile": "Profile",
+      "logout": "Logout",
+      "theme": "Theme",
+      "language": "Language",
+      "darkMode": "Dark Mode"
+    },
+    "dashboard": {
+      "welcome": "Welcome back",
+      "subtitle": "Here's what's happening with your platform today.",
+      "overview": "Overview",
+      "statistics": "Statistics Overview",
+      "totalClients": "Total Clients",
+      "activeCourses": "Active Courses",
+      "monthlyRevenue": "This Month Revenue",
+      "pendingTasks": "Pending Tasks",
+      "assignedTasks": {
+        "title": "Assigned Tasks",
+        "noTasks": "No tasks assigned to you",
+        "addedBy": "Added by"
+      },
+      "quickAccess": {
+        "title": "Quick Access",
+        "manage": "Manage",
+        "manageTitle": "Manage Quick Access",
+        "manageDescription": "Select which shortcuts to show in Quick Access.",
+        "newClient": "New Client",
+        "allClients": "All Clients",
+        "settings": "Settings",
+        "timeSlots": "Time Slots",
+        "testTemplates": "Test Templates",
+        "quizzes": "Quizzes",
+        "questions": "Questions",
+        "oralTestTypes": "Oral Test Types",
+        "examSlots": "Exam Slots",
+        "noItems": "No quick access items configured.",
+        "addItems": "Add Items",
+        "save": "Save",
+        "cancel": "Cancel"
+      },
+      "placeholder": {
+        "title": "Quick Access",
+        "description": "This is a placeholder for the Admin interface. You can add more features and pages here based on your requirements.",
+        "interface": "Interface",
+        "role": "Role"
+      },
+      "scheduler": {
+        "title": "Oral Exam Slots Scheduler",
+        "totalActiveSlots": "Total Active Slots",
+        "totalHours": "Total Hours",
+        "totalBreakHours": "Total Break Hours",
+        "teachersScheduledToday": "Teachers Today",
+        "dayView": "Day",
+        "weekView": "Week",
+        "workSlot": "Work Slot",
+        "breakSlot": "Break",
+        "filterTeacher": "Filter Teacher",
+        "filterTestType": "Filter Test Type",
+        "allTeachers": "All",
+        "allTestTypes": "All",
+        "oralTestType": "Oral Test Type",
+        "today": "Today",
+        "teacher": "Teacher",
+        "date": "Date",
+        "dateTeacher": "Date / Teacher",
+        "time": "Time",
+        "duration": "Duration",
+        "minutes": "min",
+        "creationType": "Slot Type",
+        "bulkGenerated": "Bulk Generated",
+        "singleCreated": "Single Created",
+        "past": "Past",
+        "noSlots": "No exam slots found for the selected period and filters.",
+        "dateRange": "Date Range",
+        "selectStartDate": "Select start date",
+        "selectEndDate": "Select end date",
+        "clearRange": "Clear Range",
+        "weeklyView": "Weekly Timeline Resource Scheduler View",
+        "dailyView": "Daily Timeline Resource Scheduler View"
+      }
+    },
+    "clients": {
+      "title": "All Clients",
+      "clientsList": "Clients List",
+      "addNew": "Add New Client",
+      "search": "Search clients...",
+      "filter": "Filter",
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "noClients": "No clients found",
+      "loading": "Loading clients...",
+      "deleteConfirm": "Delete Client",
+      "deleteMessage": "Are you sure you want to delete this client? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleteSuccess": "Client deleted successfully",
+      "deleteError": "Error deleting client",
+      "tryAgain": "Please try again",
+      "search": "Search clients...",
+      "filter": "Filter",
+      "addNew": "Add New Client",
+      "noSearchResults": "Try adjusting your search query",
+      "addFirstClient": "Add your first client to get started",
+      "showing": "Showing",
+      "client": "client",
+      "clients": "clients",
+      "program": "Program",
+      "added": "Added",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "contactInfo": "Contact Info",
+        "phone": "Phone",
+        "status": "Status",
+        "joinDate": "Join Date",
+        "actions": "Actions"
+      }
+    },
+    "clientProfile": {
+      "title": "Client Profile",
+      "back": "Back to Clients",
+      "clients": "Clients",
+      "viewAll": "View all",
+      "editProfile": "Edit Profile",
+      "delete": "Delete",
+      "deleteClient": "Delete Client",
+      "deleteConfirm": "Are you sure you want to delete",
+      "deleteWarning": "This action cannot be undone and will permanently remove all client data.",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "clientNotFound": "Client not found",
+      "clientNotFoundMessage": "The client you're looking for doesn't exist.",
+      "joined": "Joined",
+      "clientCode": "Client Code",
+      "totalPaid": "Total Paid",
+      "totalPending": "Total Pending",
+      "balance": "Balance",
+      "tabs": {
+        "information": "Information",
+        "batches": "Batches",
+        "placement": "Placement",
+        "waiting": "Waiting",
+        "payments": "Payments",
+        "invoices": "Invoices",
+        "certificates": "Certificates",
+        "tests": "Tests",
+        "messages": "Messages",
+        "misc": "Misc"
+      },
+      "quickActions": {
+        "title": "Quick Actions",
+        "choosePath": "Choose Path",
+        "enrollInBatch": "Enroll in a Batch",
+        "createPlacementTest": "Create Placement Test",
+        "addToWaiting": "Add to Waiting",
+        "postponeTraining": "Postpone Training",
+        "addPayment": "Add Payment",
+        "newInvoice": "New Invoice"
+      },
+      "trainingPath": {
+        "title": "Training Path",
+        "noPathWarning": "This client has no active training path yet! You could either select from the existing paths, or design a custom one. Selecting a path for the client is critical to manage and track his/her courses and payments.",
+        "selectCreatePath": "Select/create path",
+        "currentPath": "Current Path",
+        "progress": "Progress"
+      },
+      "timeline": {
+        "title": "Timeline",
+        "filters": {
+          "all": "All",
+          "placementTesting": "Placement Testing",
+          "waiting": "Waiting",
+          "batches": "Batches",
+          "paths": "Paths",
+          "payments": "Payments",
+          "tags": "Tags",
+          "tasks": "Tasks"
+        },
+        "noEvents": "No timeline events yet",
+        "view": "View",
+        "daysAgo": "days ago",
+        "weeksAgo": "weeks ago"
+      },
+      "files": {
+        "title": "Files & Attachments",
+        "dropHere": "Drop file here, or click to browse.",
+        "supportedFormats": "PNG, JPG, TXT, PDF, DOC(X), PPT(X), XLS(X), and ZIP.",
+        "maxSize": "50 MP Maximum size.",
+        "availableSpace": "Available disk space",
+        "noFiles": "No files uploaded yet",
+        "uploadSuccess": "File uploaded successfully",
+        "uploadError": "Failed to upload file",
+        "deleteSuccess": "File deleted successfully",
+        "deleteTitle": "Delete File",
+        "deleteMessage": "Are you sure you want to delete this file? This action cannot be undone.",
+        "invalidType": "Invalid file type",
+        "tooLarge": "File is too large (max 50MB)"
+      },
+      "staffTasks": {
+        "title": "Staff Tasks",
+        "noTasks": "No tasks associated with this client.",
+        "newTask": "New Task",
+        "addNote": "Add Note"
+      },
+      "notes": {
+        "title": "Staff Notes",
+        "newNote": "New note",
+        "placeholder": "Type your note here...",
+        "addNote": "Add note",
+        "emptyNote": "Please enter a note",
+        "addedSuccess": "Note added successfully",
+        "editedSuccess": "Note updated successfully",
+        "deletedSuccess": "Note deleted successfully"
+      },
+      "systemAccount": {
+        "title": "System Account",
+        "username": "Username",
+        "initialPassword": "Initial Password",
+        "lastLogin": "Last Login",
+        "lastActivity": "Last Activity",
+        "onlineStatus": "Online Status",
+        "createdAt": "Account Created At",
+        "online": "Online",
+        "offline": "Offline",
+        "loginAsClient": "Login as Client",
+        "editAccount": "Edit Account",
+        "suspendAccount": "Suspend Account"
+      },
+      "personalInfo": "Personal Information",
+      "productInfo": "Product Information",
+      "enrollmentDetails": "Client Enrollment Details",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "jobTitle": "Job Title",
+      "age": "Age",
+      "gender": "Gender",
+      "city": "City",
+      "country": "Country",
+      "guardianNumber": "Guardian Number",
+      "currentPath": "Current Path",
+      "currentProgram": "Current Program",
+      "programType": "Program Type",
+      "source": "Source",
+      "pathCost": "Path Cost",
+      "paidForPath": "Paid for Path",
+      "remaining": "Remaining",
+      "totalPaidEver": "Total Paid Ever",
+      "coordinator": "Coordinator",
+      "company": "Company",
+      "tags": "Tags",
+      "noTags": "No tags",
+      "timeSlots": "Selected Time Slots",
+      "noTimeSlots": "No time slots selected",
+      "sessionInfo": "Session Information",
+      "totalSessions": "Total Sessions",
+      "completedSessions": "Completed Sessions",
+      "remainingSessions": "Remaining Sessions",
+      "upcomingSessions": "Upcoming Sessions",
+      "noSessionData": "No session data available",
+      "accountInfo": "Account Information",
+      "username": "Username",
+      "password": "Password",
+      "accountStatus": "Account Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "lastLogin": "Last Login",
+      "never": "Never",
+      "accountActions": "Account Actions",
+      "forceLogout": "Force Logout",
+      "forceLogoutTitle": "Force Client Logout",
+      "forceLogoutMessage": "Are you sure you want to log out this client from all devices? They will need to log in again to access their account.",
+      "forceLogoutSuccess": "Client logged out successfully",
+      "forceLogoutDescription": "The client has been logged out from all devices.",
+      "forceLogoutError": "Error logging out client",
+      "resetPassword": "Reset Password",
+      "resetPasswordTitle": "Reset Client Password",
+      "resetPasswordMessage": "Are you sure you want to reset this client's password? A new temporary password will be generated.",
+      "resetPasswordSuccess": "Password reset successfully",
+      "newPasswordPrefix": "New temporary password: ",
+      "resetPasswordError": "Error resetting password",
+      "deactivateAccount": "Deactivate Account",
+      "activateAccount": "Activate Account",
+      "deactivateTitle": "Deactivate Client Account",
+      "activateTitle": "Activate Client Account",
+      "deactivateMessage": "Are you sure you want to deactivate this client's account? They will not be able to log in until reactivated.",
+      "activateMessage": "Are you sure you want to activate this client's account? They will be able to log in again.",
+      "accountActivated": "Account activated",
+      "accountDeactivated": "Account deactivated",
+      "accountActivatedMessage": "The client account has been activated successfully.",
+      "accountDeactivatedMessage": "The client account has been deactivated successfully.",
+      "accountStatusError": "Error updating account status",
+      "processing": "Processing...",
+      "extraInfo": "Extra Information",
+      "noExtraInfo": "No extra information available",
+      "notes": {
+        "title": "Staff Notes",
+        "newNote": "New note",
+        "placeholder": "Type your note here...",
+        "addNote": "Add note",
+        "emptyNote": "Please enter a note",
+        "addedSuccess": "Note added successfully",
+        "editedSuccess": "Note updated successfully",
+        "deletedSuccess": "Note deleted successfully",
+        "deleteConfirmTitle": "Delete Note",
+        "deleteConfirmMessage": "Are you sure you want to delete this note? This action cannot be undone.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "noNotes": "No notes added",
+      "statusHistory": "Status History",
+      "noStatusHistory": "No status history",
+      "preferredTrainingDays": "Preferred Training Days",
+      "noDaysSelected": "No days selected",
+      "comingSoon": "Coming soon...",
+      "featureNotAvailable": "This feature will be available in a future update.",
+      "placement": {
+        "title": "Placement Test",
+        "noSessions": "No placement sessions found for this client.",
+        "writtenTest": "Written Test",
+        "oralEvaluation": "Oral Evaluation",
+        "teacher": "Teacher",
+        "course": "Course",
+        "level": "Level",
+        "studentFeedback": "Student Feedback",
+        "internalFeedback": "Internal Feedback",
+        "strengths": "Strengths",
+        "improvementAreas": "Areas for Improvement",
+        "internalNotes": "Internal Notes",
+        "evaluationPending": "Evaluation is pending.",
+        "answer": "Answer",
+        "correct": "Correct",
+        "ratings": {
+          "grammar": "Grammar",
+          "speaking": "Speaking",
+          "listening": "Listening",
+          "pronunciation": "Pronunciation",
+          "confidence": "Confidence"
+        }
+      }
+    },
+    "staffTasks": {
+      "title": "Staff Tasks",
+      "newTask": "New task",
+      "noTasks": "No tasks added for this client",
+      "taskCode": "Task Code",
+      "task": "Task",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter task description...",
+      "associatedClient": "Associated Client",
+      "categories": "Categories",
+      "addCategory": "Add",
+      "assignedTo": "Assigned to",
+      "urgency": "Urgency",
+      "urgencyNormal": "Normal",
+      "urgencyImportant": "Important",
+      "urgencyCritical": "Critical",
+      "allowReassign": "Allow the task assignee to re-assign",
+      "status": "Status",
+      "statusPending": "Pending",
+      "statusResolved": "Resolved",
+      "addedBy": "Added by",
+      "createdAt": "Created at",
+      "client": "Client",
+      "searchAssignee": "Search by name, number, or email",
+      "me": "Me",
+      "reassign": "Reassign",
+      "edit": "Edit",
+      "delete": "Delete",
+      "markResolved": "Mark as Resolved",
+      "addTask": "Add Task",
+      "editTask": "Edit Task",
+      "reassignTask": "Reassign task",
+      "user": "User",
+      "continue": "Continue",
+      "close": "Close",
+      "cancel": "Cancel",
+      "save": "Save",
+      "updatesAndNotes": "Updates & notes",
+      "historyAndChanges": "History & changes",
+      "newNote": "New note",
+      "newNoteTooltip": "Add a note to track updates. Use @ to mention team members.",
+      "addNote": "Add note",
+      "noNotes": "No notes added yet",
+      "noHistory": "No history available",
+      "taskCreated": "Added, with importance \"{{urgency}}\", and was assigned to: {{assignedTo}}",
+      "taskUpdated": "Task updated",
+      "taskReassigned": "Reassigned from {{fromUser}} to {{toUser}}",
+      "taskResolved": "Task marked as resolved",
+      "noteAdded": "Note added",
+      "addReminder": "Add reminder",
+      "reminderMessage": "Reminder message",
+      "reminderDate": "Reminder date & time",
+      "setReminder": "Set Reminder",
+      "deleteConfirmTitle": "Delete Task",
+      "deleteConfirmMessage": "Are you sure you want to delete this task? This action cannot be undone.",
+      "deleteNoteConfirmTitle": "Delete Note",
+      "deleteNoteConfirmMessage": "Are you sure you want to delete this note?",
+      "taskAddedSuccess": "Task added successfully",
+      "taskUpdatedSuccess": "Task updated successfully",
+      "taskDeletedSuccess": "Task deleted successfully",
+      "taskReassignedSuccess": "Task reassigned successfully",
+      "taskResolvedSuccess": "Task marked as resolved",
+      "noteAddedSuccess": "Note added successfully",
+      "noteDeletedSuccess": "Note deleted successfully",
+      "fillRequiredFields": "Please fill all required fields",
+      "noPermission": "You do not have permission to perform this action",
+      "viewTask": "View Task",
+      "by": "By",
+      "ago": "ago",
+      "timelineEntry": "New remark added: ({{code}}) {{title}}. Is assigned to: {{assignee}}",
+      "assignedTasks": "Assigned tasks",
+      "openTicketsAlert": "You have open support ticket(s) awaiting your reply!",
+      "viewTickets": "View tickets",
+      "categoryManagement": "Category Management",
+      "addNewCategory": "Add new category",
+      "categoryNameEn": "Category name (English)",
+      "categoryNameAr": "Category name (Arabic)",
+      "categoryAddedSuccess": "Category added successfully",
+      "categoryDeletedSuccess": "Category deleted successfully",
+      "categoryName": "Category name",
+      "taskNotFound": "Task not found",
+      "goBack": "Go Back",
+      "saveChanges": "Save Changes",
+      "noResultsFound": "No results found",
+      "selected": "Selected",
+      "noteUpdatedSuccess": "Note updated successfully",
+      "editNote": "Edit note",
+      "attachments": "Attachments",
+      "noAttachments": "No attachments added yet",
+      "dropFileHere": "Drop file here, or click to browse.",
+      "maxFileSize": "50 MB Maximum size.",
+      "invalidFileType": "Invalid file type. Allowed: PNG, JPG, TXT, PDF, DOC(X), PPT(X), XLS(X), ZIP",
+      "fileTooLarge": "File is too large. Maximum size is 50 MB.",
+      "deleteAttachmentTitle": "Delete Attachment",
+      "deleteAttachmentMessage": "Are you sure you want to delete this attachment?",
+      "attachmentAddedSuccess": "Attachment added successfully",
+      "attachmentDeletedSuccess": "Attachment deleted successfully"
+    },
+    "clientForm": {
+      "title": "Add New Client",
+      "editTitle": "Edit Client",
+      "personalInfo": "Personal Information",
+      "businessInfo": "Business Information",
+      "productInfo": "Client Enrollment Details",
+      "courseInfo": "Course Information",
+      "fields": {
+        "name": "Full Name",
+        "nameRequired": "Name *",
+        "email": "Email Address",
+        "emailRequired": "Email *",
+        "phone": "Phone Number",
+        "phoneRequired": "Phone Number *",
+        "jobTitle": "Job Title",
+        "age": "Age",
+        "gender": "Gender",
+        "city": "City",
+        "country": "Country",
+        "guardianNumber": "Guardian Number (Optional)",
+        "currentPath": "Current Path",
+        "currentProgram": "Current Program",
+        "programType": "Program Type",
+        "source": "Source",
+        "assignedCoordinator": "Assigned Coordinator",
+        "underCompany": "Under Company",
+        "tags": "Tags",
+        "selectPath": "Select path",
+        "selectType": "Select type",
+        "selectSource": "Select source",
+        "selectCoordinator": "Select coordinator",
+        "selectCompany": "Select company",
+        "selectGender": "Select gender",
+        "maleOption": "Male",
+        "femaleOption": "Female",
+        "otherOption": "Other",
+        "preferNotOption": "Prefer not to say",
+        "oneOnOne": "One-on-One",
+        "groupOption": "Group",
+        "hybridOption": "Hybrid",
+        "website": "Website",
+        "referral": "Referral",
+        "socialMedia": "Social Media",
+        "walkIn": "Walk-in",
+        "corporate": "Corporate",
+        "noneOption": "None",
+        "cancel": "Cancel",
+        "saveChanges": "Save Changes",
+        "saving": "Saving...",
+        "pathCost": "Path Cost",
+        "paidForPath": "Paid Amount",
+        "status": "Status",
+        "trainingPathType": "Training Path Type",
+        "numberOfSessions": "Number of Sessions",
+        "notes": "Notes"
+      },
+      "placeholders": {
+        "name": "Enter client full name",
+        "email": "Enter email address",
+        "phone": "+20 xxx xxx xxxx",
+        "jobTitle": "e.g. Software Engineer",
+        "age": "Age",
+        "city": "Enter city",
+        "country": "Enter country",
+        "guardianNumber": "Guardian phone number",
+        "notes": "Add any additional notes about this client..."
+      },
+      "buttons": {
+        "submit": "Add Client",
+        "update": "Update Client",
+        "cancel": "Cancel",
+        "submitting": "Submitting..."
+      },
+      "validation": {
+        "nameRequired": "Name is required",
+        "nameTooLong": "Name must be less than 100 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email address",
+        "phoneRequired": "Phone number is required",
+        "phoneTooLong": "Phone number must be less than 20 characters",
+        "phoneInvalid": "Invalid phone number format",
+        "jobTitleTooLong": "Job title must be less than 100 characters",
+        "ageInvalid": "Age must be between 1 and 120",
+        "cityTooLong": "City must be less than 100 characters",
+        "countryTooLong": "Country must be less than 100 characters"
+      },
+      "success": "Client added successfully",
+      "error": "Error adding client",
+      "selectGender": "Select gender",
+      "selectStatus": "Select status",
+      "selectPathType": "Select path type",
+      "preDesigned": "Pre-designed",
+      "custom": "Custom",
+      "trainingPath": "Training Path",
+      "trainingPathTooltip": "Select a pre-designed or custom training path",
+      "preDesignedPath": "Select a pre-designed path",
+      "customPath": "Design a custom path",
+      "selectTrainingPath": "Select training path",
+      "timeSlots": "Selected time slot(s)",
+      "timeSlotsTooltip": "Select up to 3 preferred time slots",
+      "selectTimeSlots": "Select time slots (max 3)",
+      "maxTimeSlots": "Maximum 3 time slots allowed",
+      "tags": "Tags",
+      "tagsTooltip": "Add tags for filtering and categorization",
+      "coordinator": "Assign a coordinator?",
+      "coordinatorTooltip": "Assign a team member to manage this client",
+      "noCoordinator": "[No body]",
+      "noBody": "No body",
+      "company": "Under company?",
+      "companyTooltip": "Associate client with a corporate account",
+      "companyPlaceholder": "Name, phone number, or email...",
+      "none": "None",
+      "extraInfo": "Extra info",
+      "extraInfoTooltip": "Custom fields for additional client information",
+      "manageFields": "Manage",
+      "noExtraFields": "No extra fields defined. Click \"Manage\" to add custom fields.",
+      "notes": "Notes",
+      "createAccount": "Create an account for the new client",
+      "createAccountTooltip": "When enabled, the system will automatically generate login credentials (username & password) for this client.",
+      "createAccountDescription": "System will auto-generate username (email) and password",
+      "addClient": "Add client",
+      "or": "Or",
+      "saveAndAddAnother": "Save & add another one",
+      "guardianTooltip": "Parent or guardian contact for teens",
+      "yes": "Yes",
+      "no": "No",
+      "selectPlaceholder": "Select",
+      "enterPlaceholder": "Enter",
+      "missingRequired": "Missing required fields",
+      "pleaseFill": "Please fill"
+    },
+    "extraFieldsManager": {
+      "title": "Extra information manager",
+      "subtitle": "Clients",
+      "description": "Here you can manage and add to the \"Clients\" extra information. \"Extra information\" can help you extend the amount of data you can add to this type of content.",
+      "addNewField": "Add new field",
+      "field": "Field",
+      "informationType": "Information type",
+      "defaultValue": "Default value",
+      "createdAt": "Created at",
+      "editField": "Edit field",
+      "newField": "New information field",
+      "newFieldDescription": "Here you can add a new extra information field. Pick a name for the field, a type, and a default value (optional).",
+      "fieldName": "Field name",
+      "fieldNameEn": "Field name (EN)",
+      "fieldNameAr": "Field name (AR)",
+      "fieldNameEnRequired": "Field name (EN) is required",
+      "fieldNameArRequired": "Field name (AR) is required",
+      "defaultValueLabel": "Default value",
+      "defaultValueHelper": "The default value for this new information field",
+      "fieldType": "Field type",
+      "fieldDescription": "Description",
+      "fieldDescriptionPlaceholder": "Field description",
+      "descriptionHelper": "Add a description for this field (optional)",
+      "code": "Code",
+      "codeHelper": "Unique code for this field (optional)",
+      "isMandatory": "Is mandatory",
+      "isSearchable": "Is searchable",
+      "allowOwnerEdit": "Allow owner to edit",
+      "deleteConfirm": "Delete field",
+      "deleteMessage": "Are you sure you want to delete this field?",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "save": "Save field",
+      "add": "Add field",
+      "close": "Close",
+      "or": "Or",
+      "searchFields": "Search fields",
+      "noFields": "No fields found",
+      "fieldTypes": {
+        "text": "Text/number",
+        "number": "Number",
+        "boolean": "Yes / No",
+        "options": "Options",
+        "longText": "Long Text",
+        "phoneNumber": "Phone number",
+        "email": "Email Address",
+        "dateTime": "Date & Time",
+        "date": "Date",
+        "time": "Time"
+      }
+    },
+    "status": {
+      "New": "New",
+      "BookedTest": "Booked a placement test",
+      "Waiting": "Waiting",
+      "InTraining": "In training",
+      "CompletedTraining": "Completed training",
+      "Inactive": "Inactive"
+    },
+    "messages": {
+      "loadingError": "Error loading data",
+      "saveSuccess": "Changes saved successfully",
+      "savingError": "Error saving changes",
+      "confirmAction": "Confirm Action",
+      "noData": "No data available"
+    },
+    "coordination": {
+      "title": "Coordination",
+      "timeSlots": {
+        "title": "Time Slots",
+        "addSlot": "Add time slot",
+        "editSlot": "Edit time slot",
+        "slotInfo": "Slot information",
+        "moreInfo": "More info",
+        "edit": "Edit",
+        "deactivate": "Deactivate",
+        "activate": "Activate",
+        "archive": "Archive",
+        "deleteSlot": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "close": "Close",
+        "back": "Back",
+        "noSlots": "No time slots yet",
+        "noSlotsDesc": "Create your first time slot to get started.",
+        "notFound": "Time slot not found",
+        "day": "Day",
+        "type": "Type",
+        "slotsLabel": "Slots",
+        "startTime": "Start time",
+        "endTime": "End time",
+        "duration": "Duration",
+        "minutes": "Minutes",
+        "weeklyDuration": "Weekly duration (total)",
+        "totalWeekly": "Total",
+        "isActive": "Is active",
+        "createdAt": "Created at",
+        "availableInstructors": "Available instructors",
+        "autoAssigned": "Will be matched automatically",
+        "colorPicker": "Custom color",
+        "numberOfTests": "Number of tests",
+        "infoBanner": "\"Time Slots\" are all the time options available for your clients to pick from, for training (lectures) and other activities like placement tests. You select a slot for each new client, and each new batch, and the system helps you match both together easily! The system will also be able to find the available instructors for each slot, based on the instructor shifts, duties, and branch association (automatically).",
+        "types": {
+          "lectures": "Lectures",
+          "oralPlacementTests": "Oral placement tests",
+          "allSlots": "All slots"
+        },
+        "venues": {
+          "online": "Online",
+          "onsite": "Onsite"
+        },
+        "statusLabels": {
+          "active": "Active",
+          "deactivated": "Deactivated",
+          "archived": "Archived"
+        },
+        "days": {
+          "saturday": "Saturday",
+          "sunday": "Sunday",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday"
+        },
+        "form": {
+          "allocationType": "Allocation for (type)",
+          "allocationTypeDesc": "The type of training or activities this slot is allocated for.",
+          "venue": "Venue",
+          "venueDesc": "Where the slot is available; online or onsite (offline).",
+          "label": "Label",
+          "labelDesc": "A descriptive label or name for the slot; it should be unique and mention the day(s) and time(s).",
+          "labelPlaceholder": "Example: Sat + Tue 2-4 PM",
+          "color": "Color",
+          "colorDesc": "Pick a unique color for this slot, to make it easy to identify later.",
+          "instructorsTitle": "Assigned automatically!",
+          "instructorsDesc": "Instructors are matched with slots automatically, based on their branch associations, duty(s), and schedules!",
+          "daysAndTimes": "Day(s) and times",
+          "lectureDaysAndTimes": "Lectures days & times",
+          "lectureScheduleDesc": "Select the day(s), and start and end times, for the new lectures slot.",
+          "dayAndDuration": "Day & duration",
+          "placementScheduleDesc": "Select the day, and start and end time. Each slot should contain multiple tests. And the system will split the time between these tests automatically.",
+          "singleTestDuration": "Single test duration",
+          "willCoverTests": "Will cover {{count}} tests (per tester)",
+          "selectTypeFirst": "Please select an allocation type first to configure the schedule."
+        },
+        "validation": {
+          "required": "This field is required.",
+          "endAfterStart": "End time must be after start time.",
+          "atLeastOneDay": "Please select at least one day.",
+          "doesNotFit": "Selected time range does not fit the test duration.",
+          "fillAllRequired": "Please fill all required fields."
+        },
+        "messages": {
+          "createSuccess": "Time slot created successfully.",
+          "updateSuccess": "Time slot updated successfully.",
+          "deleteSuccess": "Time slot deleted successfully.",
+          "statusUpdated": "Time slot status updated."
+        }
+      }
+    },
+    "placementTests": {
+      "templates": {
+        "title": "Test Templates",
+        "subtitle": "Manage placement test templates, set prices, and control availability.",
+        "addTemplate": "Add Template",
+        "addNewTemplate": "Add New Template",
+        "editTemplate": "Edit Template",
+        "noTemplates": "No test templates yet. Create your first template to get started.",
+        "yes": "Yes",
+        "no": "No",
+        "inactive": "Inactive",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "add": "Add",
+        "createdAt": "Created at",
+        "deleteConfirm": "Delete Template",
+        "deleteMessage": "Are you sure you want to delete this template? This action cannot be undone.",
+        "deleteSuccess": "Template deleted successfully.",
+        "createSuccess": "Template created successfully.",
+        "updateSuccess": "Template updated successfully.",
+        "currentUpdated": "Current template updated.",
+        "cannotDeactivateCurrent": "Cannot deactivate the current template. Set another template as current first.",
+        "cannotUnsetCurrent": "Cannot unset current. Set another template as current instead.",
+        "cannotDeleteCurrent": "Cannot delete the current template.",
+        "mustBeActive": "Template must be active to be set as current.",
+        "fields": {
+          "title": "Title",
+          "description": "Description",
+          "price": "Price",
+          "active": "Active",
+          "current": "Current",
+          "actions": "Actions"
+        },
+        "validation": {
+          "fillRequired": "Please fill all required fields. Price must be greater than 0."
+        }
+      }
+    },
+    "testingCenter": {
+      "quizzes": {
+        "title": "Quiz Management",
+        "subtitle": "Manage quizzes, set types, instructions, and time limits.",
+        "addQuiz": "Add Quiz",
+        "addNewQuiz": "Add New Quiz",
+        "editQuiz": "Edit Quiz",
+        "noQuizzes": "No quizzes yet. Create your first quiz to get started.",
+        "yes": "Yes",
+        "no": "No",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "add": "Add",
+        "minutes": "min",
+        "createdAt": "Created at",
+        "deleteConfirm": "Delete Quiz",
+        "deleteMessage": "Are you sure you want to delete this quiz? This action cannot be undone.",
+        "deleteSuccess": "Quiz deleted successfully.",
+        "createSuccess": "Quiz created successfully.",
+        "updateSuccess": "Quiz updated successfully.",
+        "currentUpdated": "Current quiz updated.",
+        "cannotDeactivateCurrent": "Cannot deactivate the current quiz. Set another quiz as current first.",
+        "cannotUnsetCurrent": "Cannot unset current. Set another quiz as current instead.",
+        "cannotDeleteCurrent": "Cannot delete the current quiz.",
+        "cannotDeleteWithQuestions": "Cannot delete a quiz that has questions. Delete the questions first.",
+        "mustBeActive": "Quiz must be active to be set as current.",
+        "comingSoon": "Template selection for this test type will be available soon.",
+        "backToQuizzes": "Back to Quizzes",
+        "manageQuestions": "Manage Questions",
+        "testTypes": {
+          "placementTest": "Placement Test",
+          "practiceExam": "Practice Exam",
+          "finalExam": "Final Exam"
+        },
+        "questionsStatusLabels": {
+          "pending": "Pending",
+          "saved": "Saved"
+        },
+        "fields": {
+          "title": "Title",
+          "testType": "Type",
+          "instructions": "Instructions",
+          "totalQuestions": "Total Questions",
+          "timeLimit": "Time Limit (min)",
+          "active": "Active",
+          "current": "Current",
+          "questionsStatus": "Questions",
+          "testTemplate": "Test Template",
+          "selectTemplate": "Select Template",
+          "actions": "Actions"
+        },
+        "validation": {
+          "fillRequired": "Please fill all required fields. Time limit must be greater than 0.",
+          "selectTemplate": "Please select a test template."
+        }
+      },
+      "questions": {
+        "title": "Questions Management",
+        "subtitle": "Manage questions, set options, and assign to quizzes.",
+        "addQuestion": "Add Question",
+        "addNewQuestion": "Add New Question",
+        "editQuestion": "Edit Question",
+        "noQuestions": "No questions yet. Create your first question to get started.",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "add": "Add",
+        "deleteConfirm": "Delete Question",
+        "deleteMessage": "Are you sure you want to delete this question? This action cannot be undone.",
+        "deleteSuccess": "Question deleted successfully.",
+        "createSuccess": "Question created successfully.",
+        "updateSuccess": "Question updated successfully.",
+        "saveSuccess": "Questions saved successfully.",
+        "question": "Question",
+        "questionsFor": "Questions for",
+        "addQuestions": "Add",
+        "questionsCount": "questions",
+        "allFieldsRequired": "all fields are required",
+        "removeQuestion": "Remove",
+        "addAnotherQuestion": "Add Question",
+        "saveQuestions": "Save Questions",
+        "options": "Options",
+        "none": "None",
+        "questionTypes": {
+          "singleChoice": "Single Choice",
+          "multiChoice": "Multi Choice",
+          "trueFalse": "True / False"
+        },
+        "mediaTypes": {
+          "image": "Image",
+          "video": "Video",
+          "audio": "Audio"
+        },
+        "fields": {
+          "questionText": "Question",
+          "type": "Type",
+          "quiz": "Quiz",
+          "selectQuiz": "Select Quiz",
+          "order": "Order",
+          "points": "Points",
+          "correctAnswer": "Correct Answer",
+          "mediaUrl": "Media URL (Optional)",
+          "mediaUrlPlaceholder": "https://...",
+          "mediaType": "Media Type (Optional)",
+          "actions": "Actions"
+        },
+        "validation": {
+          "fillRequired": "Please fill all required fields.",
+          "answersRequired": "Please fill all answer options.",
+          "questionRequired": "Question text is required.",
+          "pointsPositive": "Points must be a positive number."
+        }
+      }
+    },
+    "oralExams": {
+      "testTypes": {
+        "title": "Oral Test Types Management",
+        "subtitle": "Manage oral test type definitions and configurations.",
+        "addTestType": "Add Oral Test Type",
+        "addNewTestType": "Add New Oral Test Type",
+        "editTestType": "Edit Oral Test Type",
+        "noTestTypes": "No oral test types yet. Create your first test type to get started.",
+        "active": "Active",
+        "inactive": "Inactive",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "add": "Add",
+        "close": "Close",
+        "createdAt": "Created at",
+        "deleteConfirm": "Delete Oral Test Type",
+        "deleteMessage": "Are you sure you want to delete this oral test type? This action cannot be undone.",
+        "deleteSuccess": "Oral test type deleted successfully.",
+        "createSuccess": "Oral test type created successfully.",
+        "updateSuccess": "Oral test type updated successfully.",
+        "categories": {
+          "placementTest": "Placement Test",
+          "course": "Course"
+        },
+        "fields": {
+          "title": "Title",
+          "type": "Type",
+          "description": "Description",
+          "duration": "Duration (minutes)",
+          "totalScore": "Max Score",
+          "evaluationCriteria": "Evaluation Criteria",
+          "evaluationCriteriaPlaceholder": "Describe the evaluation criteria for this test",
+          "testTemplate": "Placement Test",
+          "selectTemplate": "Select Template",
+          "placementTestCourse": "Placement Test / Course",
+          "selectCourse": "Select Course",
+          "noTemplates": "No templates available",
+          "noCourses": "No courses available yet",
+          "active": "Active",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "validation": {
+          "fillRequired": "Please fill all required fields. Duration and score must be greater than 0.",
+          "templateRequired": "Please select a test template.",
+          "courseRequired": "Please select a course."
+        }
+      },
+      "examSlots": {
+        "title": "Oral Exams Management",
+        "subtitle": "Manage available oral exam slots and assign teachers.",
+        "oralExamsOverview": "Oral Exams Overview",
+        "oralExamsOverviewSubtitle": "View and manage bulk and single oral exam slot groups.",
+        "bannerTitle": "Available Oral Exams",
+        "bannerSubtitle": "Click on a date to assign teachers and time slots",
+        "bulkAddSlots": "Bulk Add Slots",
+        "addSlot": "Add Slot",
+        "addSlotFor": "Assign Teacher for",
+        "examSlotsCount": "exam slots",
+        "slotsCount": "slots",
+        "noSlotsForDay": "No slots for this day. Click \"Add Slot\" to create one.",
+        "deleteAll": "Delete All",
+        "edit": "Edit",
+        "assign": "Assign",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "all": "All",
+        "teacher": "Teacher",
+        "oralTestType": "Oral Test Type",
+        "slotType": "Slot Type",
+        "bulk": "Bulk",
+        "single": "Single",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "daysIncluded": "Days Included",
+        "paginationPrevious": "Previous",
+        "paginationNext": "Next",
+        "noOverviewData": "No oral exam slot groups found.",
+        "bulkAdd": "Bulk Add",
+        "editBulkSlots": "Edit Bulk Slots",
+        "editSingleSlot": "Edit Single Slot",
+        "addTimeSlot": "Add Time Slot",
+        "timeSlotLabel": "Time Slot",
+        "createSuccess": "Slot created successfully.",
+        "updateSuccess": "Slot group updated successfully.",
+        "deleteSuccess": "Slot deleted successfully.",
+        "deleteAllSuccess": "All slots deleted successfully.",
+        "deleteGroupSuccess": "Exam slot group deleted successfully.",
+        "bulkSuccess": "Slots created successfully",
+        "deleteSlotConfirm": "Delete Slot",
+        "deleteSlotMessage": "Are you sure you want to delete this slot?",
+        "deleteAllConfirm": "Delete All Slots",
+        "deleteAllMessage": "Are you sure you want to delete all slots for this teacher on this day?",
+        "deleteGroupConfirm": "Delete Exam Slot Group",
+        "deleteGroupMessage": "Are you sure you want to delete this exam slot group?",
+        "legend": {
+          "today": "Today",
+          "hasSlots": "Has Slots",
+          "selected": "Selected"
+        },
+        "status": {
+          "available": "Available",
+          "reserved": "Reserved",
+          "completed": "Completed"
+        },
+        "slotTypes": {
+          "work": "Work",
+          "break": "Break"
+        },
+        "fields": {
+          "teacher": "Teacher",
+          "oralTestType": "Oral Test Type",
+          "startDate": "Start Date",
+          "endDate": "End Date",
+          "daysOfWeek": "Days of Week",
+          "timeSlots": "Time Slots",
+          "startTime": "Start Time",
+          "endTime": "End Time",
+          "slotType": "Slot Type",
+          "time": "Time"
+        },
+        "validation": {
+          "fillRequired": "Please fill all required fields.",
+          "pastDate": "Start date cannot be before today.",
+          "endBeforeStart": "End date must be after or equal to start date.",
+          "durationMismatch": "The selected time range does not align with the selected duration.",
+          "teacherOverlap": "This teacher already has a slot at this time.",
+          "invalid_test_type": "Invalid test type selected.",
+          "inactive_test_type": "Cannot create slots for inactive test type."
+        }
+      }
+    },
+    "evaluation": {
+      "courses": {
+        "title": "Courses Management",
+        "subtitle": "Manage available courses for evaluation.",
+        "add": "Add Course",
+        "edit": "Edit Course",
+        "createSuccess": "Course created successfully.",
+        "updateSuccess": "Course updated successfully.",
+        "deleteSuccess": "Course deleted successfully.",
+        "deleteConfirm": "Delete Course",
+        "deleteMessage": "Are you sure you want to delete this course?"
+      },
+      "levels": {
+        "title": "Levels Management",
+        "subtitle": "Manage available levels for evaluation.",
+        "add": "Add Level",
+        "edit": "Edit Level",
+        "order": "Order",
+        "createSuccess": "Level created successfully.",
+        "updateSuccess": "Level updated successfully.",
+        "deleteSuccess": "Level deleted successfully.",
+        "deleteConfirm": "Delete Level",
+        "deleteMessage": "Are you sure you want to delete this level?"
+      },
+      "nameEn": "Name (English)",
+      "nameAr": "Name (Arabic)",
+      "active": "Active",
+      "inactive": "Inactive",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "ptRequests": {
+      "title": "PT Cancel Requests",
+      "noRequests": "No cancel requests yet.",
+      "reason": "Reason",
+      "rejectionReason": "Rejection Reason",
+      "rejectionReasonPlaceholder": "Enter rejection reason...",
+      "approve": "Approve",
+      "deny": "Deny",
+      "cancel": "Cancel",
+      "confirmDeny": "Confirm Deny",
+      "denyTitle": "Deny Cancel Request",
+      "approveSuccess": "Request approved successfully.",
+      "denySuccess": "Request denied.",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "denied": "Denied"
+      }
+    }
+  },
+  "teacher": {
+    "sidebar": {
+      "teacher": "Teacher",
+      "home": "Home",
+      "calendar": "Calendar",
+      "sessions": "Sessions",
+      "requests": "Requests",
+      "profile": "Profile"
+    },
+    "header": {
+      "settings": "Settings",
+      "darkMode": "Dark Mode",
+      "logout": "Logout"
+    },
+    "home": {
+      "welcome": "Welcome, {{name}}!",
+      "subtitle": "You have {{count}} scheduled sessions.",
+      "teacher": "Teacher",
+      "totalSessions": "Total Sessions",
+      "scheduled": "Scheduled",
+      "completed": "Completed",
+      "pendingRequests": "Pending Requests",
+      "upcomingSessions": "Upcoming Sessions",
+      "viewAll": "View All",
+      "noUpcoming": "No upcoming sessions.",
+      "openSession": "Open Session"
+    },
+    "calendar": {
+      "title": "Working Schedule",
+      "selectDay": "Select a day",
+      "noSlots": "No slots for this day.",
+      "reserved": "Reserved",
+      "available": "Available"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "noSessions": "No sessions found.",
+      "notFound": "Session not found.",
+      "goBack": "Go Back",
+      "sessionDetail": "Session Details",
+      "student": "Student",
+      "dateTime": "Date & Time",
+      "writtenTest": "Written Test",
+      "viewWrittenTest": "View Written Test",
+      "noWrittenTest": "No written test",
+      "writtenTestResults": "Written Test Results",
+      "studentAnswer": "Student Answer",
+      "correctAnswer": "Correct Answer",
+      "evaluated": "Evaluated",
+      "cancelRequest": "Cancel Request",
+      "cancelRequestPending": "Cancel Request Pending",
+      "cancelRequestTitle": "Submit Cancel Request",
+      "cancelRequestDesc": "Please provide a reason for cancelling this session.",
+      "cancelReasonPlaceholder": "Enter your reason...",
+      "cancel": "Cancel",
+      "submitCancelRequest": "Submit Request",
+      "cancelRequestSent": "Cancel request submitted successfully.",
+      "filter": {
+        "all": "All",
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "status": {
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "requests": {
+      "title": "My Requests",
+      "noRequests": "No requests yet.",
+      "reason": "Reason",
+      "rejectionReason": "Rejection Reason",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "denied": "Denied"
+      }
+    },
+    "profile": {
+      "title": "My Profile",
+      "fullName": "Full Name",
+      "email": "Email",
+      "role": "Role",
+      "interface": "Interface"
+    },
+    "evaluation": {
+      "title": "Evaluation",
+      "completed": "Completed",
+      "course": "Course",
+      "level": "Level",
+      "selectCourse": "Select Course",
+      "selectLevel": "Select Level",
+      "studentFeedback": "Student Feedback",
+      "studentFeedbackDesc": "This feedback will be visible to the student.",
+      "internalFeedback": "Internal Feedback",
+      "internalFeedbackDesc": "Only visible to admin and staff.",
+      "summary": "Summary",
+      "summaryPlaceholder": "Write a summary of the student's performance...",
+      "strengths": "Strengths",
+      "improvementAreas": "Areas for Improvement",
+      "addTag": "Type and press Enter...",
+      "grammar": "Grammar",
+      "speaking": "Speaking",
+      "listening": "Listening",
+      "pronunciation": "Pronunciation",
+      "confidence": "Confidence",
+      "internalNotes": "Internal Notes",
+      "internalNotesPlaceholder": "Internal observations and recommendations...",
+      "save": "Save Evaluation",
+      "saveSuccess": "Evaluation saved successfully."
+    }
+  },
+  "client": {
+    "sidebar": {
+      "home": "Home",
+      "placement": "Placement",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "placement": {
+      "title": "Placement Test Results",
+      "subtitle": "View your placement test sessions, scores, and feedback.",
+      "noSessions": "No placement sessions found.",
+      "writtenTest": "Written Test",
+      "score": "score",
+      "oralFeedback": "Oral Session Feedback",
+      "course": "Course",
+      "level": "Level",
+      "strengths": "Strengths",
+      "improvementAreas": "Areas for Improvement",
+      "evaluationPending": "Evaluation is pending. Your teacher will provide feedback soon.",
+      "status": {
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "profile": {
+      "title": "My Profile",
+      "fullName": "Full Name",
+      "email": "Email",
+      "role": "Role",
+      "interface": "Interface"
+    }
+  },
+  "extraFields": {
+    "current_program": "Current Program",
+    "program_type": "Program Type",
+    "source": "Source"
+  }
+}
