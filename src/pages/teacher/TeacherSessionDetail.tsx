@@ -257,7 +257,7 @@ const TeacherSessionDetail = () => {
 
           {/* Two column layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* LEFT - Student Feedback */}
+            {/* LEFT - Student Feedback (ratings + notes - visible to student) */}
             <div className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800/40 bg-emerald-50/40 dark:bg-emerald-950/10 shadow-sm overflow-hidden">
               <div className="flex items-center gap-3 px-5 py-4 bg-emerald-100/60 dark:bg-emerald-900/20 border-b border-emerald-200 dark:border-emerald-800/40">
                 <div className="h-9 w-9 rounded-lg bg-emerald-500/15 dark:bg-emerald-500/20 flex items-center justify-center">
@@ -266,6 +266,39 @@ const TeacherSessionDetail = () => {
                 <div>
                   <h3 className="text-base font-semibold text-foreground">{t("teacher.evaluation.studentFeedback")}</h3>
                   <p className="text-xs text-emerald-600/80 dark:text-emerald-400/70">{t("teacher.evaluation.studentFeedbackDesc")}</p>
+                </div>
+              </div>
+              <div className="p-5 space-y-5">
+                <div className="space-y-3 bg-card/60 dark:bg-card/30 rounded-lg p-4 border border-border/50">
+                  <StarRating label={t("teacher.evaluation.grammar")} value={ratings.grammar} onChange={v => setRatings(r => ({ ...r, grammar: v }))} />
+                  <StarRating label={t("teacher.evaluation.speaking")} value={ratings.speaking} onChange={v => setRatings(r => ({ ...r, speaking: v }))} />
+                  <StarRating label={t("teacher.evaluation.listening")} value={ratings.listening} onChange={v => setRatings(r => ({ ...r, listening: v }))} />
+                  <StarRating label={t("teacher.evaluation.pronunciation")} value={ratings.pronunciation} onChange={v => setRatings(r => ({ ...r, pronunciation: v }))} />
+                  <StarRating label={t("teacher.evaluation.confidence")} value={ratings.confidence} onChange={v => setRatings(r => ({ ...r, confidence: v }))} />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium mb-1.5 block">{t("teacher.evaluation.studentNotes")}</label>
+                  <Textarea
+                    value={internalNotes}
+                    onChange={e => setInternalNotes(e.target.value)}
+                    disabled={!!existingEval}
+                    rows={4}
+                    placeholder={t("teacher.evaluation.studentNotesPlaceholder")}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT - Internal Feedback (summary + strengths + improvements - staff only) */}
+            <div className="rounded-xl border-2 border-amber-200 dark:border-amber-800/40 bg-amber-50/40 dark:bg-amber-950/10 shadow-sm overflow-hidden">
+              <div className="flex items-center gap-3 px-5 py-4 bg-amber-100/60 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800/40">
+                <div className="h-9 w-9 rounded-lg bg-amber-500/15 dark:bg-amber-500/20 flex items-center justify-center">
+                  <Lock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold text-foreground">{t("teacher.evaluation.internalFeedback")}</h3>
+                  <p className="text-xs text-amber-600/80 dark:text-amber-400/70">{t("teacher.evaluation.internalFeedbackDesc")}</p>
                 </div>
               </div>
               <div className="p-5 space-y-5">
@@ -299,7 +332,7 @@ const TeacherSessionDetail = () => {
                       <Badge
                         key={tag}
                         variant="secondary"
-                        className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 cursor-pointer"
+                        className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 cursor-pointer"
                         onClick={() => !existingEval && handleRemoveTag(tag, strengths, setStrengths)}
                       >
                         {tag} {!existingEval && "×"}
@@ -334,39 +367,6 @@ const TeacherSessionDetail = () => {
                       </Badge>
                     ))}
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT - Internal Feedback */}
-            <div className="rounded-xl border-2 border-amber-200 dark:border-amber-800/40 bg-amber-50/40 dark:bg-amber-950/10 shadow-sm overflow-hidden">
-              <div className="flex items-center gap-3 px-5 py-4 bg-amber-100/60 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800/40">
-                <div className="h-9 w-9 rounded-lg bg-amber-500/15 dark:bg-amber-500/20 flex items-center justify-center">
-                  <Lock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">{t("teacher.evaluation.internalFeedback")}</h3>
-                  <p className="text-xs text-amber-600/80 dark:text-amber-400/70">{t("teacher.evaluation.internalFeedbackDesc")}</p>
-                </div>
-              </div>
-              <div className="p-5 space-y-5">
-                <div className="space-y-3 bg-card/60 dark:bg-card/30 rounded-lg p-4 border border-border/50">
-                  <StarRating label={t("teacher.evaluation.grammar")} value={ratings.grammar} onChange={v => setRatings(r => ({ ...r, grammar: v }))} />
-                  <StarRating label={t("teacher.evaluation.speaking")} value={ratings.speaking} onChange={v => setRatings(r => ({ ...r, speaking: v }))} />
-                  <StarRating label={t("teacher.evaluation.listening")} value={ratings.listening} onChange={v => setRatings(r => ({ ...r, listening: v }))} />
-                  <StarRating label={t("teacher.evaluation.pronunciation")} value={ratings.pronunciation} onChange={v => setRatings(r => ({ ...r, pronunciation: v }))} />
-                  <StarRating label={t("teacher.evaluation.confidence")} value={ratings.confidence} onChange={v => setRatings(r => ({ ...r, confidence: v }))} />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">{t("teacher.evaluation.internalNotes")}</label>
-                  <Textarea
-                    value={internalNotes}
-                    onChange={e => setInternalNotes(e.target.value)}
-                    disabled={!!existingEval}
-                    rows={4}
-                    placeholder={t("teacher.evaluation.internalNotesPlaceholder")}
-                  />
                 </div>
               </div>
             </div>

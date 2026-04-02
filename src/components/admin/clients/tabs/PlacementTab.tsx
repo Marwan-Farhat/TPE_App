@@ -173,45 +173,12 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, evaluation, getCours
             <CollapsibleContent>
               <div className="mt-2 space-y-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* Student Feedback */}
+                  {/* Student Feedback (ratings + notes - what student sees) */}
                   <div className="rounded-xl border-2 border-emerald-200 dark:border-emerald-800 bg-emerald-50/40 dark:bg-emerald-950/20 overflow-hidden">
                     <div className="flex items-center gap-2 px-4 py-3 bg-emerald-100/60 dark:bg-emerald-900/40 border-b border-emerald-200 dark:border-emerald-800">
                       <MessageSquare className="h-4 w-4 text-emerald-600" />
                       <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
                         {t("admin.clientProfile.placement.studentFeedback")}
-                      </span>
-                    </div>
-                    <div className="p-4 space-y-3">
-                      <p className="text-sm leading-relaxed">{evaluation.studentFeedback.summary}</p>
-                      {evaluation.studentFeedback.strengths.length > 0 && (
-                        <div>
-                          <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-1">{t("admin.clientProfile.placement.strengths")}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {evaluation.studentFeedback.strengths.map((s) => (
-                              <Badge key={s} variant="secondary" className="text-xs bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">{s}</Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {evaluation.studentFeedback.improvementAreas.length > 0 && (
-                        <div>
-                          <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">{t("admin.clientProfile.placement.improvementAreas")}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {evaluation.studentFeedback.improvementAreas.map((a) => (
-                              <Badge key={a} variant="secondary" className="text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">{a}</Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Internal Feedback */}
-                  <div className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/20 overflow-hidden">
-                    <div className="flex items-center gap-2 px-4 py-3 bg-amber-100/60 dark:bg-amber-900/40 border-b border-amber-200 dark:border-amber-800">
-                      <Lock className="h-4 w-4 text-amber-600" />
-                      <span className="text-sm font-semibold text-amber-800 dark:text-amber-300">
-                        {t("admin.clientProfile.placement.internalFeedback")}
                       </span>
                     </div>
                     <div className="p-4 space-y-3">
@@ -225,7 +192,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, evaluation, getCours
                                   key={star}
                                   className={`h-3.5 w-3.5 ${
                                     star <= evaluation.internalFeedback.ratings[skill]
-                                      ? "text-amber-500 fill-amber-500"
+                                      ? "text-emerald-500 fill-emerald-500"
                                       : "text-muted-foreground/30"
                                   }`}
                                 />
@@ -236,8 +203,41 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, evaluation, getCours
                       </div>
                       {evaluation.internalFeedback.notes && (
                         <div>
-                          <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">{t("admin.clientProfile.placement.internalNotes")}</p>
+                          <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-1">{t("admin.clientProfile.placement.studentNotes")}</p>
                           <p className="text-sm text-muted-foreground leading-relaxed">{evaluation.internalFeedback.notes}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Internal Feedback (summary + strengths + improvements - staff only) */}
+                  <div className="rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/20 overflow-hidden">
+                    <div className="flex items-center gap-2 px-4 py-3 bg-amber-100/60 dark:bg-amber-900/40 border-b border-amber-200 dark:border-amber-800">
+                      <Lock className="h-4 w-4 text-amber-600" />
+                      <span className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+                        {t("admin.clientProfile.placement.internalFeedback")}
+                      </span>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      <p className="text-sm leading-relaxed">{evaluation.studentFeedback.summary}</p>
+                      {evaluation.studentFeedback.strengths.length > 0 && (
+                        <div>
+                          <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">{t("admin.clientProfile.placement.strengths")}</p>
+                          <div className="flex flex-wrap gap-1">
+                            {evaluation.studentFeedback.strengths.map((s) => (
+                              <Badge key={s} variant="secondary" className="text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">{s}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {evaluation.studentFeedback.improvementAreas.length > 0 && (
+                        <div>
+                          <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">{t("admin.clientProfile.placement.improvementAreas")}</p>
+                          <div className="flex flex-wrap gap-1">
+                            {evaluation.studentFeedback.improvementAreas.map((a) => (
+                              <Badge key={a} variant="secondary" className="text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">{a}</Badge>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>

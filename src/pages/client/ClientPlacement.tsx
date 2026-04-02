@@ -128,7 +128,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, evaluation, getCours
           </div>
         )}
 
-        {/* Evaluation / Oral Feedback - only student-visible parts */}
+        {/* Evaluation / Oral Feedback - student sees ratings + notes */}
         {evaluation && (
           <>
             <Separator />
@@ -150,41 +150,36 @@ const SessionCard: React.FC<SessionCardProps> = ({ session, evaluation, getCours
                 </Badge>
               </div>
 
-              {/* Summary */}
+              {/* Ratings */}
               <div className="bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 space-y-4">
-                <p className="text-sm leading-relaxed">{evaluation.studentFeedback.summary}</p>
+                <div className="space-y-2.5">
+                  {(["grammar", "speaking", "listening", "pronunciation", "confidence"] as const).map((skill) => (
+                    <div key={skill} className="flex items-center justify-between">
+                      <span className="text-sm font-medium capitalize">{t(`client.placement.ratings.${skill}`)}</span>
+                      <div className="flex gap-0.5">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={`h-4 w-4 ${
+                              star <= evaluation.internalFeedback.ratings[skill]
+                                ? "text-emerald-500 fill-emerald-500"
+                                : "text-muted-foreground/30"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-                {/* Strengths */}
-                {evaluation.studentFeedback.strengths.length > 0 && (
+                {/* Notes */}
+                {evaluation.internalFeedback.notes && (
                   <div>
                     <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-1.5 flex items-center gap-1">
-                      <CheckCircle className="h-3.5 w-3.5" />
-                      {t("client.placement.strengths")}
+                      <MessageSquare className="h-3.5 w-3.5" />
+                      {t("client.placement.teacherNotes")}
                     </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {evaluation.studentFeedback.strengths.map((s) => (
-                        <Badge key={s} variant="secondary" className="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 text-xs">
-                          {s}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Improvement Areas */}
-                {evaluation.studentFeedback.improvementAreas.length > 0 && (
-                  <div>
-                    <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1.5 flex items-center gap-1">
-                      <AlertTriangle className="h-3.5 w-3.5" />
-                      {t("client.placement.improvementAreas")}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {evaluation.studentFeedback.improvementAreas.map((a) => (
-                        <Badge key={a} variant="secondary" className="bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs">
-                          {a}
-                        </Badge>
-                      ))}
-                    </div>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{evaluation.internalFeedback.notes}</p>
                   </div>
                 )}
               </div>

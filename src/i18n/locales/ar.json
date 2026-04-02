@@ -742,6 +742,7 @@
         "internalFeedback": "ملاحظات داخلية",
         "strengths": "نقاط القوة",
         "improvementAreas": "مجالات التحسين",
+        "studentNotes": "ملاحظات للطالب",
         "internalNotes": "ملاحظات داخلية",
         "evaluationPending": "التقييم قيد الانتظار.",
         "answer": "الإجابة",
@@ -1453,7 +1454,7 @@
     "sessions": { "title": "الجلسات", "noSessions": "لا توجد جلسات.", "notFound": "الجلسة غير موجودة.", "goBack": "رجوع", "sessionDetail": "تفاصيل الجلسة", "student": "الطالب", "dateTime": "التاريخ والوقت", "writtenTest": "الاختبار الكتابي", "viewWrittenTest": "عرض الاختبار الكتابي", "noWrittenTest": "لا يوجد اختبار كتابي", "writtenTestResults": "نتائج الاختبار الكتابي", "studentAnswer": "إجابة الطالب", "correctAnswer": "الإجابة الصحيحة", "evaluated": "تم التقييم", "cancelRequest": "طلب إلغاء", "cancelRequestPending": "طلب إلغاء معلق", "cancelRequestTitle": "تقديم طلب إلغاء", "cancelRequestDesc": "يرجى تقديم سبب لإلغاء هذه الجلسة.", "cancelReasonPlaceholder": "أدخل السبب...", "cancel": "إلغاء", "submitCancelRequest": "تقديم الطلب", "cancelRequestSent": "تم تقديم طلب الإلغاء بنجاح.", "filter": { "all": "الكل", "scheduled": "مجدولة", "completed": "مكتملة", "cancelled": "ملغاة" }, "status": { "scheduled": "مجدولة", "completed": "مكتملة", "cancelled": "ملغاة" } },
     "requests": { "title": "طلباتي", "noRequests": "لا توجد طلبات بعد.", "reason": "السبب", "rejectionReason": "سبب الرفض", "status": { "pending": "قيد الانتظار", "approved": "تمت الموافقة", "denied": "مرفوض" } },
     "profile": { "title": "ملفي الشخصي", "fullName": "الاسم الكامل", "email": "البريد الإلكتروني", "role": "الدور", "interface": "الواجهة" },
-    "evaluation": { "title": "التقييم", "completed": "مكتمل", "course": "الكورس", "level": "المستوى", "selectCourse": "اختر الكورس", "selectLevel": "اختر المستوى", "studentFeedback": "ملاحظات الطالب", "studentFeedbackDesc": "هذه الملاحظات ستظهر للطالب.", "internalFeedback": "ملاحظات داخلية", "internalFeedbackDesc": "تظهر فقط للإدارة والموظفين.", "summary": "الملخص", "summaryPlaceholder": "اكتب ملخصاً عن أداء الطالب...", "strengths": "نقاط القوة", "improvementAreas": "مجالات التحسين", "addTag": "اكتب واضغط Enter...", "grammar": "القواعد", "speaking": "التحدث", "listening": "الاستماع", "pronunciation": "النطق", "confidence": "الثقة", "internalNotes": "ملاحظات داخلية", "internalNotesPlaceholder": "ملاحظات وتوصيات داخلية...", "save": "حفظ التقييم", "saveSuccess": "تم حفظ التقييم بنجاح." }
+    "evaluation": { "title": "التقييم", "completed": "مكتمل", "course": "الكورس", "level": "المستوى", "selectCourse": "اختر الكورس", "selectLevel": "اختر المستوى", "studentFeedback": "ملاحظات الطالب", "studentFeedbackDesc": "هذه الملاحظات (التقييمات والملاحظات) ستظهر للطالب.", "internalFeedback": "ملاحظات داخلية", "internalFeedbackDesc": "الملخص ونقاط القوة ومجالات التحسين — تظهر فقط للإدارة والموظفين.", "summary": "الملخص", "summaryPlaceholder": "اكتب ملخصاً عن أداء الطالب...", "strengths": "نقاط القوة", "improvementAreas": "مجالات التحسين", "addTag": "اكتب واضغط Enter...", "grammar": "القواعد", "speaking": "التحدث", "listening": "الاستماع", "pronunciation": "النطق", "confidence": "الثقة", "studentNotes": "ملاحظات للطالب", "studentNotesPlaceholder": "ملاحظات وتعليقات ستظهر للطالب...", "internalNotes": "ملاحظات داخلية", "internalNotesPlaceholder": "ملاحظات وتوصيات داخلية...", "save": "حفظ التقييم", "saveSuccess": "تم حفظ التقييم بنجاح." }
   },
   "client": {
     "sidebar": {
@@ -1471,8 +1472,14 @@
       "oralFeedback": "ملاحظات الجلسة الشفوية",
       "course": "الكورس",
       "level": "المستوى",
-      "strengths": "نقاط القوة",
-      "improvementAreas": "مجالات التحسين",
+      "teacherNotes": "ملاحظات المعلم",
+      "ratings": {
+        "grammar": "القواعد",
+        "speaking": "التحدث",
+        "listening": "الاستماع",
+        "pronunciation": "النطق",
+        "confidence": "الثقة"
+      },
       "evaluationPending": "التقييم قيد الانتظار. سيقدم المعلم ملاحظاته قريباً.",
       "status": {
         "scheduled": "مجدولة",
